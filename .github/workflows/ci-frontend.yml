@@ -2,9 +2,9 @@ name: Next.js CI - Code Quality & Test
 
 on:
   push:
-    branches: ["main", "master", "develop"]
+    branches: ["main", "master", "develop", "qa"]
   pull_request:
-    branches: ["main", "master", "develop"]
+    branches: ["main", "master", "develop", "qa"]
 
 jobs:
   validate:
