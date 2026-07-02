@@ -11,7 +11,6 @@ interface HomeScreenProps {
 export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
   return (
     <section className="relative flex min-h-[calc(100vh-56px)] flex-col bg-neutral-900 overflow-hidden">
-      {/* Imagem de Fundo com Overlay */}
       <div className="absolute inset-0 z-0">
         <Image 
           src="/images/plane.avif"
@@ -23,9 +22,7 @@ export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
         <div className="absolute inset-0 bg-neutral-900/70" />
       </div>
 
-      {/* Header Interno da Home */}
       <header className="relative z-10 px-6 pt-8 md:px-10 flex items-center gap-3">
-        {/* Logo Customizado da Marca */}
         <Image 
           src="/images/logo.png"
           alt="Best Route Logo"
@@ -37,7 +34,6 @@ export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
         <span className="text-neutral-50 font-semibold text-xl tracking-tight">Best Route</span>
       </header>
 
-      {/* Conteúdo Principal (Hero Section) */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 -mt-10">
         <h1 className="text-neutral-50 text-[clamp(32px,5vw,56px)] font-bold leading-[1.05] tracking-tight max-w-3xl">
           Encontre a melhor rota em segundos
@@ -53,7 +49,6 @@ export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
         </button>
       </div>
 
-      {/* Footer com Ícones Convertidos para Lucide */}
       <footer className="relative z-10 pb-10 flex justify-center gap-5">
         <a
           href="https://github.com"
