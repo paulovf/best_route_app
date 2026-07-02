@@ -49,11 +49,11 @@ jobs:
         run: |
           python3 -c "
           import sys
-          
+
           def parse_version(v_str):
               base_version = v_str.split('-')[0]
               return tuple(map(int, base_version.split('.')))
-          
+
           try:
               pr_v = parse_version('${{ env.PR_VERSION }}')
               main_v = parse_version('${{ env.MAIN_VERSION }}')

@@ -11,9 +11,9 @@ jobs:
       - name: Validate Branch Name
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
-          
+
           REGEX_BRANCH="^qa$|^(feat|fix|hotfix|feature|qa|chore|style|ci|docs)[\/-].+$"
-          
+
           if [[ ! "$BRANCH_NAME" =~ $REGEX_BRANCH ]]; then
             echo "=========================================================================="
             echo "ERROR: Invalid branch name!"
@@ -28,9 +28,9 @@ jobs:
       - name: Validate Pull Request Title
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          
+
           REGEX_TITLE="^(feat|fix|hotfix|feature|qa|chore|style|ci|docs): .+$"
-          
+
           if [[ ! "$PR_TITLE" =~ $REGEX_TITLE ]]; then
             echo "=========================================================================="
             echo "ERROR: Invalid Pull Request title!"
