@@ -1,11 +1,39 @@
 services:
   web:
-    container_name: bestroute-app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+    container_name: best_route_web
     ports:
       - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
     environment:
       - NODE_ENV=development
-    restart: always
+    stdin_open: true
+    tty: true
+    networks:
+      - bestroute-app-network
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: best_route_web_test
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+    networks:
+      - bestroute-app-network
+
+networks:
+  bestroute-app-network:
