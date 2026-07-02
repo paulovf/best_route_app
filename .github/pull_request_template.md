@@ -6,11 +6,11 @@
 
 <!-- Qual problema esta PR resolve? -->
 
-## Changes 
+## Changes
 
-- 
-- 
-- 
+-
+-
+-
 
 ## Impacts
 
@@ -29,4 +29,3 @@
 ## Evidence
 
 <!-- Prints, vídeos ou exemplos -->
-
