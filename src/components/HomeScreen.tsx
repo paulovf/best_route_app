@@ -10,7 +10,7 @@ interface HomeScreenProps {
 
 export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
   return (
-    <section className="relative flex min-h-[calc(100vh-56px)] flex-col bg-neutral-900 overflow-hidden">
+    <section className="relative flex h-screen flex-col bg-neutral-900 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image 
           src="/images/plane.avif"
@@ -28,7 +28,7 @@ export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
           alt="Best Route Logo"
           width={48}
           height={48}
-          className="object-contain"
+          className="w-12 h-12 object-contain"
           priority
         />
         <span className="text-neutral-50 font-semibold text-xl tracking-tight">Best Route</span>
@@ -36,14 +36,14 @@ export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 -mt-10">
         <h1 className="text-neutral-50 text-[clamp(32px,5vw,56px)] font-bold leading-[1.05] tracking-tight max-w-3xl">
-          Encontre a melhor rota em segundos
+          Encontre a melhor rota para sua viagem
         </h1>
-        <p className="text-neutral-50/80 mt-5 max-w-xl text-[17px] md:text-lg leading-relaxed">
-          Compare caminhos, pedágios e tempo de viagem entre qualquer cidade do Brasil
+        <p className="text-neutral-50/80 mt-5 max-w-xl text-base md:text-lg leading-relaxed">
+          Compare caminhos, formas de transporte, preços e tempo de viagem entre cidades de todo o Brasil
         </p>
         <button
           onClick={onCalculateRoute}
-          className="mt-10 bg-neutral-50 text-neutral-900 rounded-full font-semibold px-10 py-3.5 text-[15px] shadow-sm hover:bg-neutral-200 active:scale-95 transition-all"
+          className="mt-10 bg-neutral-50 text-neutral-900 rounded-full font-semibold px-10 py-3.5 text-sm shadow-sm hover:bg-neutral-200 active:scale-95 transition-all cursor-pointer"
         >
           Calcular rota
         </button>
@@ -51,31 +51,43 @@ export default function HomeScreen({ onCalculateRoute }: HomeScreenProps) {
 
       <footer className="relative z-10 pb-10 flex justify-center gap-5">
         <a
-          href="https://github.com"
+          href="https://github.com/paulovf/best_route_api"
           target="_blank"
           rel="noreferrer"
-          className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition"
           aria-label="GitHub API"
         >
-          <GitBranch size={18} />
+          <div className="flex flex-col items-center gap-y-2">
+            <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
+              <GitBranch size={18} />
+            </div>
+            <span className="text-sm text-neutral-50/80">GitHub API</span>
+          </div>
         </a>
         <a
-          href="https://github.com"
+          href="https://github.com/paulovf/best_route_app"
           target="_blank"
           rel="noreferrer"
-          className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition"
-          aria-label="GitHub Front"
+          aria-label="GitHub App"
         >
-          <Code2 size={18} />
+          <div className="flex flex-col items-center gap-y-2">
+            <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
+              <Code2 size={18} />
+            </div>
+            <span className="text-sm text-neutral-50/80">GitHub App</span>
+          </div>
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/in/paulo-vitor-francisco"
           target="_blank"
           rel="noreferrer"
-          className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition"
           aria-label="LinkedIn"
         >
-          <ExternalLink size={18} />
+          <div className="flex flex-col items-center gap-y-2">
+            <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
+              <ExternalLink size={18} />
+            </div>
+            <span className="text-sm text-neutral-50/80">My Linkedin</span>
+          </div>
         </a>
       </footer>
     </section>
