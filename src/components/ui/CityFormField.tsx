@@ -1,0 +1,138 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
+import { MapPin } from 'lucide-react';
+
+interface IBGECity {
+  id: number;
+  nome: string;
+  microrregiao: {
+    mesorregiao: {
+      UF: { sigla: string };
+    };
+  };
+}
+
+export interface CityOption {
+  name: string;
+  uf: string;
+  displayName: string;
+}
+
+interface CityAutocompleteProps {
+  label: string;
+  placeholder: string;
+  namePrefix: string;
+  iconColorClass?: string;
+}
+
+export function CityFormField({ label, placeholder, namePrefix, iconColorClass = "text-neutral-200" }: CityAutocompleteProps) {
+  const [cities, setCities] = useState<CityOption[]>([]);
+  const [query, setQuery] = useState('');
+  const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
+        const data: IBGECity[] = await response.json();
+        
+        const formattedCities = data.map(city => {
+          const ufSigla = city.microrregiao?.mesorregiao?.UF?.sigla || '';
+          
+          return {
+            name: city.nome,
+            uf: ufSigla,
+            displayName: ufSigla ? `${city.nome} - ${ufSigla}` : city.nome
+          };
+        });
+        
+        const validCities = formattedCities.filter(c => c.name);
+        
+        setCities(validCities);
+      } catch (error) {
+        console.error("Error during serach city on IBGE api:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredCities = query === '' 
+    ? [] 
+    : cities.filter((city) => {
+        const normalize = (str: string) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        return normalize(city.displayName).includes(normalize(query));
+      }).slice(0, 10);
+
+  return (
+    <div className="relative" ref={wrapperRef}>
+      <label className="block text-sm font-medium text-neutral-400 mb-2">
+        {label}
+      </label>
+      
+      <div className="relative flex items-center">
+        <MapPin className={`w-5 h-5 absolute left-3 pointer-events-none ${iconColorClass}`} />
+        
+        <input 
+          type="text" 
+          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary transition placeholder-slate-400 focus:outline-none" 
+          placeholder={placeholder}
+          value={selectedCity ? selectedCity.displayName : query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setSelectedCity(null);
+            setIsOpen(true);
+          }}
+          onFocus={() => setIsOpen(true)}
+          required
+        />
+      </div>
+
+      <input type="hidden" name={`${namePrefix}_city`} value={selectedCity?.name || ''} />
+      <input type="hidden" name={`${namePrefix}_uf`} value={selectedCity?.uf || ''} />
+
+      {isOpen && query.length > 1 && !selectedCity && (
+        <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
+          {isLoading ? (
+            <li className="p-3 text-neutral-900 text-sm text-center animate-pulse">Carregando cidades...</li>
+          ) : filteredCities.length > 0 ? (
+            filteredCities.map((city, index) => (
+              <li 
+                key={`${city.uf}-${city.name}-${index}`}
+                onClick={() => {
+                  setSelectedCity(city);
+                  setQuery(city.displayName);
+                  setIsOpen(false);
+                }}
+                className="p-3 text-sm text-neutral-900 hover:opacity-50 cursor-pointer transition-colors"
+              >
+                <span className="font-medium">{city.name}</span>
+                <span className="ml-1">- {city.uf}</span>
+              </li>
+            ))
+          ) : (
+            <li className="p-3 text-neutral-500 text-sm text-center">Nenhuma cidade encontrada.</li>
+          )}
+        </ul>
+      )}
+    </div>
+  );
+}
