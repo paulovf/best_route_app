@@ -37,7 +37,6 @@ body {
   margin: 0;
 }
 
-/* 🗓️ DIA SELECIONADO: Transforma o círculo azul em um círculo preto sólido e elegante */
 .rdp-selected,
 .rdp-day_selected,
 .rdp-day_selected:hover,
