@@ -25,22 +25,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.rdp-root  {
-  --rdp-accent-color: #0f172a !important;;
+.rdp-root {
+  --rdp-accent-color: #0f172a !important;
 }
 
 .rdp {
   --rdp-cell-size: 40px;
   /* 🔄 Troca o azul padrão pelo preto do seu botão principal */
-  --rdp-accent-color: #111111; 
-  --rdp-background-color: #f1f5f9; 
+  --rdp-accent-color: #111111;
+  --rdp-background-color: #f1f5f9;
   color: #0f172a;
   margin: 0;
 }
 
 /* 🗓️ DIA SELECIONADO: Transforma o círculo azul em um círculo preto sólido e elegante */
 .rdp-selected,
-.rdp-day_selected, 
+.rdp-day_selected,
 .rdp-day_selected:hover,
 .rdp-day_selected:focus {
   background-color: #0f172a !important;
@@ -79,7 +79,8 @@ body {
 }
 
 /* 🔒 DIAS BLOQUEADOS (Travas: Passado e futuro maior que 1 ano) */
-.rdp-day_status_disabled, .rdp-day[disabled] {
+.rdp-day_status_disabled,
+.rdp-day[disabled] {
   color: #cbd5e1;
   opacity: 0.4;
   cursor: not-allowed;

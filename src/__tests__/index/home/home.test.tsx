@@ -1,16 +1,53 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import Home from "@/app/page";
 
+const mockIBGEResponse = [
+  {
+    id: 1,
+    nome: "São Paulo",
+    microrregiao: { mesorregiao: { UF: { sigla: "SP" } } },
+  },
+  {
+    id: 2,
+    nome: "Rio de Janeiro",
+    microrregiao: { mesorregiao: { UF: { sigla: "RJ" } } },
+  },
+];
+
 describe("Home page", () => {
-  it("Render default home alt text logo", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockIBGEResponse),
+      }),
+    ) as jest.Mock;
+  });
+
+  it("Render default home alt text logo", async () => {
     render(<Home />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
 
     const logo = screen.getByAltText("Best Route home logo");
     expect(logo).toBeInTheDocument();
   });
 
-  it("Render title and subtitle", () => {
+  it("Render title and subtitle", async () => {
     render(<Home />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
 
     const title = screen.getByRole("heading", {
       name: /Encontre a melhor rota para sua viagem/i,
@@ -24,18 +61,26 @@ describe("Home page", () => {
     expect(subtitle).toBeInTheDocument();
   });
 
-  it("Render button calculate route", () => {
+  it("Render button calculate route", async () => {
     render(<Home />);
 
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
     const button = screen.getByRole("button", {
-      name: /Calcular rota/i,
+      name: /Começe aqui/i,
     });
 
     expect(button).toBeInTheDocument();
   });
 
-  it("Render buttons links", () => {
+  it("Render buttons links", async () => {
     render(<Home />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
 
     const githubApi = screen.getByRole("link", {
       name: /GitHub API/i,

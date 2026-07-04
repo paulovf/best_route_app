@@ -1,20 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { GitBranch, ExternalLink } from "lucide-react";
-import Topbar from '@/components/layout/Topbar';
-import { FormScreen } from '../form/FormScreem';
+import Topbar from "@/components/layout/Topbar";
+import { FormScreen } from "../form/FormScreen";
 
 export default function HomeScreen() {
   const [showTopbar, setShowTopbar] = useState(false);
   const formSectionRef = useRef<HTMLDivElement>(null);
 
   const scrollToForm = () => {
-    formSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
+    const currentFormSection = formSectionRef.current;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setShowTopbar(entry.isIntersecting);
@@ -22,16 +24,16 @@ export default function HomeScreen() {
       {
         root: null,
         threshold: 0.1,
-      }
+      },
     );
 
-    if (formSectionRef.current) {
-      observer.observe(formSectionRef.current);
+    if (currentFormSection) {
+      observer.observe(currentFormSection);
     }
 
     return () => {
-      if (formSectionRef.current) {
-        observer.unobserve(formSectionRef.current);
+      if (currentFormSection) {
+        observer.unobserve(currentFormSection);
       }
     };
   }, []);
@@ -71,14 +73,14 @@ export default function HomeScreen() {
             Encontre a melhor rota para sua viagem
           </h1>
           <p className="text-neutral-50/80 mt-5 max-w-xl text-base md:text-lg leading-relaxed">
-            Compare caminhos, formas de transporte, preços e tempo de viagem entre
-            cidades de todo o Brasil
+            Compare caminhos, formas de transporte, preços e tempo de viagem
+            entre cidades de todo o Brasil
           </p>
           <button
             onClick={scrollToForm}
             className="mt-10 bg-neutral-50 text-neutral-900 rounded-full font-semibold px-10 py-3.5 text-sm shadow-sm hover:bg-neutral-200 active:scale-95 transition-all cursor-pointer"
           >
-            Calcular rota
+            Começe aqui
           </button>
         </div>
 
@@ -130,4 +132,4 @@ export default function HomeScreen() {
   );
 }
 
-HomeScreen.displayName = 'HomeScreen';
+HomeScreen.displayName = "HomeScreen";

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { DayPicker } from 'react-day-picker';
-import { Calendar } from 'lucide-react';
-import { format, addYears, startOfDay } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import 'react-day-picker/dist/style.css';
+import { useState, useRef, useEffect } from "react";
+import { DayPicker } from "react-day-picker";
+import { Calendar } from "lucide-react";
+import { format, addYears, startOfDay } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import "react-day-picker/dist/style.css";
 
 interface DatePickerFieldProps {
   value: Date | undefined;
@@ -21,7 +21,10 @@ export function DatePickerField({ value, onChange }: DatePickerFieldProps) {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -31,31 +34,28 @@ export function DatePickerField({ value, onChange }: DatePickerFieldProps) {
 
   return (
     <div className="relative flex flex-col w-full" ref={wrapperRef}>
-      <div 
+      <div
         onClick={() => setIsOpen(!isOpen)}
         className="relative flex items-center cursor-pointer"
       >
         <Calendar
-          className={
-            `w-5 h-5 absolute left-3 pointer-events-none ${
-              value
-              ? "text-neutral-900"
-              : "text-slate-400"
-            }`
-          } />
-        <input 
-          type="text" 
+          className={`w-5 h-5 absolute left-3 pointer-events-none ${
+            value ? "text-neutral-900" : "text-slate-400"
+          }`}
+        />
+        <input
+          type="text"
           readOnly
           placeholder="dd/mm/aaaa"
-          value={value ? format(value, 'dd/MM/yyyy') : ''}
-          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none" 
+          value={value ? format(value, "dd/MM/yyyy") : ""}
+          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none"
         />
       </div>
 
-      <input 
-        type="hidden" 
-        name="travel_date" 
-        value={value ? format(value, 'yyyy-MM-dd') : ''} 
+      <input
+        type="hidden"
+        name="travel_date"
+        value={value ? format(value, "yyyy-MM-dd") : ""}
       />
 
       {isOpen && (
@@ -68,10 +68,7 @@ export function DatePickerField({ value, onChange }: DatePickerFieldProps) {
               setIsOpen(false);
             }}
             locale={ptBR}
-            disabled={[
-              { before: today },
-              { after: maxDate }
-            ]}
+            disabled={[{ before: today }, { after: maxDate }]}
           />
         </div>
       )}
