@@ -67,7 +67,6 @@ body {
   text-transform: capitalize;
 }
 
-/* Dias da semana (dom, seg, ter...) */
 .rdp-head_cell {
   color: #64748b;
   font-weight: 600;
