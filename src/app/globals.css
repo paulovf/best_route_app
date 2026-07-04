@@ -24,3 +24,63 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.rdp-root {
+  --rdp-accent-color: #0f172a !important;
+}
+
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #111111;
+  --rdp-background-color: #f1f5f9;
+  color: #0f172a;
+  margin: 0;
+}
+
+.rdp-selected,
+.rdp-day_selected,
+.rdp-day_selected:hover,
+.rdp-day_selected:focus {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-radius: 9999px !important;
+  border-color: #0f172a !important;
+}
+
+.rdp-nav_button {
+  color: #475569;
+}
+
+.rdp-nav_button:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.rdp-day {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.rdp-caption_label {
+  color: #0f172a;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.rdp-head_cell {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.rdp-day_status_disabled,
+.rdp-day[disabled] {
+  color: #cbd5e1;
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: none;
+}
+
+.rdp-day:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+}
