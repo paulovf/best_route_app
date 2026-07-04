@@ -31,7 +31,6 @@ body {
 
 .rdp {
   --rdp-cell-size: 40px;
-  /* 🔄 Troca o azul padrão pelo preto do seu botão principal */
   --rdp-accent-color: #111111;
   --rdp-background-color: #f1f5f9;
   color: #0f172a;
