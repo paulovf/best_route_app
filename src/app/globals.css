@@ -72,7 +72,6 @@ body {
   font-weight: 600;
 }
 
-/* 🔒 DIAS BLOQUEADOS (Travas: Passado e futuro maior que 1 ano) */
 .rdp-day_status_disabled,
 .rdp-day[disabled] {
   color: #cbd5e1;
