@@ -1,20 +1,29 @@
 'use client';
 
-import { forwardRef, FormEvent } from 'react';
-import { MapPlus, MapPin, Calendar, ArrowUpDown } from "lucide-react";
-import { CityFormField } from '@/components/ui/CityFormField';
+import { forwardRef, FormEvent, useState } from 'react';
+import { MapPlus, Calendar, ArrowUpDown } from "lucide-react";
+import { CityFormField, CityOption } from '@/components/ui/CityFormField';
+import { DatePickerField } from '@/components/ui/DatePickerField';
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
+  const [origin, setOrigin] = useState<CityOption | null>(null);
+  const [destination, setDestination] = useState<CityOption | null>(null);
+  const [travelDate, setTravelDate] = useState<Date | undefined>();
+  
+  const handleSwap = () => {
+    setOrigin(destination);
+    setDestination(origin);
+  };
+  
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const originCity = formData.get('origin_city');
-    const originUf = formData.get('origin_uf');
-    const destCity = formData.get('destination_city');
-    const destUf = formData.get('destination_uf');
-
-    console.log('Buscando rotas de:', `${originCity}-${originUf}`, 'para:', `${destCity}-${destUf}`);
+    const originState = formData.get('origin_state');
+    const destinationCity = formData.get('destination_city');
+    const destinationState = formData.get('destination_state');
+    const travelDate = formData.get('travel_date');
   };
 
   return (
@@ -36,49 +45,39 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-                <MapPin size={20} className="text-slate-400" />
-              </div>
               <CityFormField 
-                label="Origem"
-                placeholder="Ex: São Paulo, SP"
+                placeholder="Onde você está?"
                 namePrefix="origin"
-                iconColorClass="text-neutral-500"
+                value={origin}
+                onChange={setOrigin}
               />
             </div>
 
             <div className="flex justify-center relative z-10">
               <button
                 type="button"
+                onClick={handleSwap}
                 id="swap"
                 className="w-9 h-9 rounded-full bg-white border shadow-sm flex items-center justify-center hover:bg-slate-50 active:scale-95 transition cursor-pointer"
-                aria-label="invertFields"
+                aria-label="Inverter origem e destino"
               >
                 <ArrowUpDown size={20} className="text-neutral-900" />
               </button>
             </div>
 
             <div className="relative">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-                <MapPin size={20} className="text-slate-400" />
-              </div>
-              <input
-                id="destinationCity" 
+              <CityFormField 
                 placeholder="Para onde você vai?"
-                className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary transition placeholder-slate-400 focus:outline-none"
-                required 
+                namePrefix="destination"
+                value={destination}
+                onChange={setDestination}
               />
             </div>
 
             <div className="relative">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-                <Calendar size={20} className="text-neutral-900" />
-              </div>
-              <input
-                id="data"
-                type="date"
-                className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary transition placeholder-slate-400 focus:outline-none"
-                required
+              <DatePickerField 
+                value={travelDate}
+                onChange={setTravelDate}
               />
             </div>
 
@@ -91,7 +90,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
             </button>
           </form>
         </div>
-        <p className="text-center text-xs text-slate-500 mt-6">Usamos dados públicos para estimar pedágios e tempo</p>
+        <p className="text-center text-xs text-slate-500 mt-6">Usamos dados públicos e consultas em IA para estimar preços, itinerários e tempo</p>
       </div>
     </section>
   );

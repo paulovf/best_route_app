@@ -20,20 +20,27 @@ export interface CityOption {
 }
 
 interface CityAutocompleteProps {
-  label: string;
   placeholder: string;
   namePrefix: string;
-  iconColorClass?: string;
+  value: CityOption | null;
+  onChange: (city: CityOption | null) => void;
 }
 
-export function CityFormField({ label, placeholder, namePrefix, iconColorClass = "text-neutral-200" }: CityAutocompleteProps) {
+export function CityFormField({ placeholder, namePrefix, value, onChange }: CityAutocompleteProps) {
   const [cities, setCities] = useState<CityOption[]>([]);
   const [query, setQuery] = useState('');
-  const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (value) {
+      setQuery(value.displayName);
+    } else if (!isOpen) {
+      setQuery('');
+    }
+  }, [value, isOpen]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -83,22 +90,25 @@ export function CityFormField({ label, placeholder, namePrefix, iconColorClass =
       }).slice(0, 10);
 
   return (
-    <div className="relative" ref={wrapperRef}>
-      <label className="block text-sm font-medium text-neutral-400 mb-2">
-        {label}
-      </label>
-      
+    <div className="relative" ref={wrapperRef}>      
       <div className="relative flex items-center">
-        <MapPin className={`w-5 h-5 absolute left-3 pointer-events-none ${iconColorClass}`} />
+        <MapPin 
+          className={
+            `w-5 h-5 absolute left-3 pointer-events-none ${
+              value
+              ? "text-neutral-900"
+              : "text-slate-400"
+            }`
+          } />
         
         <input 
           type="text" 
-          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary transition placeholder-slate-400 focus:outline-none" 
+          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none" 
           placeholder={placeholder}
-          value={selectedCity ? selectedCity.displayName : query}
+          value={value ? value.displayName : query}
           onChange={(e) => {
             setQuery(e.target.value);
-            setSelectedCity(null);
+            onChange(null);
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
@@ -106,10 +116,10 @@ export function CityFormField({ label, placeholder, namePrefix, iconColorClass =
         />
       </div>
 
-      <input type="hidden" name={`${namePrefix}_city`} value={selectedCity?.name || ''} />
-      <input type="hidden" name={`${namePrefix}_uf`} value={selectedCity?.uf || ''} />
+      <input type="hidden" name={`${namePrefix}_city`} value={value?.name || ''} />
+      <input type="hidden" name={`${namePrefix}_state`} value={value?.uf || ''} />
 
-      {isOpen && query.length > 1 && !selectedCity && (
+      {isOpen && query.length > 1 && !value && (
         <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
           {isLoading ? (
             <li className="p-3 text-neutral-900 text-sm text-center animate-pulse">Carregando cidades...</li>
@@ -118,7 +128,7 @@ export function CityFormField({ label, placeholder, namePrefix, iconColorClass =
               <li 
                 key={`${city.uf}-${city.name}-${index}`}
                 onClick={() => {
-                  setSelectedCity(city);
+                  onChange(city);
                   setQuery(city.displayName);
                   setIsOpen(false);
                 }}

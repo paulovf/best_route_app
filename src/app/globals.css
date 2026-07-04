@@ -24,3 +24,70 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.rdp-root  {
+  --rdp-accent-color: #0f172a !important;;
+}
+
+.rdp {
+  --rdp-cell-size: 40px;
+  /* 🔄 Troca o azul padrão pelo preto do seu botão principal */
+  --rdp-accent-color: #111111; 
+  --rdp-background-color: #f1f5f9; 
+  color: #0f172a;
+  margin: 0;
+}
+
+/* 🗓️ DIA SELECIONADO: Transforma o círculo azul em um círculo preto sólido e elegante */
+.rdp-selected,
+.rdp-day_selected, 
+.rdp-day_selected:hover,
+.rdp-day_selected:focus {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-radius: 9999px !important;
+  border-color: #0f172a !important;
+}
+
+/* 🧭 SETAS DE NAVEGAÇÃO (< e >): Remove o azul e aplica um cinza grafite profissional */
+.rdp-nav_button {
+  color: #475569; /* slate-600 */
+}
+
+.rdp-nav_button:hover {
+  color: #0f172a; /* slate-900 ao passar o mouse */
+  background-color: #f1f5f9;
+}
+
+/* Números dos dias normais (Garante excelente leitura) */
+.rdp-day {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Título do Mês (Julho 2026) */
+.rdp-caption_label {
+  color: #0f172a;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Dias da semana (dom, seg, ter...) */
+.rdp-head_cell {
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* 🔒 DIAS BLOQUEADOS (Travas: Passado e futuro maior que 1 ano) */
+.rdp-day_status_disabled, .rdp-day[disabled] {
+  color: #cbd5e1;
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: none;
+}
+
+/* Hover suave nos dias que estão disponíveis para clique */
+.rdp-day:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+}

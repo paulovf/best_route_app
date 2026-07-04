@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Best Route App",
+  title: "Best Route",
   description: "Otimizador inteligente de rotas",
 };
 
