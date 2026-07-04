@@ -80,7 +80,6 @@ body {
   background: none;
 }
 
-/* Hover suave nos dias que estão disponíveis para clique */
 .rdp-day:hover:not([disabled]):not(.rdp-day_selected) {
   background-color: #f1f5f9;
   border-radius: 9999px;
