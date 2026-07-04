@@ -52,7 +52,7 @@ body {
 }
 
 .rdp-nav_button:hover {
-  color: #0f172a; /* slate-900 ao passar o mouse */
+  color: #0f172a;
   background-color: #f1f5f9;
 }
 
