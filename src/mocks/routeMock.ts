@@ -1,0 +1,230 @@
+// src/mocks/routeMock.ts
+import { RouteApiResponse } from '@/types/route';
+
+export const MOCK_API_RESPONSE: RouteApiResponse = {
+    "id": "bf5079df-5194-4516-bc80-2e6577ecb29b",
+    "origin_city": "São Paulo",
+    "origin_state": "SP",
+    "destination_city": "Niterói",
+    "destination_state": "RJ",
+    "travel_date": "2026-12-25T12:00:00Z",
+    "options": [
+        {
+            "total_kilometers": 390,
+            "total_amount": 740.0,
+            "order": 1,
+            "description": "A opção mais rápida e eficiente, combinando voo doméstico de Congonhas para Santos Dumont com transporte por aplicativo direto para Niterói.",
+            "steps": [
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 10.0,
+                    "average_amount": 60.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Casa",
+                    "origin_departure_type": "home",
+                    "destination_city": "São Paulo",
+                    "destination_state": "SP",
+                    "destination_arrival": "Aeroporto de Congonhas (CGH)",
+                    "destination_arrival_type": "airport",
+                    "order": 1,
+                    "duration_hours": 0.5
+                },
+                {
+                    "transport_type": "plane",
+                    "kilometers": 360.0,
+                    "average_amount": 600.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Aeroporto de Congonhas (CGH)",
+                    "origin_departure_type": "airport",
+                    "destination_city": "Rio de Janeiro",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Aeroporto Santos Dumont (SDU)",
+                    "destination_arrival_type": "airport",
+                    "order": 2,
+                    "duration_hours": 2.5
+                },
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 20.0,
+                    "average_amount": 80.0,
+                    "origin_city": "Rio de Janeiro",
+                    "origin_state": "RJ",
+                    "origin_departure": "Aeroporto Santos Dumont (SDU)",
+                    "origin_departure_type": "airport",
+                    "destination_city": "Niterói",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Seu destino",
+                    "destination_arrival_type": "home",
+                    "order": 3,
+                    "duration_hours": 0.75
+                }
+            ],
+            "total_duration_hours": 3.75
+        },
+        {
+            "total_kilometers": 383,
+            "total_amount": 733.0,
+            "order": 2,
+            "description": "Uma alternativa rápida e cênica, utilizando voo para o Rio, transporte por aplicativo até a Praça XV e a tradicional barca para Niterói.",
+            "steps": [
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 10.0,
+                    "average_amount": 60.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Casa",
+                    "origin_departure_type": "home",
+                    "destination_city": "São Paulo",
+                    "destination_state": "SP",
+                    "destination_arrival": "Aeroporto de Congonhas (CGH)",
+                    "destination_arrival_type": "airport",
+                    "order": 1,
+                    "duration_hours": 0.5
+                },
+                {
+                    "transport_type": "plane",
+                    "kilometers": 360.0,
+                    "average_amount": 600.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Aeroporto de Congonhas (CGH)",
+                    "origin_departure_type": "airport",
+                    "destination_city": "Rio de Janeiro",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Aeroporto Santos Dumont (SDU)",
+                    "destination_arrival_type": "airport",
+                    "order": 2,
+                    "duration_hours": 2.5
+                },
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 5.0,
+                    "average_amount": 40.0,
+                    "origin_city": "Rio de Janeiro",
+                    "origin_state": "RJ",
+                    "origin_departure": "Aeroporto Santos Dumont (SDU)",
+                    "origin_departure_type": "airport",
+                    "destination_city": "Rio de Janeiro",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Praça XV",
+                    "destination_arrival_type": "boat_station",
+                    "order": 3,
+                    "duration_hours": 0.25
+                },
+                {
+                    "transport_type": "boat",
+                    "kilometers": 5.0,
+                    "average_amount": 8.0,
+                    "origin_city": "Rio de Janeiro",
+                    "origin_state": "RJ",
+                    "origin_departure": "Praça XV",
+                    "origin_departure_type": "boat_station",
+                    "destination_city": "Niterói",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Praça Arariboia",
+                    "destination_arrival_type": "boat_station",
+                    "order": 4,
+                    "duration_hours": 0.33
+                },
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 3.0,
+                    "average_amount": 25.0,
+                    "origin_city": "Niterói",
+                    "origin_state": "RJ",
+                    "origin_departure": "Praça Arariboia",
+                    "origin_departure_type": "boat_station",
+                    "destination_city": "Niterói",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Seu destino",
+                    "destination_arrival_type": "home",
+                    "order": 5,
+                    "duration_hours": 0.15
+                }
+            ],
+            "total_duration_hours": 3.73
+        },
+        {
+            "total_kilometers": 440,
+            "total_amount": 388.0,
+            "order": 3,
+            "description": "Viagem de carro particular, oferecendo total flexibilidade de horários e paradas, com custos de combustível e pedágios estimados.",
+            "steps": [
+                {
+                    "transport_type": "car",
+                    "kilometers": 440.0,
+                    "average_amount": 388.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Casa",
+                    "origin_departure_type": "home",
+                    "destination_city": "Niterói",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Seu destino",
+                    "destination_arrival_type": "home",
+                    "order": 1,
+                    "duration_hours": 6.0
+                }
+            ],
+            "total_duration_hours": 6.0
+        },
+        {
+            "total_kilometers": 460,
+            "total_amount": 280.0,
+            "order": 4,
+            "description": "A opção mais econômica, utilizando ônibus direto de São Paulo para Niterói, ideal para quem busca custo-benefício e não tem pressa.",
+            "steps": [
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 15.0,
+                    "average_amount": 70.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Casa",
+                    "origin_departure_type": "home",
+                    "destination_city": "São Paulo",
+                    "destination_state": "SP",
+                    "destination_arrival": "Terminal Rodoviário Tietê",
+                    "destination_arrival_type": "bus_station",
+                    "order": 1,
+                    "duration_hours": 0.75
+                },
+                {
+                    "transport_type": "bus",
+                    "kilometers": 440.0,
+                    "average_amount": 180.0,
+                    "origin_city": "São Paulo",
+                    "origin_state": "SP",
+                    "origin_departure": "Terminal Rodoviário Tietê",
+                    "origin_departure_type": "bus_station",
+                    "destination_city": "Niterói",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Terminal Rodoviário Roberto Silveira",
+                    "destination_arrival_type": "bus_station",
+                    "order": 2,
+                    "duration_hours": 7.0
+                },
+                {
+                    "transport_type": "app_mobile",
+                    "kilometers": 5.0,
+                    "average_amount": 30.0,
+                    "origin_city": "Niterói",
+                    "origin_state": "RJ",
+                    "origin_departure": "Terminal Rodoviário Roberto Silveira",
+                    "origin_departure_type": "bus_station",
+                    "destination_city": "Niterói",
+                    "destination_state": "RJ",
+                    "destination_arrival": "Seu destino",
+                    "destination_arrival_type": "home",
+                    "order": 3,
+                    "duration_hours": 0.25
+                }
+            ],
+            "total_duration_hours": 8.0
+        }
+    ]
+};
+
