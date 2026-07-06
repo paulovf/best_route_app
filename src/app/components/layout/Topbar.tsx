@@ -36,7 +36,7 @@ export default function Topbar({ show }: TopbarProps) {
               : "px-3.5 py-1.5 rounded-full"
           } ${
             isActive
-              ? "bg-neutral-900 text-white"
+              ? "bg-neutral-600 text-white"
               : isMobile
                 ? "text-slate-600 hover:bg-slate-50"
                 : "text-slate-600 hover:bg-slate-100"
@@ -50,7 +50,7 @@ export default function Topbar({ show }: TopbarProps) {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-900/10 ${
+      className={`fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-600/10 ${
         show
           ? "opacity-100 translate-y-0"
           : "opacity-0 -translate-y-full pointer-events-none"
@@ -66,14 +66,14 @@ export default function Topbar({ show }: TopbarProps) {
             className="w-7 h-7 object-contain"
             priority
           />
-          <span className="font-semibold tracking-tight text-neutral-900">
+          <span className="font-semibold tracking-tight text-neutral-600">
             Best Route
           </span>
         </div>
         <nav className="hidden md:flex gap-1">{renderLinks(false)}</nav>
 
         <button
-          className="md:hidden p-2 text-neutral-900"
+          className="md:hidden p-2 text-neutral-600"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -81,7 +81,7 @@ export default function Topbar({ show }: TopbarProps) {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden absolute top-14 left-0 w-full bg-white border-b border-neutral-900/10 shadow-lg p-6 flex flex-col gap-4 animate-in slide-in-from-top-5">
+        <div className="md:hidden absolute top-14 left-0 w-full bg-white border-b border-neutral-600/10 shadow-lg p-6 flex flex-col gap-4 animate-in slide-in-from-top-5">
           {renderLinks(true)}
         </div>
       )}
