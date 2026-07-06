@@ -102,7 +102,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
               type="button"
               id="btn-calculate"
               onClick={handleCalculate}
-              className="w-full mt-2 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-[15px] shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
+              className="w-full mt-2 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
             >
               Calcular rota
             </button>
