@@ -28,6 +28,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
 
   return (
     <section
+      id="form-screen"
       ref={ref}
       className="screen h-screen bg-neutral-50 flex items-center justify-center px-4 py-12"
     >

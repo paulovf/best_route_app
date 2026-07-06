@@ -1,12 +1,53 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { useActiveSection } from "@/hooks/useActiveSection";
+import Link from "next/link";
 
 interface TopbarProps {
   show: boolean;
 }
 
 export default function Topbar({ show }: TopbarProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const activeSection = useActiveSection(["home-screen", "form-screen"]);
+
+  const navLinks = [
+    { label: "Home", href: "/", id: "home-screen" },
+    { label: "Formulário", href: "/#form-screen", id: "form-screen" },
+    { label: "Loading", href: "/#loading", id: "loading" },
+    { label: "Resultados", href: "/result", id: "result-screen" },
+  ];
+
+  const renderLinks = (isMobile: boolean) => {
+    return navLinks.map((link) => {
+      const isActive = activeSection === link.id;
+      
+      return (
+        <Link
+          key={link.label}
+          href={link.href}
+          onClick={() => isMobile && setIsMenuOpen(false)}
+          className={`text-sm font-medium transition ${
+            isMobile 
+              ? "px-4 py-3 rounded-xl text-left" 
+              : "px-3.5 py-1.5 rounded-full"
+          } ${
+            isActive
+              ? "bg-neutral-900 text-white"
+              : isMobile 
+                ? "text-slate-600 hover:bg-slate-50" 
+                : "text-slate-600 hover:bg-slate-100"
+          }`}
+        >
+          {link.label}
+        </Link>
+      );
+    });
+  };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-900/10 ${
@@ -29,21 +70,23 @@ export default function Topbar({ show }: TopbarProps) {
             Best Route
           </span>
         </div>
-        <nav className="flex gap-1 overflow-x-auto">
-          <button className="px-3.5 py-1.5 rounded-full text-sm font-medium bg-neutral-900 text-white transition">
-            Home
-          </button>
-          <button className="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition">
-            Formulário
-          </button>
-          <button className="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition">
-            Loading
-          </button>
-          <button className="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition">
-            Resultados
-          </button>
+        <nav className="hidden md:flex gap-1">
+          {renderLinks(false)}
         </nav>
+
+        <button
+          className="md:hidden p-2 text-neutral-900"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-14 left-0 w-full bg-white border-b border-neutral-900/10 shadow-lg p-6 flex flex-col gap-4 animate-in slide-in-from-top-5">
+          {renderLinks(true)}
+        </div>
+      )}
     </header>
   );
 }
