@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { CityFormField } from "@/components/ui/CityFormField";
+import { CityFormField } from "@/app/components/ui/CityFormField";
 
 const mockIBGEResponse = [
   {

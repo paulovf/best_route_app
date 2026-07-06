@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { DatePickerField } from "@/components/ui/DatePickerField";
+import { DatePickerField } from "@/app/components/ui/DatePickerField";
 import { subDays } from "date-fns";
 
 describe("DatePickerField component", () => {

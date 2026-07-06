@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Topbar from "@/components/layout/Topbar";
+import Topbar from "@/app/components/layout/Topbar";
 
 describe("Topbar component", () => {
   beforeEach(() => {

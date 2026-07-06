@@ -2,8 +2,8 @@
 
 import { forwardRef, FormEvent, useState } from "react";
 import { MapPlus, ArrowUpDown } from "lucide-react";
-import { CityFormField, CityOption } from "@/components/ui/CityFormField";
-import { DatePickerField } from "@/components/ui/DatePickerField";
+import { CityFormField, CityOption } from "@/app/components/ui/CityFormField";
+import { DatePickerField } from "@/app/components/ui/DatePickerField";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const [origin, setOrigin] = useState<CityOption | null>(null);

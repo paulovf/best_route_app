@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/app/components/layout/Footer";
 
 describe("Footer component", () => {
   beforeEach(() => {

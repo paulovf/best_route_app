@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { GitBranch, ExternalLink } from "lucide-react";
-import Topbar from "@/components/layout/Topbar";
+import Topbar from "@/app/components/layout/Topbar";
 import { FormScreen } from "../form/FormScreen";
 
 export default function HomeScreen() {
