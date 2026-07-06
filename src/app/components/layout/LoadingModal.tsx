@@ -22,7 +22,7 @@ export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-neutral-800 backdrop-blur-sm animate-slide-up">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-800 backdrop-blur-sm animate-slide-up">
       <div className="w-full max-w-md bg-neutral-800 rounded-t-3xl sm:rounded-3xl p-8">
         
         <div className="flex flex-col items-center justify-center text-center">
