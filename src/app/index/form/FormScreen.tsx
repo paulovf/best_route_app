@@ -4,11 +4,21 @@ import { forwardRef, FormEvent, useState } from "react";
 import { MapPlus, ArrowUpDown } from "lucide-react";
 import { CityFormField, CityOption } from "@/app/components/ui/CityFormField";
 import { DatePickerField } from "@/app/components/ui/DatePickerField";
+import { LoadingModal } from "@/app/components/layout/LoadingModal";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const [origin, setOrigin] = useState<CityOption | null>(null);
   const [destination, setDestination] = useState<CityOption | null>(null);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const handleCalculate = async () => {
+    setIsCalculating(true);
+
+    setTimeout(() => {
+      setIsCalculating(false);
+    }, 270000);
+  };
 
   const handleSwap = () => {
     setOrigin(destination);
@@ -36,13 +46,13 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
         <div className="bg-white rounded-[28px] shadow-sm border p-8 md:p-10">
           <header className="flex items-center gap-3 mb-8">
             <div
-              className="p-2 flex flex-col items-center justifu-center rounded-full border-2 border-neutral-900"
+              className="p-2 flex flex-col items-center justifu-center rounded-full border-2 border-neutral-600"
               aria-label="Map plus"
             >
-              <MapPlus size={26} className="text-neutral-900" />
+              <MapPlus size={26} className="text-neutral-600" />
             </div>
             <div>
-              <h2 className="text-xl text-neutral-900 font-semibold text-[var(--primary)] leading-tight">
+              <h2 className="text-xl text-neutral-600 font-semibold leading-tight">
                 Calcule sua melhor rota
               </h2>
               <p className="text-sm text-slate-500 mt-0.5">
@@ -70,7 +80,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                 className="w-9 h-9 rounded-full bg-white border shadow-sm flex items-center justify-center hover:bg-slate-50 active:scale-95 transition cursor-pointer"
                 aria-label="Inverter origem e destino"
               >
-                <ArrowUpDown size={20} className="text-neutral-900" />
+                <ArrowUpDown size={20} className="text-neutral-600" />
               </button>
             </div>
 
@@ -89,9 +99,10 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
             </div>
 
             <button
-              type="submit"
+              type="button"
               id="btn-calcular"
-              className="w-full mt-2 bg-neutral-900 text-neutral-80 rounded-full font-semibold h-12 text-[15px] shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
+              onClick={handleCalculate}
+              className="w-full mt-2 bg-neutral-700 text-neutral-80 rounded-full font-semibold h-12 text-[15px] shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
             >
               Calcular rota
             </button>
@@ -102,6 +113,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
           itinerários e tempo
         </p>
       </div>
+      <LoadingModal isOpen={isCalculating} />
     </section>
   );
 });
