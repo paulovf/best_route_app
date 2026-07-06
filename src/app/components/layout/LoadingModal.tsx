@@ -1,5 +1,5 @@
 // src/components/ui/LoadingModal.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 interface LoadingModalProps {
@@ -9,13 +9,13 @@ interface LoadingModalProps {
 export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -24,10 +24,9 @@ export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-800 backdrop-blur-sm animate-slide-up">
       <div className="w-full max-w-md bg-neutral-800 rounded-t-3xl sm:rounded-3xl p-8">
-        
         <div className="flex flex-col items-center justify-center text-center">
           <div className="relative w-[120px] h-[120px] flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full border-4 border-white/10 border-t-white animate-spin"></div>            
+            <div className="absolute inset-0 rounded-full border-4 border-white/10 border-t-white animate-spin"></div>
             <Image
               src="/images/logo.png"
               alt="Best Route modal loading logo"

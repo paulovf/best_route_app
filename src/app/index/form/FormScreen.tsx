@@ -14,10 +14,10 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
 
   const handleCalculate = async () => {
     setIsCalculating(true);
-    
+
     setTimeout(() => {
       setIsCalculating(false);
-    }, 270000);    
+    }, 270000);
   };
 
   const handleSwap = () => {
