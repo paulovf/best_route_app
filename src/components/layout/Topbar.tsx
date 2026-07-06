@@ -24,21 +24,21 @@ export default function Topbar({ show }: TopbarProps) {
   const renderLinks = (isMobile: boolean) => {
     return navLinks.map((link) => {
       const isActive = activeSection === link.id;
-      
+
       return (
         <Link
           key={link.label}
           href={link.href}
           onClick={() => isMobile && setIsMenuOpen(false)}
           className={`text-sm font-medium transition ${
-            isMobile 
-              ? "px-4 py-3 rounded-xl text-left" 
+            isMobile
+              ? "px-4 py-3 rounded-xl text-left"
               : "px-3.5 py-1.5 rounded-full"
           } ${
             isActive
               ? "bg-neutral-900 text-white"
-              : isMobile 
-                ? "text-slate-600 hover:bg-slate-50" 
+              : isMobile
+                ? "text-slate-600 hover:bg-slate-50"
                 : "text-slate-600 hover:bg-slate-100"
           }`}
         >
@@ -70,9 +70,7 @@ export default function Topbar({ show }: TopbarProps) {
             Best Route
           </span>
         </div>
-        <nav className="hidden md:flex gap-1">
-          {renderLinks(false)}
-        </nav>
+        <nav className="hidden md:flex gap-1">{renderLinks(false)}</nav>
 
         <button
           className="md:hidden p-2 text-neutral-900"
