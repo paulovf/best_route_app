@@ -22,7 +22,7 @@ jobs:
           cache: "npm"
           
       - name: Remove existing SWC cache
-	run: rm -rf /home/runner/.cache/next-swc
+        run: rm -rf /home/runner/.cache/next-swc
 
       - name: Install Dependencies
         run: npm ci
