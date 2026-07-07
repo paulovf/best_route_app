@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { MOCK_API_RESPONSE } from "@/mocks/routeMock";
 import { OptionCard } from "../../components/layout/OptionCard";
 import Topbar from "@/app/components/layout/Topbar";
