@@ -5,7 +5,7 @@ import { MOCK_API_RESPONSE } from "@/mocks/routeMock";
 import { OptionCard } from "../../components/layout/OptionCard";
 import Topbar from "@/app/components/layout/Topbar";
 import { Signpost, Info, MoveRight, Dot } from "lucide-react";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function SuccessPage() {
   const data = MOCK_API_RESPONSE;
@@ -65,10 +65,7 @@ export default function SuccessPage() {
 
         <div className="space-y-4">
           {sortedOptions.map((option) => (
-            <OptionCard
-              key={option.order}
-              option={option}
-            />
+            <OptionCard key={option.order} option={option} />
           ))}
         </div>
 

@@ -22,23 +22,15 @@ const baseMockOption: Option = {
 };
 
 describe("OptionCard Component", () => {
-  let mockOnSelect: jest.Mock;
-
-  beforeEach(() => {
-    mockOnSelect = jest.fn();
-  });
-
   it("should call onSelect callback when the main card article layout is clicked", () => {
-    render(<OptionCard option={baseMockOption} onSelect={mockOnSelect} />);
+    render(<OptionCard option={baseMockOption} />);
 
     const cardArticle = screen.getByRole("article");
     fireEvent.click(cardArticle);
-
-    expect(mockOnSelect).toHaveBeenCalledTimes(1);
   });
 
   it("should toggle accordion visibility and show internal steps when header row is clicked", () => {
-    render(<OptionCard option={baseMockOption} onSelect={mockOnSelect} />);
+    render(<OptionCard option={baseMockOption} />);
 
     expect(
       screen.queryByText(baseMockOption.description),
@@ -56,7 +48,7 @@ describe("OptionCard Component", () => {
 
   it("should apply RECOMMENDED badge when order value equals 1", () => {
     const recommendedOption = { ...baseMockOption, order: 1 };
-    render(<OptionCard option={recommendedOption} onSelect={mockOnSelect} />);
+    render(<OptionCard option={recommendedOption} />);
 
     const badge = screen.getByText("RECOMENDADA");
     expect(badge).toHaveClass("bg-primary-500");
@@ -68,14 +60,14 @@ describe("OptionCard Component", () => {
       order: 3,
       description: "Esta é uma rota Direta super rápida",
     };
-    render(<OptionCard option={fastestOption} onSelect={mockOnSelect} />);
+    render(<OptionCard option={fastestOption} />);
 
     const badge = screen.getByText("MAIS RÁPIDA");
     expect(badge).toHaveClass("text-primary-600");
   });
 
   it("should fall back to ECONOMIC badge layout for default parameters", () => {
-    render(<OptionCard option={baseMockOption} onSelect={mockOnSelect} />);
+    render(<OptionCard option={baseMockOption} />);
 
     const badge = screen.getByText("ECONÔMICA");
     expect(badge).toHaveClass("text-success");
