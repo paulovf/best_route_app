@@ -12,7 +12,11 @@ interface TopbarProps {
 
 export default function Topbar({ show }: TopbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const activeSection = useActiveSection(["home-screen", "form-screen", "result-screen"]);
+  const activeSection = useActiveSection([
+    "home-screen",
+    "form-screen",
+    "result-screen",
+  ]);
 
   const navLinks = [
     { label: "Home", href: "/", id: "home-screen" },

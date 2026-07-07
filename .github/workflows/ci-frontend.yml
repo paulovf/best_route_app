@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          
+
       - name: Remove existing SWC cache
         run: rm -rf /home/runner/.cache/next-swc
 

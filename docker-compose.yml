@@ -18,12 +18,12 @@ services:
       - bestroute-app-network
 
   test:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+    image: mcr.microsoft.com/playwright:v1.45.0-noble
     container_name: best_route_web_test
+    working_dir: /app
     ports:
       - "3001:3001"
+      - "8080:8080"
     volumes:
       - .:/app
       - /app/node_modules
@@ -37,3 +37,6 @@ services:
 
 networks:
   bestroute-app-network:
+
+volumes:
+  playwright-cache:
