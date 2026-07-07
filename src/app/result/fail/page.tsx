@@ -1,13 +1,19 @@
 "use client";
 
 import React from "react";
-import { MOCK_API_ERROR } from "@/mocks/failMock";
+import { useRoute } from "@/context/RouteContext";
 import Link from "next/link";
 import { CircleAlert } from "lucide-react";
 import Topbar from "@/app/components/layout/Topbar";
 
 export default function ErrorPage() {
-  const errorData = MOCK_API_ERROR;
+  const { errorData } = useRoute();
+  const errorDataResult = errorData || {
+    status: 500,
+    error: "Internal Server Error",
+    message: "An unexpected error occurred.",
+    path: ""
+  };
 
   const getFriendlyMessage = (fullMessage?: string) => {
     if (fullMessage?.includes("Unable to generate a valid itinerary")) {
@@ -33,7 +39,7 @@ export default function ErrorPage() {
           </h1>
 
           <p className="mt-3 text-sm text-neutral-600 text-center">
-            {getFriendlyMessage(errorData.message)}
+            {getFriendlyMessage(errorDataResult.message)}
           </p>
 
           <Link

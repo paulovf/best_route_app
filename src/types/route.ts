@@ -33,6 +33,14 @@ export interface Option {
   total_duration_hours: number;
 }
 
+export interface RouteApiRequest {
+  origin_city: string;
+  origin_state: string;
+  destination_city: string;
+  destination_state: string;
+  travel_date: string;
+}
+
 export interface RouteApiResponse {
   id: string;
   origin_city: string;

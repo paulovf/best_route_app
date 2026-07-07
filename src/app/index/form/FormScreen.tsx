@@ -1,39 +1,57 @@
 "use client";
 
 import { forwardRef, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { MapPlus, ArrowUpDown } from "lucide-react";
 import { CityFormField, CityOption } from "@/app/components/ui/CityFormField";
 import { DatePickerField } from "@/app/components/ui/DatePickerField";
 import { LoadingModal } from "@/app/components/layout/LoadingModal";
+import { searchRoute } from "@/services/routeService";
+import { useRoute } from "@/context/RouteContext";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
+  const router = useRouter();
+  const {setRouteData, setErrorData} = useRoute();
   const [origin, setOrigin] = useState<CityOption | null>(null);
   const [destination, setDestination] = useState<CityOption | null>(null);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
-
-  const handleCalculate = async () => {
-    setIsCalculating(true);
-
-    setTimeout(() => {
-      setIsCalculating(false);
-    }, 270000);
-  };
 
   const handleSwap = () => {
     setOrigin(destination);
     setDestination(origin);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const formData = new FormData(e.currentTarget);
-    // const originCity = formData.get("origin_city");
-    // const originState = formData.get("origin_state");
-    // const destinationCity = formData.get("destination_city");
-    // const destinationState = formData.get("destination_state");
-    // const travelDate = formData.get("travel_date");
+    if (!origin || !destination || !travelDate) {
+      alert("Por favor, preencha todos os campos antes de prosseguir.");
+      return;
+    }
+
+    setIsCalculating(true);
+
+    try {
+      const payload = {
+        origin_city: origin.name,
+        origin_state: origin.uf, 
+        destination_city: destination.name,
+        destination_state: destination.uf,
+        travel_date: travelDate.toISOString(),
+      };
+
+      const response = await searchRoute(payload);
+      setRouteData(response);
+      router.push("/result/success");
+
+    } catch (error) {
+      console.error("Route calculation failed:", error);
+      setErrorData(error as any);
+      router.push("/result/fail");
+    } {
+      setIsCalculating(false);
+    }
   };
 
   return (
@@ -99,9 +117,8 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
             </div>
 
             <button
-              type="button"
+              type="submit"
               id="btn-calculate"
-              onClick={handleCalculate}
               className="w-full mt-2 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
             >
               Calcular rota
