@@ -53,7 +53,7 @@ jest.mock("/src/app/components/layout/OptionCard", () => {
   };
 });
 
-describe("SuccessPage Component", () => {
+describe("SuccessPage screen", () => {
   it("should render locations and format the travel date safely into pt-BR standard", () => {
     render(<SuccessPage />);
 

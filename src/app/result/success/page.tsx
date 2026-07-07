@@ -82,3 +82,5 @@ export default function SuccessPage() {
     </main>
   );
 }
+
+SuccessPage.displayName = "SuccessPage";
