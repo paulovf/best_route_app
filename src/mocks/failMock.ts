@@ -1,4 +1,6 @@
-export const MOCK_API_ERROR: any = {
+import { Fail } from "@/types/fail";
+
+export const MOCK_API_ERROR: Fail = {
   timestamp: "2026-07-07T11:46:15.538907395",
   status: 422,
   error: "Unprocessable Entity",

@@ -9,8 +9,8 @@ import Topbar from "@/app/components/layout/Topbar";
 export default function ErrorPage() {
   const errorData = MOCK_API_ERROR;
 
-  const getFriendlyMessage = (fullMessage: string) => {
-    if (fullMessage.includes("Unable to generate a valid itinerary")) {
+  const getFriendlyMessage = (fullMessage?: string) => {
+    if (fullMessage?.includes("Unable to generate a valid itinerary")) {
       return "Não foi possível gerar um itinerário válido com os locais informados. Verifique os nomes das cidades e tente novamente.";
     }
     return "Houve um problema ao processar a sua rota. Tente mais tarde.";
