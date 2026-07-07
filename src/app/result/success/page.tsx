@@ -1,4 +1,3 @@
-// src/app/results/Success.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -6,13 +5,11 @@ import { MOCK_API_RESPONSE } from "@/mocks/routeMock";
 import { OptionCard } from "../../components/layout/OptionCard";
 import Topbar from "@/app/components/layout/Topbar";
 import { Signpost, Info, MoveRight, Dot } from "lucide-react";
+import Link from 'next/link';
 
 export default function SuccessPage() {
   const data = MOCK_API_RESPONSE;
   const sortedOptions = [...data.options].sort((a, b) => a.order - b.order);
-  const [, setSelectedOrder] = useState<number | null>(
-    sortedOptions[0]?.order ?? null,
-  );
 
   const formatDate = (isoString: string) => {
     const dateObj = new Date(isoString);
@@ -21,10 +18,6 @@ export default function SuccessPage() {
       month: "2-digit",
       year: "numeric",
     });
-  };
-
-  const handleNewSearch = () => {
-    console.log("Redirecionar para home/busca");
   };
 
   return (
@@ -75,20 +68,18 @@ export default function SuccessPage() {
             <OptionCard
               key={option.order}
               option={option}
-              onSelect={() => setSelectedOrder(option.order)}
             />
           ))}
         </div>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-3">
-          <button
-            type="button"
+          <Link
+            href="/#form-screen"
             id="btn-recalculate"
-            onClick={handleNewSearch}
-            className="w-full mt-2 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
+            className="flex flex-row items-center justify-center w-full mt-2 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
           >
             Nova consulta
-          </button>
+          </Link>
         </div>
       </div>
     </main>

@@ -7,10 +7,9 @@ import { OptionCardStep } from "./OptionCard/Step";
 
 interface OptionCardProps {
   option: Option;
-  onSelect: () => void;
 }
 
-export const OptionCard = ({ option, onSelect }: OptionCardProps) => {
+export const OptionCard = ({ option }: OptionCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const getBadgeDetails = (order: number, desc: string) => {
@@ -28,7 +27,6 @@ export const OptionCard = ({ option, onSelect }: OptionCardProps) => {
 
   return (
     <article
-      onClick={() => onSelect()}
       className={`rounded-[20px] border-2 bg-white p-5 transition-all duration-200 cursor-pointer ${
         isOpen ? "border-neutral-400 shadow-md" : "border-slate-300"
       }`}

@@ -18,7 +18,7 @@ services:
       - bestroute-app-network
 
   test:
-    image: mcr.microsoft.com/playwright:v1.45.0-noble
+    image: mcr.microsoft.com/playwright:v1.61.1-noble
     container_name: best_route_web_test
     working_dir: /app
     ports:
