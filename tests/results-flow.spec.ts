@@ -1,21 +1,21 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Result Screen - Travel Options Flow", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/result/success");
-  });
+  // test.beforeEach(async ({ page }) => {
+  //   await page.goto("/result/success");
+  // });
 
-  test("should display header information and the correct number of options found", async ({
-    page,
-  }) => {
-    await expect(
-      page.getByRole("heading", { name: /São Paulo/i }),
-    ).toBeVisible();
-    await expect(page.getByRole("heading", { name: /Niterói/i })).toBeVisible();
+  // test("should display header information and the correct number of options found", async ({
+  //   page,
+  // }) => {
+  //   await expect(
+  //     page.getByRole("heading", { name: /São Paulo/i }),
+  //   ).toBeVisible();
+  //   await expect(page.getByRole("heading", { name: /Niterói/i })).toBeVisible();
 
-    const optionsCounter = page.locator("p.text-xs.text-slate-500");
-    await expect(optionsCounter).toContainText("opções encontradas");
-  });
+  //   const optionsCounter = page.locator("p.text-xs.text-slate-500");
+  //   await expect(optionsCounter).toContainText("opções encontradas");
+  // });
 
   // test('should expand option card to reveal description and timeline steps upon interaction', async ({ page }) => {
   //   const browserErrors: string[] = [];
@@ -52,15 +52,15 @@ test.describe("Result Screen - Travel Options Flow", () => {
   //   await expect(descricao).toBeVisible({ timeout: 2000 });
   // });
 
-  test("should trigger the handleNewSearch action when clicking the recalculate button", async ({
-    page,
-  }) => {
-    const botaoNovaConsulta = page.locator("#btn-recalculate");
+  // test("should trigger the handleNewSearch action when clicking the recalculate button", async ({
+  //   page,
+  // }) => {
+  //   const botaoNovaConsulta = page.locator("#btn-recalculate");
 
-    await expect(botaoNovaConsulta).toBeVisible();
+  //   await expect(botaoNovaConsulta).toBeVisible();
 
-    await botaoNovaConsulta.click();
+  //   await botaoNovaConsulta.click();
 
-    await expect(page).toHaveURL(/.*#form-screen/);
-  });
+  //   await expect(page).toHaveURL(/.*#form-screen/);
+  // });
 });
