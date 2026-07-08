@@ -29,9 +29,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased font-sans antialiased bg-neutral-50 text-neutral-800`}
     >
       <body className="min-h-full flex flex-col">
-        <RouteProvider>
-          {children}
-        </RouteProvider>
+        <RouteProvider>{children}</RouteProvider>
       </body>
     </html>
   );

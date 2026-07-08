@@ -15,13 +15,13 @@ export default function SuccessPage() {
     destination_city: "-",
     destination_state: "",
     travel_date: new Date().toISOString(),
-    options: []
+    options: [],
   };
   const sortedOptions = [...data.options].sort((a, b) => a.order - b.order);
 
   const formatDate = (isoString: string) => {
     if (!isoString || isoString === "-") return "-";
-    
+
     const dateObj = new Date(isoString);
     if (isNaN(dateObj.getTime())) return "-";
 

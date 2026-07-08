@@ -12,7 +12,7 @@ export default function ErrorPage() {
     status: 500,
     error: "Internal Server Error",
     message: "An unexpected error occurred.",
-    path: ""
+    path: "",
   };
 
   const getFriendlyMessage = (fullMessage?: string) => {

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { Fail } from "@/types/fail";
+import { RouteApiResponse } from "@/types/route";
 
 interface RouteContextType {
-  routeData: any | null;
+  routeData: RouteApiResponse | null;
   errorData: Fail | null;
-  setRouteData: (data: any) => void;
+  setRouteData: (data: RouteApiResponse) => void;
   setErrorData: (error: Fail) => void;
   clearStorage: () => void;
 }
@@ -14,18 +15,25 @@ interface RouteContextType {
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
 
 export function RouteProvider({ children }: { children: React.ReactNode }) {
-  const [routeData, setRouteDataState] = useState<any | null>(null);
-  const [errorData, setErrorDataState] = useState<Fail | null>(null);
+  const [routeData, setRouteDataState] = useState<RouteApiResponse | null>(
+    () => {
+      if (typeof window !== "undefined") {
+        const savedRoute = sessionStorage.getItem("best_route_data");
+        return savedRoute ? JSON.parse(savedRoute) : null;
+      }
+      return null;
+    },
+  );
 
-  useEffect(() => {
-    const savedRoute = sessionStorage.getItem("best_route_data");
-    const savedError = sessionStorage.getItem("best_route_error");
+  const [errorData, setErrorDataState] = useState<Fail | null>(() => {
+    if (typeof window !== "undefined") {
+      const savedError = sessionStorage.getItem("best_route_error");
+      return savedError ? JSON.parse(savedError) : null;
+    }
+    return null;
+  });
 
-    if (savedRoute) setRouteDataState(JSON.parse(savedRoute));
-    if (savedError) setErrorDataState(JSON.parse(savedError));
-  }, []);
-
-  const setRouteData = (data: any) => {
+  const setRouteData = (data: RouteApiResponse) => {
     setRouteDataState(data);
     setErrorDataState(null);
     sessionStorage.setItem("best_route_data", JSON.stringify(data));
@@ -47,7 +55,9 @@ export function RouteProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <RouteContext.Provider value={{ routeData, errorData, setRouteData, setErrorData, clearStorage }}>
+    <RouteContext.Provider
+      value={{ routeData, errorData, setRouteData, setErrorData, clearStorage }}
+    >
       {children}
     </RouteContext.Provider>
   );

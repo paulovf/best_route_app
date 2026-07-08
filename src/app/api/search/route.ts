@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const path = '/api/v1/routes/search';
+const path = "/api/v1/routes/search";
 
 export async function POST(request: Request) {
   try {
@@ -21,15 +21,15 @@ export async function POST(request: Request) {
 
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json(
-      { 
-        status: 500, 
-        error: "Internal Server Error", 
+      {
+        status: 500,
+        error: "Internal Server Error",
         message: "Failed to communicate with the internal proxy.",
         path: path,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

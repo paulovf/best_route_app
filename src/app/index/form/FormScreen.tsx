@@ -8,10 +8,11 @@ import { DatePickerField } from "@/app/components/ui/DatePickerField";
 import { LoadingModal } from "@/app/components/layout/LoadingModal";
 import { searchRoute } from "@/services/routeService";
 import { useRoute } from "@/context/RouteContext";
+import { Fail } from "@/types/fail";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const router = useRouter();
-  const {setRouteData, setErrorData} = useRoute();
+  const { setRouteData, setErrorData } = useRoute();
   const [origin, setOrigin] = useState<CityOption | null>(null);
   const [destination, setDestination] = useState<CityOption | null>(null);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
@@ -35,7 +36,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
     try {
       const payload = {
         origin_city: origin.name,
-        origin_state: origin.uf, 
+        origin_state: origin.uf,
         destination_city: destination.name,
         destination_state: destination.uf,
         travel_date: travelDate.toISOString(),
@@ -44,12 +45,12 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
       const response = await searchRoute(payload);
       setRouteData(response);
       router.push("/result/success");
-
     } catch (error) {
       console.error("Route calculation failed:", error);
-      setErrorData(error as any);
+      setErrorData(error as Fail);
       router.push("/result/fail");
-    } {
+    }
+    {
       setIsCalculating(false);
     }
   };

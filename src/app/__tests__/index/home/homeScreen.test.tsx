@@ -14,6 +14,25 @@ const mockIBGEResponse = [
   },
 ];
 
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+  }),
+}));
+
+jest.mock("/src/context/RouteContext", () => ({
+  useRoute: () => ({
+    routeData: null,
+    errorData: null,
+    setRouteData: jest.fn(),
+    setErrorData: jest.fn(),
+    clearStorage: jest.fn(),
+  }),
+}));
+
 describe("Home page", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -38,7 +57,7 @@ describe("Home page", () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    const logo = screen.getByAltText("Best Route home logo");
+    const logo = await screen.getByAltText("Best Route home logo");
     expect(logo).toBeInTheDocument();
   });
 
@@ -49,11 +68,11 @@ describe("Home page", () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    const title = screen.getByRole("heading", {
+    const title = await screen.getByRole("heading", {
       name: /Encontre a melhor rota para sua viagem/i,
     });
 
-    const subtitle = screen.getByText(
+    const subtitle = await screen.getByText(
       "Compare caminhos, formas de transporte, preços e tempo de viagem entre cidades de todo o Brasil",
     );
 
@@ -68,7 +87,7 @@ describe("Home page", () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    const button = screen.getByRole("button", {
+    const button = await screen.getByRole("button", {
       name: /Começe aqui/i,
     });
 
@@ -82,15 +101,15 @@ describe("Home page", () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    const githubApi = screen.getByRole("link", {
+    const githubApi = await screen.getByRole("link", {
       name: /GitHub API/i,
     });
 
-    const githubApp = screen.getByRole("link", {
+    const githubApp = await screen.getByRole("link", {
       name: /GitHub App/i,
     });
 
-    const linkedin = screen.getByRole("link", {
+    const linkedin = await screen.getByRole("link", {
       name: /Meu Linkedin/i,
     });
 
