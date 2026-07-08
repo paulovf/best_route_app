@@ -1,4 +1,3 @@
-// src/mocks/routeMock.ts
 import { RouteApiResponse } from "@/types/route";
 
 export const MOCK_API_RESPONSE: RouteApiResponse = {

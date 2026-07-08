@@ -1,18 +1,30 @@
 "use client";
 
 import React from "react";
-import { MOCK_API_RESPONSE } from "@/mocks/routeMock";
+import { useRoute } from "@/context/RouteContext";
 import { OptionCard } from "../../components/layout/OptionCard";
 import Topbar from "@/app/components/layout/Topbar";
 import { Signpost, Info, MoveRight, Dot } from "lucide-react";
 import Link from "next/link";
 
 export default function SuccessPage() {
-  const data = MOCK_API_RESPONSE;
+  const { routeData } = useRoute();
+  const data = routeData || {
+    origin_city: "-",
+    origin_state: "",
+    destination_city: "-",
+    destination_state: "",
+    travel_date: new Date().toISOString(),
+    options: [],
+  };
   const sortedOptions = [...data.options].sort((a, b) => a.order - b.order);
 
   const formatDate = (isoString: string) => {
+    if (!isoString || isoString === "-") return "-";
+
     const dateObj = new Date(isoString);
+    if (isNaN(dateObj.getTime())) return "-";
+
     return dateObj.toLocaleDateString("pt-BR", {
       day: "2-digit",
       month: "2-digit",

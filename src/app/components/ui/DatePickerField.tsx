@@ -7,7 +7,7 @@ import { format, addYears, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import "react-day-picker/dist/style.css";
 
-interface DatePickerFieldProps {
+export interface DatePickerFieldProps {
   value: Date | undefined;
   onChange: (date: Date | undefined) => void;
 }

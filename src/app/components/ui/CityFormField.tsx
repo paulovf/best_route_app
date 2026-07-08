@@ -19,7 +19,7 @@ export interface CityOption {
   displayName: string;
 }
 
-interface CityAutocompleteProps {
+export interface CityAutocompleteProps {
   placeholder: string;
   namePrefix: string;
   value: CityOption | null;

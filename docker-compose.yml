@@ -6,6 +6,8 @@ services:
     container_name: best_route_web
     ports:
       - "3000:3000"
+    env_file:
+      - .env.local
     volumes:
       - .:/app
       - /app/node_modules
@@ -16,6 +18,7 @@ services:
     tty: true
     networks:
       - bestroute-app-network
+      - bestroute-shared-network
 
   test:
     image: mcr.microsoft.com/playwright:v1.61.1-noble
@@ -37,6 +40,8 @@ services:
 
 networks:
   bestroute-app-network:
+  bestroute-shared-network:
+    external: true
 
 volumes:
   playwright-cache:
