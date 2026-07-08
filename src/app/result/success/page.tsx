@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRoute } from "@/context/RouteContext";
+import { useRouter } from "next/navigation";
 import { OptionCard } from "../../components/layout/OptionCard";
 import Topbar from "@/app/components/layout/Topbar";
 import { Signpost, Info, MoveRight, Dot } from "lucide-react";
@@ -9,14 +10,30 @@ import Link from "next/link";
 
 export default function SuccessPage() {
   const { routeData } = useRoute();
-  const data = routeData || {
+  const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    if (!routeData || !routeData.options || routeData.options.length === 0) {
+      router.replace("/#form-screen");
+    }
+  }, [routeData, router]);
+
+  if (!isMounted || !routeData || !routeData.options || routeData.options.length === 0) {
+    return null; 
+  }
+
+  const data = isMounted && routeData ? routeData : {
     origin_city: "-",
     origin_state: "",
     destination_city: "-",
     destination_state: "",
-    travel_date: new Date().toISOString(),
+    travel_date: "",
     options: [],
   };
+
   const sortedOptions = [...data.options].sort((a, b) => a.order - b.order);
 
   const formatDate = (isoString: string) => {
@@ -46,11 +63,11 @@ export default function SuccessPage() {
           <div>
             <div className="flex flex-row justify-center items-center gap-x-1">
               <h1 className="text-lg font-bold text-primary-700 leading-tight">
-                {data.origin_city} ({data.origin_state})
+                {data.origin_city} {data.origin_state ? `(${data.origin_state})` : ""}
               </h1>
               <MoveRight size={16} className="text-primary-700" />
               <h1 className="text-lg font-bold text-primary-700 leading-tight">
-                {data.destination_city} ({data.destination_state})
+                {data.destination_city} {data.destination_state ? `(${data.destination_state})` : ""}
               </h1>
               <Dot size={26} className="text-primary-700" />
               <h1 className="text-lg font-bold text-neutral-700 leading-tight">

@@ -41,7 +41,7 @@ export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
             Estamos calculando sua rota
           </h3>
           <p className="mt-2 text-white/70 text-[15px]">
-            Aguarde alguns instantes...
+            Por favor, aguarde alguns instatntes. Não atualize ou feche a página.
           </p>
         </div>
       </div>
