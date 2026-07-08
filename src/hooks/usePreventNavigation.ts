@@ -6,7 +6,7 @@ export const usePreventNavigation = (isBlocking: boolean) => {
 
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
-      event.returnValue = ""; 
+      event.returnValue = "";
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);

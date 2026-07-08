@@ -21,18 +21,26 @@ export default function SuccessPage() {
     }
   }, [routeData, router]);
 
-  if (!isMounted || !routeData || !routeData.options || routeData.options.length === 0) {
-    return null; 
+  if (
+    !isMounted ||
+    !routeData ||
+    !routeData.options ||
+    routeData.options.length === 0
+  ) {
+    return null;
   }
 
-  const data = isMounted && routeData ? routeData : {
-    origin_city: "-",
-    origin_state: "",
-    destination_city: "-",
-    destination_state: "",
-    travel_date: "",
-    options: [],
-  };
+  const data =
+    isMounted && routeData
+      ? routeData
+      : {
+          origin_city: "-",
+          origin_state: "",
+          destination_city: "-",
+          destination_state: "",
+          travel_date: "",
+          options: [],
+        };
 
   const sortedOptions = [...data.options].sort((a, b) => a.order - b.order);
 
@@ -63,11 +71,13 @@ export default function SuccessPage() {
           <div>
             <div className="flex flex-row justify-center items-center gap-x-1">
               <h1 className="text-lg font-bold text-primary-700 leading-tight">
-                {data.origin_city} {data.origin_state ? `(${data.origin_state})` : ""}
+                {data.origin_city}{" "}
+                {data.origin_state ? `(${data.origin_state})` : ""}
               </h1>
               <MoveRight size={16} className="text-primary-700" />
               <h1 className="text-lg font-bold text-primary-700 leading-tight">
-                {data.destination_city} {data.destination_state ? `(${data.destination_state})` : ""}
+                {data.destination_city}{" "}
+                {data.destination_state ? `(${data.destination_state})` : ""}
               </h1>
               <Dot size={26} className="text-primary-700" />
               <h1 className="text-lg font-bold text-neutral-700 leading-tight">

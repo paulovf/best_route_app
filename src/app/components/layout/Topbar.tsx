@@ -21,14 +21,14 @@ export default function Topbar({ show }: TopbarProps) {
     "result-screen",
   ]);
 
-  const { routeData, errorData } = useRoute(); 
+  const { routeData, errorData } = useRoute();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   let resultHref = "/#form-screen";
-  
+
   if (isMounted) {
     if (routeData && routeData.options && routeData.options.length > 0) {
       resultHref = "/result/success";
