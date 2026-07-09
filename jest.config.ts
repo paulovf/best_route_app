@@ -10,7 +10,7 @@ const config = {
   testPathIgnorePatterns: [
     "<rootDir>/node_modules/",
     "<rootDir>/.next/",
-    "<rootDir>/tests/",
+    "<rootDir>/e2e/",
   ],
 };
 

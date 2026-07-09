@@ -23,10 +23,11 @@ services:
   test:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.test
     container_name: best_route_web_test
+    ipc: host
     ports:
-      - "3001:3000"
+      - "9322:9322"
     env_file:
       - .env.local
     volumes:
@@ -35,9 +36,10 @@ services:
       - /app/.next
     environment:
       - NODE_ENV=test
+      - PLAYWRIGHT_BASE_URL=http://web:3000
     stdin_open: true
     tty: true
-    command: npm run test
+    command: npx playwright test
     networks:
       - bestroute-app-network
 

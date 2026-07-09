@@ -1,34 +1,49 @@
-# name: Playwright Tests
-# on:
-#   push:
-#     branches: [main, master, qa]
-#   pull_request:
-#     branches: [main, master, qa]
+name: Playwright Tests
 
-# jobs:
-#   e2e-tests:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Code checkout
-#         uses: actions/checkout@v4
+on:
+  push:
+    branches: [main, master, qa]
+  pull_request:
+    branches: [main, master, qa]
 
-#       - name: Create .env.local for CI
-#         run: |
-#           touch .env.local
-#           echo "API_URL=https://api.backend.mock" >> .env.local
-#           echo "X_API_KEY=ci-secret-key" >> .env.local
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
 
-#       - name: Up Web application (Docker)
-#         run: docker compose up -d web
+      - name: Create .env.local for CI
+        run: |
+          touch .env.local
+          echo "API_URL=https://api.backend.mock" >> .env.local
+          echo "X_API_KEY=ci-secret-key" >> .env.local
 
-#       - name: Run Playwright tests
-#         run: |
-#           docker compose run test sh -c "npm install && npx playwright test --config playwright.config.ts"
+      - name: Build and start Docker containers
+        run: docker compose build web test
 
-#       - name: Save Playwright report
-#         if: failure()
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: playwright-report
-#           path: playwright-report/
-#           retention-days: 30
+      - name: Up Web application
+        run: docker compose up -d web
+
+      - name: Wait for web service to be ready
+        run: |
+          echo "Esperando o serviço web iniciar..."
+          for i in {1..30}; do
+            if curl -s http://localhost:3000 > /dev/null; then
+              echo "Web service está online!"
+              break
+            fi
+            echo "Aguardando... $i"
+            sleep 3
+          done
+
+      - name: Run Playwright tests
+        run: docker compose run --rm test npx playwright test
+
+      - name: Save Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

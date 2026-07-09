@@ -88,7 +88,7 @@ describe("Home page", () => {
     });
 
     const button = await screen.getByRole("button", {
-      name: /Começe aqui/i,
+      name: /Comece aqui/i,
     });
 
     expect(button).toBeInTheDocument();
