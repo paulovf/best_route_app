@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import Link from "next/link";
 import { useRoute } from "@/context/RouteContext";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 interface TopbarProps {
   show: boolean;
@@ -13,7 +14,7 @@ interface TopbarProps {
 
 export default function Topbar({ show }: TopbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
 
   const activeSection = useActiveSection([
     "home-screen",
@@ -22,10 +23,6 @@ export default function Topbar({ show }: TopbarProps) {
   ]);
 
   const { routeData, errorData } = useRoute();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   let resultHref = "/#form-screen";
 

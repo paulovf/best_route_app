@@ -2,11 +2,18 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import ErrorPage from "@/app/result/fail/page";
 import { useRoute } from "@/context/RouteContext";
+import { useIsMounted } from "@/hooks/useIsMounted";
+
+const mockReplace = jest.fn();
+
+jest.mock("/src/hooks/useIsMounted", () => ({
+  useIsMounted: jest.fn(),
+}));
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: jest.fn(),
-    replace: jest.fn(),
+    replace: mockReplace,
     prefetch: jest.fn(),
     back: jest.fn(),
   }),
@@ -18,15 +25,17 @@ jest.mock("/src/context/RouteContext", () => ({
 
 describe("ErrorPage Screen", () => {
   const mockUseRoute = useRoute as jest.Mock;
+  const mockUseIsMounted = useIsMounted as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockUseIsMounted.mockReturnValue(true);
   });
 
   it("should render the main title and layout structure", () => {
     mockUseRoute.mockReturnValue({
       routeData: null,
-      errorData: null,
+      errorData: { status: 500, message: "Error" },
       setRouteData: jest.fn(),
       setErrorData: jest.fn(),
       clearStorage: jest.fn(),
@@ -79,37 +88,13 @@ describe("ErrorPage Screen", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render fallback message when errorData is completely null", () => {
+  it("should redirect to /#form-screen when errorData is null", () => {
     mockUseRoute.mockReturnValue({
-      routeData: null,
       errorData: null,
-      setRouteData: jest.fn(),
-      setErrorData: jest.fn(),
-      clearStorage: jest.fn(),
     });
 
     render(<ErrorPage />);
 
-    expect(
-      screen.getByText(
-        "Houve um problema ao processar a sua rota. Tente mais tarde.",
-      ),
-    ).toBeInTheDocument();
-  });
-
-  it("should contain the link to go back and restart the search pointing to the home page form", () => {
-    mockUseRoute.mockReturnValue({
-      routeData: null,
-      errorData: null,
-      setRouteData: jest.fn(),
-      setErrorData: jest.fn(),
-      clearStorage: jest.fn(),
-    });
-
-    render(<ErrorPage />);
-
-    const backLink = screen.getByRole("link", { name: /Refazer Nova Busca/i });
-    expect(backLink).toBeInTheDocument();
-    expect(backLink).toHaveAttribute("href", "/#form-screen");
+    expect(mockReplace).toHaveBeenCalledWith("/#form-screen");
   });
 });

@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRoute } from "@/context/RouteContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CircleAlert } from "lucide-react";
 import Topbar from "@/app/components/layout/Topbar";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function ErrorPage() {
   const { errorData } = useRoute();
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const errorDataResult = errorData || {
     status: 500,
     error: "Internal Server Error",
@@ -19,8 +20,6 @@ export default function ErrorPage() {
   };
 
   useEffect(() => {
-    setIsMounted(true);
-
     if (!errorData) {
       router.replace("/#form-screen");
     }

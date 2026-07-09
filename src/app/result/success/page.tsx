@@ -1,21 +1,20 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRoute } from "@/context/RouteContext";
 import { useRouter } from "next/navigation";
 import { OptionCard } from "../../components/layout/OptionCard";
 import Topbar from "@/app/components/layout/Topbar";
 import { Signpost, Info, MoveRight, Dot } from "lucide-react";
 import Link from "next/link";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function SuccessPage() {
   const { routeData } = useRoute();
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
-    setIsMounted(true);
-
     if (!routeData || !routeData.options || routeData.options.length === 0) {
       router.replace("/#form-screen");
     }
