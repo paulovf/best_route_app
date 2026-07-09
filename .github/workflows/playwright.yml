@@ -19,6 +19,9 @@ jobs:
           echo "API_URL=https://api.backend.mock" >> .env.local
           echo "X_API_KEY=ci-secret-key" >> .env.local
 
+      - name: Create Docker Network
+        run: docker network create bestroute-shared-network
+
       - name: Build and start Docker containers
         run: docker compose build web test
 
