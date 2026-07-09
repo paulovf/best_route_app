@@ -1,4 +1,3 @@
-// src/hooks/__tests__/usePreventNavigation.test.ts
 import { renderHook } from "@testing-library/react";
 import { usePreventNavigation } from "../usePreventNavigation";
 
