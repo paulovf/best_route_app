@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
 import { useActiveSection } from "../useActiveSection";
 
-describe("useActiveSection Hook", () => {
+describe("useActiveSection hook", () => {
   const mockObserve = jest.fn();
   const mockDisconnect = jest.fn();
   let intersectionCallback: (

@@ -1,19 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRoute } from "@/context/RouteContext";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CircleAlert } from "lucide-react";
 import Topbar from "@/app/components/layout/Topbar";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function ErrorPage() {
   const { errorData } = useRoute();
+  const router = useRouter();
+  const isMounted = useIsMounted();
   const errorDataResult = errorData || {
     status: 500,
     error: "Internal Server Error",
     message: "An unexpected error occurred.",
     path: "",
   };
+
+  useEffect(() => {
+    if (!errorData) {
+      router.replace("/#form-screen");
+    }
+  }, [errorData, router]);
+
+  if (!isMounted || !errorData) {
+    return null;
+  }
 
   const getFriendlyMessage = (fullMessage?: string) => {
     if (fullMessage?.includes("Unable to generate a valid itinerary")) {

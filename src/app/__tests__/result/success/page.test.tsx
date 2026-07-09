@@ -3,11 +3,18 @@ import { render, screen } from "@testing-library/react";
 import SuccessPage from "@/app/result/success/page";
 import { useRoute } from "@/context/RouteContext";
 import { Option } from "@/types/route";
+import { useIsMounted } from "@/hooks/useIsMounted";
+
+const mockReplace = jest.fn();
+
+jest.mock("/src/hooks/useIsMounted", () => ({
+  useIsMounted: jest.fn(),
+}));
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: jest.fn(),
-    replace: jest.fn(),
+    replace: mockReplace,
     prefetch: jest.fn(),
     back: jest.fn(),
   }),
@@ -67,9 +74,11 @@ const mockMultipleOptionsResponse = {
 
 describe("SuccessPage screen", () => {
   const mockUseRoute = useRoute as jest.Mock;
+  const mockUseIsMounted = useIsMounted as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockUseIsMounted.mockReturnValue(true);
   });
 
   it("should render locations and format the travel date safely into pt-BR standard", () => {
@@ -139,19 +148,6 @@ describe("SuccessPage screen", () => {
     expect(screen.getByText("1 opção encontrada")).toBeInTheDocument();
   });
 
-  it("should fallback gracefully when routeData is completely null", () => {
-    mockUseRoute.mockReturnValue({
-      routeData: null,
-      errorData: null,
-    });
-
-    render(<SuccessPage />);
-
-    const dashPlaceholders = screen.getAllByText(/- \(\)/);
-    expect(dashPlaceholders.length).toBe(2);
-    expect(screen.getByText("0 opção encontrada")).toBeInTheDocument();
-  });
-
   it("should contain a operational link pointing back to the home page form anchor", () => {
     mockUseRoute.mockReturnValue({
       routeData: mockMultipleOptionsResponse,
@@ -163,5 +159,16 @@ describe("SuccessPage screen", () => {
     const backLink = screen.getByRole("link", { name: /Nova consulta/i });
     expect(backLink).toBeInTheDocument();
     expect(backLink).toHaveAttribute("href", "/#form-screen");
+  });
+
+  it("should redirect to /#form-screen when routeData is null", () => {
+    mockUseRoute.mockReturnValue({
+      routeData: null,
+      errorData: null,
+    });
+
+    render(<SuccessPage />);
+
+    expect(mockReplace).toHaveBeenCalledWith("/#form-screen");
   });
 });

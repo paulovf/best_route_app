@@ -17,7 +17,9 @@ describe("LoadingModal Component", () => {
     render(<LoadingModal isOpen={true} />);
 
     const title = screen.getByText("Estamos calculando sua rota");
-    const subtitle = screen.getByText("Aguarde alguns instantes...");
+    const subtitle = screen.getByText(
+      "Por favor, aguarde alguns instatntes. Não atualize ou feche a página.",
+    );
     const logo = screen.getByAltText("Best Route modal loading logo");
 
     expect(title).toBeInTheDocument();

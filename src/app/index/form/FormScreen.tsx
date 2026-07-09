@@ -9,6 +9,7 @@ import { LoadingModal } from "@/app/components/layout/LoadingModal";
 import { searchRoute } from "@/services/routeService";
 import { useRoute } from "@/context/RouteContext";
 import { Fail } from "@/types/fail";
+import { usePreventNavigation } from "@/hooks/usePreventNavigation";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const router = useRouter();
@@ -17,6 +18,8 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const [destination, setDestination] = useState<CityOption | null>(null);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
+
+  usePreventNavigation(isCalculating);
 
   const handleSwap = () => {
     setOrigin(destination);
@@ -49,8 +52,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
       console.error("Route calculation failed:", error);
       setErrorData(error as Fail);
       router.push("/result/fail");
-    }
-    {
+    } finally {
       setIsCalculating(false);
     }
   };
