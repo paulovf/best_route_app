@@ -3,8 +3,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
 RUN npm ci
-RUN npx playwright install --with-deps
 
 FROM node:20-alpine AS builder
 WORKDIR /app
