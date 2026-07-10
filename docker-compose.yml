@@ -39,7 +39,7 @@ services:
       - PLAYWRIGHT_BASE_URL=http://web:3000
     stdin_open: true
     tty: true
-    command: npx playwright test
+    command: npm run test
     networks:
       - bestroute-app-network
 
