@@ -3,7 +3,8 @@
 import { forwardRef, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MapPlus, ArrowUpDown } from "lucide-react";
-import { CityFormField, CityOption } from "@/app/components/ui/CityFormField";
+import { CityFormField } from "@/app/components/ui/CityFormField";
+import { CityOption } from "@/types/ibge";
 import { DatePickerField } from "@/app/components/ui/DatePickerField";
 import { LoadingModal } from "@/app/components/layout/LoadingModal";
 import { searchRoute } from "@/services/routeService";

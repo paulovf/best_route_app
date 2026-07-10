@@ -21,20 +21,25 @@ services:
       - bestroute-shared-network
 
   test:
-    image: mcr.microsoft.com/playwright:v1.61.1-noble
+    build:
+      context: .
+      dockerfile: Dockerfile.test
     container_name: best_route_web_test
-    working_dir: /app
+    ipc: host
     ports:
-      - "3001:3001"
-      - "8080:8080"
+      - "9322:9322"
+    env_file:
+      - .env.local
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=test
+      - PLAYWRIGHT_BASE_URL=http://web:3000
     stdin_open: true
     tty: true
+    command: npm run test
     networks:
       - bestroute-app-network
 
@@ -42,6 +47,3 @@ networks:
   bestroute-app-network:
   bestroute-shared-network:
     external: true
-
-volumes:
-  playwright-cache:
