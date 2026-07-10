@@ -9,10 +9,7 @@ import { FormScreen } from "@/app/index/form/FormScreen";
 import { useRouter } from "next/navigation";
 import { useRoute } from "@/context/RouteContext";
 import { searchRoute } from "@/services/routeService";
-import {
-  CityAutocompleteProps,
-  CityOption,
-} from "@/app/components/ui/CityFormField";
+import { CityAutocompleteProps, CityOption } from "@/types/ibge";
 import { DatePickerFieldProps } from "@/app/components/ui/DatePickerField";
 
 const mockIBGEResponse = [
