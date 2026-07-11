@@ -1,4 +1,4 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, within } from "@testing-library/react";
 import Home from "@/app/page";
 
 const mockIBGEResponse = [
@@ -95,21 +95,25 @@ describe("Home page", () => {
   });
 
   it("Render buttons links", async () => {
-    render(<Home />);
+    const { container } = render(<Home />);
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    const githubApi = await screen.getByRole("link", {
+    const buttonGroup = container.querySelector("#home-group-buttons");
+
+    expect(buttonGroup).toBeInTheDocument();
+
+    const githubApi = within(buttonGroup as HTMLElement).getByRole("link", {
       name: /GitHub API/i,
     });
 
-    const githubApp = await screen.getByRole("link", {
+    const githubApp = within(buttonGroup as HTMLElement).getByRole("link", {
       name: /GitHub App/i,
     });
 
-    const linkedin = await screen.getByRole("link", {
+    const linkedin = within(buttonGroup as HTMLElement).getByRole("link", {
       name: /Meu Linkedin/i,
     });
 

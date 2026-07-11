@@ -28,7 +28,7 @@ export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
           <div className="relative w-[120px] h-[120px] flex items-center justify-center">
             <div className="absolute inset-0 rounded-full border-4 border-white/10 border-t-white animate-spin"></div>
             <Image
-              src="/images/logo.png"
+              src="/images/logo_v2.png"
               alt="Best Route modal loading logo"
               width={80}
               height={80}

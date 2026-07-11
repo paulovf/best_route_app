@@ -35,9 +35,31 @@ export default function Topbar({ show }: TopbarProps) {
   }
 
   const navLinks = [
-    { label: "Home", href: "/", id: "home-screen" },
-    { label: "Formulário", href: "/#form-screen", id: "form-screen" },
-    { label: "Resultados", href: resultHref, id: "result-screen" },
+    { label: "Home", href: "/", id: "home-screen", target: "_self" },
+    {
+      label: "Calcular rota",
+      href: "/#form-screen",
+      id: "form-screen",
+      target: "_self",
+    },
+    {
+      label: "Resultados",
+      href: resultHref,
+      id: "result-screen",
+      target: "_self",
+    },
+    {
+      label: "GitHub Api",
+      href: "https://github.com/paulovf/best_route_api",
+      id: "",
+      target: "_blank",
+    },
+    {
+      label: "GitHub App",
+      href: "https://github.com/paulovf/best_route_app",
+      id: "",
+      target: "_blank",
+    },
   ];
 
   const renderLinks = (isMobile: boolean) => {
@@ -49,6 +71,7 @@ export default function Topbar({ show }: TopbarProps) {
           key={link.label}
           href={link.href}
           onClick={() => isMobile && setIsMenuOpen(false)}
+          target={link.target}
           className={`text-sm font-medium transition ${
             isMobile
               ? "px-4 py-3 rounded-xl text-left"
@@ -78,7 +101,7 @@ export default function Topbar({ show }: TopbarProps) {
       <div className="w-full mx-auto px-10 h-14 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
-            src="/images/logo.png"
+            src="/images/logo_v2_dark.png"
             alt="Best Route topbar logo"
             width={28}
             height={28}

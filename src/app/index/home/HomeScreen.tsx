@@ -59,7 +59,7 @@ export default function HomeScreen() {
 
         <header className="relative z-10 px-6 pt-8 md:px-10 flex items-center gap-3">
           <Image
-            src="/images/logo.png"
+            src="/images/logo_v2.png"
             alt="Best Route home logo"
             width={48}
             height={48}
@@ -87,7 +87,10 @@ export default function HomeScreen() {
           </button>
         </div>
 
-        <footer className="relative z-10 pb-10 flex justify-center gap-5">
+        <div
+          id="home-group-buttons"
+          className="relative z-10 pb-10 flex justify-center gap-5"
+        >
           <a
             href="https://github.com/paulovf/best_route_api"
             target="_blank"
@@ -127,7 +130,7 @@ export default function HomeScreen() {
               <span className="text-sm text-neutral-50/80">Meu Linkedin</span>
             </div>
           </a>
-        </footer>
+        </div>
       </section>
 
       <FormScreen ref={formSectionRef} />
