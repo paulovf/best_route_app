@@ -59,7 +59,7 @@ export default function HomeScreen() {
 
         <header className="relative z-10 px-6 pt-8 md:px-10 flex items-center gap-3">
           <Image
-            src="/images/logo.png"
+            src="/images/logo_v2.png"
             alt="Best Route home logo"
             width={48}
             height={48}
