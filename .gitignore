@@ -42,7 +42,6 @@ next-env.d.ts
 
 .tool-versions
 
-# Playwright
 node_modules/
 /test-results/
 /playwright-report/
