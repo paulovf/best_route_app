@@ -1,4 +1,3 @@
-// src/utils/routeFormatters.tsx
 import React from "react";
 import {
   Bus,
