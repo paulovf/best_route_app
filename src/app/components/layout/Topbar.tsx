@@ -36,10 +36,30 @@ export default function Topbar({ show }: TopbarProps) {
 
   const navLinks = [
     { label: "Home", href: "/", id: "home-screen", target: "_self" },
-    { label: "Calcular rota", href: "/#form-screen", id: "form-screen", target: "_self" },
-    { label: "Resultados", href: resultHref, id: "result-screen", target: "_self" },
-    { label: "GitHub Api", href: "https://github.com/paulovf/best_route_api", id: "", target: "_blank" },
-    { label: "GitHub App", href: "https://github.com/paulovf/best_route_app", id: "", target: "_blank" },
+    {
+      label: "Calcular rota",
+      href: "/#form-screen",
+      id: "form-screen",
+      target: "_self",
+    },
+    {
+      label: "Resultados",
+      href: resultHref,
+      id: "result-screen",
+      target: "_self",
+    },
+    {
+      label: "GitHub Api",
+      href: "https://github.com/paulovf/best_route_api",
+      id: "",
+      target: "_blank",
+    },
+    {
+      label: "GitHub App",
+      href: "https://github.com/paulovf/best_route_app",
+      id: "",
+      target: "_blank",
+    },
   ];
 
   const renderLinks = (isMobile: boolean) => {
