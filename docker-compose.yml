@@ -6,6 +6,8 @@ services:
     container_name: best_route_web
     ports:
       - "3000:3000"
+    env_file:
+      - .env.local
     volumes:
       - .:/app
       - /app/node_modules
@@ -16,24 +18,32 @@ services:
     tty: true
     networks:
       - bestroute-app-network
+      - bestroute-shared-network
 
   test:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.test
     container_name: best_route_web_test
+    ipc: host
     ports:
-      - "3001:3001"
+      - "9322:9322"
+    env_file:
+      - .env.local
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=test
+      - PLAYWRIGHT_BASE_URL=http://web:3000
     stdin_open: true
     tty: true
+    command: npm run test
     networks:
       - bestroute-app-network
 
 networks:
   bestroute-app-network:
+  bestroute-shared-network:
+    external: true
