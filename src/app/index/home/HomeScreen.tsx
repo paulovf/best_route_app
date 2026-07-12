@@ -12,6 +12,10 @@ export default function HomeScreen() {
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    if (typeof window !== "undefined") {
+      window.history.pushState(null, "", "#form-screen");
+    }
   };
 
   useEffect(() => {

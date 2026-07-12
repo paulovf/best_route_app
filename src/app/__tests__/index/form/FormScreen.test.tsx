@@ -167,8 +167,14 @@ describe("Form page", () => {
     const button = await screen.getByRole("button", {
       name: /Calcular rota/i,
     });
-    const infoLabel = await screen.getByText(
-      "Usamos dados públicos e consultas em IA para estimar preços, itinerários e tempo",
+    const infoLabel1 = await screen.getByText(
+      "*Usamos dados públicos e consultas em IA para estimar preços, itinerários e tempo.",
+    );
+    const infoLabel2 = await screen.getByText(
+      "*A IA pode sugerir trechos de rotas que não existem devido a mudanças recentes.",
+    );
+    const infoLabel3 = await screen.getByText(
+      "*Utilizamos sua geolocalização apenas para sugerir a cidade de partida atual.",
     );
 
     expect(title).toBeInTheDocument();
@@ -177,7 +183,9 @@ describe("Form page", () => {
     expect(destinationLabel).toBeInTheDocument();
     expect(swap).toBeInTheDocument();
     expect(button).toBeInTheDocument();
-    expect(infoLabel).toBeInTheDocument();
+    expect(infoLabel1).toBeInTheDocument();
+    expect(infoLabel2).toBeInTheDocument();
+    expect(infoLabel3).toBeInTheDocument();
   });
 
   it("when click swap button, invert cities", async () => {

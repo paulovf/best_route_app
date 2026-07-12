@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, FormEvent, useState } from "react";
+import { forwardRef, FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MapPlus, ArrowUpDown } from "lucide-react";
 import { CityFormField } from "@/app/components/ui/CityFormField";
@@ -11,16 +11,28 @@ import { searchRoute } from "@/services/routeService";
 import { useRoute } from "@/context/RouteContext";
 import { Fail } from "@/types/fail";
 import { usePreventNavigation } from "@/hooks/usePreventNavigation";
+import { useGeolocation } from "@/hooks/useGeolocation";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const router = useRouter();
-  const { setRouteData, setErrorData } = useRoute();
+  const { routeData, setRouteData, errorData, setErrorData } = useRoute();
   const [origin, setOrigin] = useState<CityOption | null>(null);
   const [destination, setDestination] = useState<CityOption | null>(null);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
+  const { location, loading: isGeolocating } = useGeolocation();
 
   usePreventNavigation(isCalculating);
+
+  useEffect(() => {
+    if (location) {
+      setOrigin({
+        name: location.city,
+        uf: location.uf,
+        displayName: `${location.city} - ${location.uf}`,
+      });
+    }
+  }, [location]);
 
   const handleSwap = () => {
     setOrigin(destination);
@@ -64,11 +76,11 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
       ref={ref}
       className="screen h-screen bg-neutral-50 flex items-center justify-center px-4 py-12"
     >
-      <div className="w-full max-w-lg">
-        <div className="bg-white rounded-[28px] shadow-sm border p-8 md:p-10">
+      <div className="w-full flex flex-col gap-y-6 items-center">
+        <div className="w-full max-w-lg bg-white rounded-[28px] shadow-sm border p-8 md:p-10">
           <header className="flex items-center gap-3 mb-8">
             <div
-              className="p-2 flex flex-col items-center justifu-center rounded-full border-2 border-neutral-600"
+              className="p-2 flex flex-col items-center justify-center rounded-full border-2 border-neutral-600"
               aria-label="Map plus"
             >
               <MapPlus size={26} className="text-neutral-600" />
@@ -86,7 +98,11 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
               <CityFormField
-                placeholder="Onde você está?"
+                placeholder={
+                  isGeolocating && routeData == null && errorData == null
+                    ? "Buscando sua localização..."
+                    : "Onde você está?"
+                }
                 namePrefix="origin"
                 key={origin?.name || "empty"}
                 value={origin}
@@ -129,10 +145,20 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
             </button>
           </form>
         </div>
-        <p className="text-center text-xs text-slate-500 mt-6">
-          Usamos dados públicos e consultas em IA para estimar preços,
-          itinerários e tempo
-        </p>
+        <div className="flex flex-col items-start gap-y-1">
+          <p className="text-xs text-slate-500">
+            *Usamos dados públicos e consultas em IA para estimar preços,
+            itinerários e tempo.
+          </p>
+          <p className="text-xs text-slate-500">
+            *A IA pode sugerir trechos de rotas que não existem devido a
+            mudanças recentes.
+          </p>
+          <p className="text-xs text-slate-500 leading-tight">
+            *Utilizamos sua geolocalização apenas para sugerir a cidade de
+            partida atual.
+          </p>
+        </div>
       </div>
       <LoadingModal isOpen={isCalculating} />
     </section>

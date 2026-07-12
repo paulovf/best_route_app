@@ -16,7 +16,7 @@ export async function getCites() {
 
     return formattedCities;
   } catch (error) {
-    console.error("Error during serach city on IBGE api:", error);
+    console.error("Error during search city on IBGE api:", error);
     return [];
   }
 }

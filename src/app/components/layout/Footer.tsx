@@ -88,6 +88,14 @@ export function Footer() {
                   GitHub App
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/privacy_policy"
+                  className="hover:text-white transition-colors"
+                >
+                  Política de privacidade
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

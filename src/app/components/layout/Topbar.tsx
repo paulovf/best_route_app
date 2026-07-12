@@ -20,6 +20,7 @@ export default function Topbar({ show }: TopbarProps) {
     "home-screen",
     "form-screen",
     "result-screen",
+    "privacy-policy-screen",
   ]);
 
   const { routeData, errorData } = useRoute();
@@ -49,16 +50,10 @@ export default function Topbar({ show }: TopbarProps) {
       target: "_self",
     },
     {
-      label: "GitHub Api",
-      href: "https://github.com/paulovf/best_route_api",
-      id: "",
-      target: "_blank",
-    },
-    {
-      label: "GitHub App",
-      href: "https://github.com/paulovf/best_route_app",
-      id: "",
-      target: "_blank",
+      label: "Política de privacidade",
+      href: "/privacy_policy",
+      id: "privacy-policy-screen",
+      target: "_self",
     },
   ];
 

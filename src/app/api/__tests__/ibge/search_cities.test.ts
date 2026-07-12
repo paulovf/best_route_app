@@ -1,8 +1,8 @@
-import { getCites } from "../../ibge/serach_cities";
+import { getCites } from "../../ibge/search_cities";
 
 global.fetch = jest.fn();
 
-describe("getCites", () => {
+describe("getCites Service", () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
