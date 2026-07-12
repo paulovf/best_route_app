@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
-import { getCites } from "@/app/api/ibge/search_cities";
-import { CityOption, CityAutocompleteProps } from "@/types/ibge";
+import { useCity } from "@/context/CityContext";
+import { CityAutocompleteProps } from "@/types/ibge";
+import { CityOption } from "@/types/ibge";
 
 export function CityFormField({
   placeholder,
@@ -11,27 +12,10 @@ export function CityFormField({
   value,
   onChange,
 }: CityAutocompleteProps) {
-  const [cities, setCities] = useState<CityOption[]>([]);
+  const { cities, isLoadingCities } = useCity();
   const [query, setQuery] = useState(value ? value.displayName : "");
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      setIsLoading(true);
-      try {
-        const validCities = await getCites();
-        setCities(validCities);
-      } catch (error) {
-        console.error("Failed to fetch cities in component:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCities();
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -46,19 +30,7 @@ export function CityFormField({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredCities =
-    query === ""
-      ? []
-      : cities
-          .filter((city) => {
-            const normalize = (str: string) =>
-              str
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase();
-            return normalize(city.displayName).includes(normalize(query));
-          })
-          .slice(0, 10);
+  const filteredCities = filterCities(query, cities);
 
   return (
     <div className="relative" ref={wrapperRef}>
@@ -98,7 +70,7 @@ export function CityFormField({
 
       {isOpen && query.length > 1 && (
         <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
-          {isLoading ? (
+          {isLoadingCities ? (
             <li className="p-3 text-neutral-900 text-sm text-center animate-pulse">
               Carregando cidades...
             </li>
@@ -126,4 +98,21 @@ export function CityFormField({
       )}
     </div>
   );
+}
+
+function filterCities(query: string, cities: CityOption[]) {
+  if (query === "") {
+    return [];
+  } else {
+    return cities
+      .filter((city) => {
+        const normalize = (str: string) =>
+          str
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+        return normalize(city.displayName).includes(normalize(query));
+      })
+      .slice(0, 10);
+  }
 }

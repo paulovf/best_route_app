@@ -1,16 +1,21 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CityFormField } from "@/app/components/ui/CityFormField";
+import { useCity } from "@/context/CityContext";
 
-const mockIBGEResponse = [
+jest.mock("/src/context/CityContext", () => ({
+  useCity: jest.fn(),
+}));
+
+const mockContextCities = [
   {
-    id: 1,
-    nome: "Curitiba",
-    microrregiao: { mesorregiao: { UF: { sigla: "PR" } } },
+    name: "Curitiba",
+    uf: "PR",
+    displayName: "Curitiba - PR",
   },
   {
-    id: 2,
-    nome: "Curitibanos",
-    microrregiao: { mesorregiao: { UF: { sigla: "SC" } } },
+    name: "Curitibanos",
+    uf: "SC",
+    displayName: "Curitibanos - SC",
   },
 ];
 
@@ -20,11 +25,10 @@ describe("CityFormField component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockIBGEResponse),
-      }),
-    ) as jest.Mock;
+    (useCity as jest.Mock).mockReturnValue({
+      cities: mockContextCities,
+      isLoadingCities: false,
+    });
   });
 
   it("when user input any text search and display cities suggestions", async () => {
