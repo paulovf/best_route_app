@@ -1,4 +1,4 @@
-import { POST } from "../../search/route";
+import { POST } from "../../../api/search/route";
 
 jest.mock("next/server", () => ({
   NextResponse: {

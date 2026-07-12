@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
-import { getCites } from "@/app/api/ibge/serach_cities";
+import { getCites } from "@/app/api/ibge/search_cities";
 import { CityOption, CityAutocompleteProps } from "@/types/ibge";
 
 export function CityFormField({
