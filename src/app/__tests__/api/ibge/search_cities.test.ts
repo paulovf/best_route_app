@@ -1,4 +1,4 @@
-import { getCites } from "../../ibge/search_cities";
+import { getCites } from "../../../api/ibge/search_cities";
 
 global.fetch = jest.fn();
 

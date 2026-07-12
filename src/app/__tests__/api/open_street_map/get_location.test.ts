@@ -1,4 +1,4 @@
-import { getByCoords } from "../../open_street_map/get_location";
+import { getByCoords } from "../../../api/open_street_map/get_location";
 import { mockSuccessResponse } from "@/mocks/openStreetMapMock";
 
 global.fetch = jest.fn();
