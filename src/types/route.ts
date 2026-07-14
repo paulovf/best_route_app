@@ -8,6 +8,9 @@ export type LocationType =
   | "street"
   | "home";
 
+export type HighlightType =
+  "recommended" | "cheapest" | "fastest" | "most_convenient";
+
 export interface Step {
   transport_type: TransportType;
   kilometers: number;
@@ -31,6 +34,7 @@ export interface Option {
   order: number;
   description: string;
   total_duration_hours: number;
+  highlight: HighlightType;
 }
 
 export interface RouteApiRequest {

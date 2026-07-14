@@ -4,26 +4,29 @@ import { ChevronDown, Dot } from "lucide-react";
 import { Option } from "@/types/route";
 import { formatDuration, formatPrice } from "@/utils/routeFormatters";
 import { OptionCardStep } from "./OptionCard/Step";
+import { HighlightType } from "@/types/route";
 
 interface OptionCardProps {
   option: Option;
 }
 
+const highlights: Record<HighlightType, string> = {
+  recommended: "RECOMENDADA",
+  cheapest: "ECONÔMICA",
+  fastest: "MAIS RÁPIDA",
+  most_convenient: "MAIS PRÁTICA",
+};
+
+const badgeBorderColor: Record<HighlightType, string> = {
+  recommended: "bg-primary-500 text-white",
+  fastest: "border border-primary-500 text-primary-600",
+  cheapest: "border border-success text-success",
+  most_convenient: "border border-success text-success",
+};
+
 export const OptionCard = ({ option }: OptionCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const getBadgeDetails = (order: number, desc: string) => {
-    if (order === 1)
-      return { label: "RECOMENDADA", css: "bg-primary-500 text-white" };
-    if (desc.toLowerCase().includes("direta") || order === 2)
-      return {
-        label: "MAIS RÁPIDA",
-        css: "border border-primary-500 text-primary-600",
-      };
-    return { label: "ECONÔMICA", css: "border border-success text-success" };
-  };
-
-  const badge = getBadgeDetails(option.order, option.description);
+  const badge = getBadgeDetails(option.highlight);
 
   return (
     <article
@@ -79,4 +82,8 @@ export const OptionCard = ({ option }: OptionCardProps) => {
       )}
     </article>
   );
+};
+
+const getBadgeDetails = (label: HighlightType) => {
+  return { label: highlights[label], css: badgeBorderColor[label] };
 };
