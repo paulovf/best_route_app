@@ -83,10 +83,10 @@ export function CityFormField({
                   setQuery(city.displayName);
                   setIsOpen(false);
                 }}
-                className="p-3 text-sm text-neutral-900 hover:opacity-50 cursor-pointer transition-colors"
+                className="p-3 text-sm text-neutral-900 font-medium hover:font-semibold cursor-pointer transition-colors flex flex-row gap-x-1 justify-start items-center"
               >
-                <span className="font-medium">{city.name}</span>
-                <span className="ml-1">- {city.uf}</span>
+                <span>{city.name}</span>
+                <span>- {city.uf}</span>
               </li>
             ))
           ) : (

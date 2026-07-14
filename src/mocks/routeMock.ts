@@ -62,6 +62,7 @@ export const MOCK_API_RESPONSE: RouteApiResponse = {
         },
       ],
       total_duration_hours: 3.75,
+      highlight: "recommended",
     },
     {
       total_kilometers: 383,
@@ -147,6 +148,7 @@ export const MOCK_API_RESPONSE: RouteApiResponse = {
         },
       ],
       total_duration_hours: 3.73,
+      highlight: "cheapest",
     },
     {
       total_kilometers: 440,
@@ -172,6 +174,7 @@ export const MOCK_API_RESPONSE: RouteApiResponse = {
         },
       ],
       total_duration_hours: 6.0,
+      highlight: "fastest",
     },
     {
       total_kilometers: 460,
@@ -227,6 +230,7 @@ export const MOCK_API_RESPONSE: RouteApiResponse = {
         },
       ],
       total_duration_hours: 8.0,
+      highlight: "most_convenient",
     },
   ],
 };

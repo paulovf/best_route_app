@@ -19,6 +19,7 @@ const baseMockOption: Option = {
   total_kilometers: 350,
   total_amount: 120,
   steps: [],
+  highlight: "recommended",
 };
 
 describe("OptionCard Component", () => {
@@ -54,11 +55,23 @@ describe("OptionCard Component", () => {
     expect(badge).toHaveClass("bg-primary-500");
   });
 
-  it('should apply FASTEST badge when description contains string keyword "direta"', () => {
-    const fastestOption = {
+  it('should apply CHEAPSET badge when highlight field is "cheapest"', () => {
+    const fastestOption: Option = {
       ...baseMockOption,
       order: 3,
-      description: "Esta é uma rota Direta super rápida",
+      highlight: "cheapest",
+    };
+    render(<OptionCard option={fastestOption} />);
+
+    const badge = screen.getByText("ECONÔMICA");
+    expect(badge).toHaveClass("text-success");
+  });
+
+  it('should apply FASTES badge when highlight field is "fastest"', () => {
+    const fastestOption: Option = {
+      ...baseMockOption,
+      order: 3,
+      highlight: "fastest",
     };
     render(<OptionCard option={fastestOption} />);
 
@@ -66,10 +79,15 @@ describe("OptionCard Component", () => {
     expect(badge).toHaveClass("text-primary-600");
   });
 
-  it("should fall back to ECONOMIC badge layout for default parameters", () => {
-    render(<OptionCard option={baseMockOption} />);
+  it('should apply MOST_CONVENIENT badge when highlight field is "most_convenient"', () => {
+    const fastestOption: Option = {
+      ...baseMockOption,
+      order: 3,
+      highlight: "most_convenient",
+    };
+    render(<OptionCard option={fastestOption} />);
 
-    const badge = screen.getByText("ECONÔMICA");
+    const badge = screen.getByText("MAIS PRÁTICA");
     expect(badge).toHaveClass("text-success");
   });
 });
