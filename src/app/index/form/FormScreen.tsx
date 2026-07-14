@@ -20,6 +20,10 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const [origin, setOrigin] = useState<CityOption | null>(null);
   const [destination, setDestination] = useState<CityOption | null>(null);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
+  const [originError, setOriginError] = useState<string | null>(null);
+  const [destinationError, setDestinationError] = useState<string | null>(null);
+  const [dateError, setDateError] = useState<string | null>(null);
+  const [wasSubmitted, setWasSubmitted] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const { location, loading: isGeolocating } = useGeolocation();
 
@@ -35,6 +39,58 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
     }
   }, [location]);
 
+  const validateForm = (
+    currentOrigin: CityOption | null,
+    currentDestination: CityOption | null,
+    currentDate: Date | undefined,
+    checkRequired: boolean
+  ): boolean => {
+    let isValid = true;
+    let oError: string | null = null;
+    let dError: string | null = null;
+    let tError: string | null = null;
+  
+    if (currentOrigin && currentDestination) {
+      if (
+        currentOrigin.name === currentDestination.name &&
+        currentOrigin.uf === currentDestination.uf
+      ) {
+        oError = "A cidade de origem não pode ser igual à cidade de destino.";
+        dError = "A cidade de destino não pode ser igual à cidade de origem.";
+        isValid = false;
+      }
+    }
+
+    if (checkRequired) {
+      if (!currentOrigin) {
+        oError =
+          oError ||
+          "Cidade de origem inválida. Por favor, selecione uma opção da lista.";
+        isValid = false;
+      }
+      if (!currentDestination) {
+        dError =
+          dError ||
+          "Cidade de destino inválida. Por favor, selecione uma opção da lista.";
+        isValid = false;
+      }
+      if (!currentDate) {
+        tError = "Por favor, selecione uma data de viagem.";
+        isValid = false;
+      }
+    }
+
+    setOriginError(oError);
+    setDestinationError(dError);
+    setDateError(tError);
+
+    return isValid;
+  };
+
+  useEffect(() => {
+    validateForm(origin, destination, travelDate, wasSubmitted);
+  }, [origin, destination, travelDate, wasSubmitted]);
+
   const handleSwap = () => {
     setOrigin(destination);
     setDestination(origin);
@@ -42,9 +98,11 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setWasSubmitted(true);
 
-    if (!origin || !destination || !travelDate) {
-      alert("Por favor, preencha todos os campos antes de prosseguir.");
+    const isFormValid = validateForm(origin, destination, travelDate, true);
+
+    if (!isFormValid) {
       return;
     }
 
@@ -52,11 +110,11 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
 
     try {
       const payload = {
-        origin_city: origin.name,
-        origin_state: origin.uf,
-        destination_city: destination.name,
-        destination_state: destination.uf,
-        travel_date: travelDate.toISOString(),
+        origin_city: origin!.name,
+        origin_state: origin!.uf,
+        destination_city: destination!.name,
+        destination_state: destination!.uf,
+        travel_date: travelDate!.toISOString(),
       };
 
       const response = await searchRoute(payload);
@@ -109,6 +167,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                   key={origin?.name || "empty"}
                   value={origin}
                   onChange={setOrigin}
+                  error={originError || undefined}
                 />
               </div>
 
@@ -131,11 +190,16 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                   key={destination?.name || "empty"}
                   value={destination}
                   onChange={setDestination}
+                  error={destinationError || undefined}
                 />
               </div>
 
               <div className="relative">
-                <DatePickerField value={travelDate} onChange={setTravelDate} />
+                <DatePickerField 
+                  value={travelDate} 
+                  onChange={setTravelDate} 
+                  error={dateError || undefined}
+                />
               </div>
 
               <button

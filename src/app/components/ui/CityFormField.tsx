@@ -6,16 +6,59 @@ import { useCity } from "@/context/CityContext";
 import { CityAutocompleteProps } from "@/types/ibge";
 import { CityOption } from "@/types/ibge";
 
+interface CityFormFieldProps extends CityAutocompleteProps {
+  error?: string;
+}
+
 export function CityFormField({
   placeholder,
   namePrefix,
   value,
   onChange,
-}: CityAutocompleteProps) {
+  error,
+}: CityFormFieldProps) {
   const { cities, isLoadingCities } = useCity();
   const [query, setQuery] = useState(value ? value.displayName : "");
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const normalize = (str: string) =>
+    str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+
+  useEffect(() => {
+    if (!cities || cities.length === 0 || !query) return;
+
+    const normalizedQuery = normalize(query);
+
+    const exactDisplayMatch = cities.find(
+      (city) => normalize(city.displayName) === normalizedQuery
+    );
+
+    if (exactDisplayMatch) {
+      if (!value || value.displayName !== exactDisplayMatch.displayName) {
+        onChange(exactDisplayMatch);
+        setIsOpen(false);
+      }
+      return;
+    }
+
+    const nameMatches = cities.filter(
+      (city) => normalize(city.name) === normalizedQuery
+    );
+
+    if (nameMatches.length === 1) {
+      const uniqueMatch = nameMatches[0];
+      if (!value || value.displayName !== uniqueMatch.displayName) {
+        onChange(uniqueMatch);
+        setQuery(uniqueMatch.displayName);
+        setIsOpen(false);
+      }
+    }
+  }, [query, cities, value, onChange]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -43,8 +86,13 @@ export function CityFormField({
 
         <input
           id={namePrefix}
+          name={namePrefix}
           type="text"
-          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none"
+          className={`w-full h-12 pl-11 pr-4 rounded-2xl border bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none ${
+            error
+              ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              : "border-slate-400"
+          }`}
           placeholder={placeholder}
           value={query}
           onChange={(e) => {
@@ -53,7 +101,6 @@ export function CityFormField({
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          required
         />
       </div>
 
@@ -67,6 +114,12 @@ export function CityFormField({
         name={`${namePrefix}_state`}
         value={value?.uf || ""}
       />
+
+      {error && (
+        <span className="text-xs text-red-500 mt-1.5 block pl-1 font-medium animate-in fade-in duration-200">
+          {error}
+        </span>
+      )}
 
       {isOpen && query.length > 1 && (
         <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
