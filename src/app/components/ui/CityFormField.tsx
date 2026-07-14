@@ -21,6 +21,8 @@ export function CityFormField({
   const [query, setQuery] = useState(value ? value.displayName : "");
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const isInternalChange = useRef(false);
+  const isDeleting = useRef(false);
 
   const normalize = (str: string) =>
     str
@@ -30,16 +32,27 @@ export function CityFormField({
       .trim();
 
   useEffect(() => {
+    if (isInternalChange.current) {
+      isInternalChange.current = false;
+      return;
+    }
+    setQuery(value ? value.displayName : "");
+  }, [value]);
+
+  useEffect(() => {
     if (!cities || cities.length === 0 || !query) return;
+
+    if (isDeleting.current) return;
 
     const normalizedQuery = normalize(query);
 
     const exactDisplayMatch = cities.find(
-      (city) => normalize(city.displayName) === normalizedQuery
+      (city) => normalize(city.displayName) === normalizedQuery,
     );
 
     if (exactDisplayMatch) {
       if (!value || value.displayName !== exactDisplayMatch.displayName) {
+        isInternalChange.current = true;
         onChange(exactDisplayMatch);
         setIsOpen(false);
       }
@@ -47,12 +60,13 @@ export function CityFormField({
     }
 
     const nameMatches = cities.filter(
-      (city) => normalize(city.name) === normalizedQuery
+      (city) => normalize(city.name) === normalizedQuery,
     );
 
     if (nameMatches.length === 1) {
       const uniqueMatch = nameMatches[0];
       if (!value || value.displayName !== uniqueMatch.displayName) {
+        isInternalChange.current = true;
         onChange(uniqueMatch);
         setQuery(uniqueMatch.displayName);
         setIsOpen(false);
@@ -96,7 +110,11 @@ export function CityFormField({
           placeholder={placeholder}
           value={query}
           onChange={(e) => {
-            setQuery(e.target.value);
+            const newValue = e.target.value;
+            isDeleting.current = newValue.length < query.length;
+
+            setQuery(newValue);
+            isInternalChange.current = true;
             onChange(null);
             setIsOpen(true);
           }}
@@ -132,6 +150,7 @@ export function CityFormField({
               <li
                 key={`${city.uf}-${city.name}-${index}`}
                 onClick={() => {
+                  isInternalChange.current = true;
                   onChange(city);
                   setQuery(city.displayName);
                   setIsOpen(false);

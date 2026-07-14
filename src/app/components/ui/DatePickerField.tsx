@@ -13,7 +13,11 @@ export interface DatePickerFieldProps {
   error?: string;
 }
 
-export function DatePickerField({ value, onChange, error }: DatePickerFieldProps) {
+export function DatePickerField({
+  value,
+  onChange,
+  error,
+}: DatePickerFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -62,9 +66,7 @@ export function DatePickerField({ value, onChange, error }: DatePickerFieldProps
       />
 
       {error && (
-        <span className="text-xs text-red-500 mt-1 ml-3 block">
-          {error}
-        </span>
+        <span className="text-xs text-red-500 mt-1 ml-3 block">{error}</span>
       )}
 
       {isOpen && (

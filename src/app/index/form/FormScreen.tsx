@@ -43,13 +43,13 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
     currentOrigin: CityOption | null,
     currentDestination: CityOption | null,
     currentDate: Date | undefined,
-    checkRequired: boolean
+    checkRequired: boolean,
   ): boolean => {
     let isValid = true;
     let oError: string | null = null;
     let dError: string | null = null;
     let tError: string | null = null;
-  
+
     if (currentOrigin && currentDestination) {
       if (
         currentOrigin.name === currentDestination.name &&
@@ -164,7 +164,6 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                       : "Onde você está?"
                   }
                   namePrefix="origin"
-                  key={origin?.name || "empty"}
                   value={origin}
                   onChange={setOrigin}
                   error={originError || undefined}
@@ -187,7 +186,6 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                 <CityFormField
                   placeholder="Para onde você vai?"
                   namePrefix="destination"
-                  key={destination?.name || "empty"}
                   value={destination}
                   onChange={setDestination}
                   error={destinationError || undefined}
@@ -195,9 +193,9 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
               </div>
 
               <div className="relative">
-                <DatePickerField 
-                  value={travelDate} 
-                  onChange={setTravelDate} 
+                <DatePickerField
+                  value={travelDate}
+                  onChange={setTravelDate}
                   error={dateError || undefined}
                 />
               </div>

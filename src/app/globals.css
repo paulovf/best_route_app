@@ -53,6 +53,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+::selection,
+*::selection {
+  background-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
 .rdp-root {
   --rdp-accent-color: #0f172a !important;
 }
