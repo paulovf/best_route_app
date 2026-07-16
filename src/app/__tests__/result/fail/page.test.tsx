@@ -62,7 +62,7 @@ describe("ErrorPage Screen", () => {
 
     expect(
       screen.getByText(
-        "Não foi possível gerar um itinerário válido com os locais informados. Verifique os nomes das cidades e tente novamente.",
+        "Houve um problema ao processar a sua rota. Tente mais tarde.",
       ),
     ).toBeInTheDocument();
   });
