@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import PrivacyPolicyPage from "@/app/privacy_policy/page";
+import PrivacyPolicyPage from "@/app/[locale]/privacy_policy/page";
 
 jest.mock("/src/app/components/layout/Topbar", () => {
   return function MockTopbar({ show }: { show: boolean }) {

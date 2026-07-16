@@ -1,22 +1,24 @@
 "use client";
 
 import { forwardRef, FormEvent, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing"; 
 import { MapPlus, ArrowUpDown } from "lucide-react";
 import { startOfDay, addYears } from "date-fns";
-import { CityFormField } from "@/app/components/ui/CityFormField";
+import { CityFormField } from "@/app/[locale]/components/ui/CityFormField";
 import { CityOption } from "@/types/form";
-import { DatePickerField } from "@/app/components/ui/DatePickerField";
-import { LoadingModal } from "@/app/components/layout/LoadingModal";
+import { DatePickerField } from "@/app/[locale]/components/ui/DatePickerField";
+import { LoadingModal } from "@/app/[locale]/components/layout/LoadingModal";
 import { searchRoute } from "@/services/routeService";
 import { useRoute } from "@/context/RouteContext";
 import { Fail } from "@/types/fail";
 import { usePreventNavigation } from "@/hooks/usePreventNavigation";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { CityProvider } from "@/context/CityContext";
+import { useTranslations } from "next-intl";
 
 export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const router = useRouter();
+  const t = useTranslations("Form");
   const { routeData, setRouteData, errorData, setErrorData } = useRoute();
   const [origin, setOrigin] = useState<CityOption | null>(null);
   const [destination, setDestination] = useState<CityOption | null>(null);
@@ -56,27 +58,23 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
         currentOrigin.name === currentDestination.name &&
         currentOrigin.uf === currentDestination.uf
       ) {
-        oError = "A cidade de origem não pode ser igual à cidade de destino.";
-        dError = "A cidade de destino não pode ser igual à cidade de origem.";
+        oError = t("errors.originSameAsDest");
+        dError = t("errors.destSameAsOrigin");
         isValid = false;
       }
     }
 
     if (checkRequired) {
       if (!currentOrigin) {
-        oError =
-          oError ||
-          "Cidade de origem inválida. Por favor, selecione uma opção da lista.";
+        oError = oError || t("errors.invalidOrigin");
         isValid = false;
       }
       if (!currentDestination) {
-        dError =
-          dError ||
-          "Cidade de destino inválida. Por favor, selecione uma opção da lista.";
+        dError = dError || t("errors.invalidDest");
         isValid = false;
       }
       if (!currentDate) {
-        tError = "Por favor, selecione uma data de viagem.";
+        tError = t("errors.emptyDate");
         isValid = false;
       } else {
         const today = startOfDay(new Date());
@@ -84,11 +82,10 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
         const selectedDate = startOfDay(currentDate);
 
         if (selectedDate < today) {
-          tError = "A data da viagem não pode ser anterior ao dia de hoje.";
+          tError = t("errors.pastDate");
           isValid = false;
         } else if (selectedDate > maxDate) {
-          tError =
-            "A data da viagem não pode ser superior a 1 ano a partir de hoje.";
+          tError = t("errors.maxDate");
           isValid = false;
         }
       }
@@ -155,16 +152,16 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
             <header className="flex items-center gap-3 mb-8">
               <div
                 className="p-2 flex flex-col items-center justify-center rounded-full border-2 border-neutral-600"
-                aria-label="Map plus"
+                aria-label={t("ariaLabels.mapIcon")}
               >
                 <MapPlus size={26} className="text-neutral-600" />
               </div>
               <div>
                 <h2 className="text-xl text-neutral-600 font-semibold leading-tight">
-                  Calcule sua melhor rota
+                  {t("title")}
                 </h2>
                 <p className="text-sm text-slate-500 mt-0.5">
-                  Planeje sua viagem com mais facilidade
+                  {t("subtitle")}
                 </p>
               </div>
             </header>
@@ -174,8 +171,8 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                 <CityFormField
                   placeholder={
                     isGeolocating && routeData == null && errorData == null
-                      ? "Buscando sua localização..."
-                      : "Onde você está?"
+                      ? t("inputs.locating")
+                      : t("inputs.originPlaceholder")
                   }
                   namePrefix="origin"
                   value={origin}
@@ -190,7 +187,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                   onClick={handleSwap}
                   id="swap"
                   className="w-9 h-9 rounded-full bg-white border shadow-sm flex items-center justify-center hover:bg-slate-50 active:scale-95 transition cursor-pointer"
-                  aria-label="Inverter origem e destino"
+                  aria-label={t("ariaLabels.swap")}
                 >
                   <ArrowUpDown size={20} className="text-neutral-600" />
                 </button>
@@ -198,7 +195,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
 
               <div className="relative">
                 <CityFormField
-                  placeholder="Para onde você vai?"
+                  placeholder={t("inputs.destinationPlaceholder")}
                   namePrefix="destination"
                   value={destination}
                   onChange={setDestination}
@@ -219,22 +216,15 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                 id="btn-calculate"
                 className="w-full mt-2 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
               >
-                Calcular rota
+                {t("calculateButton")}
               </button>
             </form>
           </div>
           <div className="flex flex-col items-start gap-y-1">
-            <p className="text-xs text-slate-500">
-              *Usamos dados públicos e consultas em IA para estimar preços,
-              itinerários e tempo.
-            </p>
-            <p className="text-xs text-slate-500">
-              *A IA pode sugerir trechos de rotas que não existem devido a
-              mudanças recentes.
-            </p>
+            <p className="text-xs text-slate-500">{t("disclaimers.data")}</p>
+            <p className="text-xs text-slate-500">{t("disclaimers.ai")}</p>
             <p className="text-xs text-slate-500 leading-tight">
-              *Utilizamos sua geolocalização apenas para sugerir a cidade de
-              partida atual.
+              {t("disclaimers.geolocation")}
             </p>
           </div>
         </div>

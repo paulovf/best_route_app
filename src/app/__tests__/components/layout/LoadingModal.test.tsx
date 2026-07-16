@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { LoadingModal } from "@/app/components/layout/LoadingModal";
+import { LoadingModal } from "@/app/[locale]/components/layout/LoadingModal";
 
 describe("LoadingModal Component", () => {
   beforeEach(() => {

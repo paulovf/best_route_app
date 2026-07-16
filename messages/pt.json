@@ -1,0 +1,84 @@
+{
+  "Home": {
+    "title": "Encontre a melhor rota para sua viagem",
+    "subtitle": "Compare caminhos, formas de transporte, preços e tempo de viagem entre cidades de todo o Brasil",
+    "cta": "Comece aqui",
+    "links": {
+      "githubApi": "GitHub API",
+      "githubApp": "GitHub App",
+      "linkedin": "Meu Linkedin"
+    },
+    "images": {
+      "planeAlt": "Avião",
+      "logoAlt": "Logo inicial do Best Route"
+    }
+  },
+  "Form": {
+    "title": "Calcule sua melhor rota",
+    "subtitle": "Planeje sua viagem com mais facilidade",
+    "ariaLabels": {
+      "mapIcon": "Ícone de mapa",
+      "swap": "Inverter origem e destino"
+    },
+    "inputs": {
+      "locating": "Buscando sua localização...",
+      "originPlaceholder": "Onde você está?",
+      "destinationPlaceholder": "Para onde você vai?"
+    },
+    "calculateButton": "Calcular rota",
+    "disclaimers": {
+      "data": "*Usamos dados públicos e consultas em IA para estimar preços, itinerários e tempo.",
+      "ai": "*A IA pode sugerir trechos de rotas que não existem devido a mudanças recentes.",
+      "geolocation": "*Utilizamos sua geolocalização apenas para sugerir a cidade de partida atual."
+    },
+    "errors": {
+      "originSameAsDest": "A cidade de origem não pode ser igual à cidade de destino.",
+      "destSameAsOrigin": "A cidade de destino não pode ser igual à cidade de origem.",
+      "invalidOrigin": "Cidade de origem inválida. Por favor, selecione uma opção da lista.",
+      "invalidDest": "Cidade de destino inválida. Por favor, selecione uma opção da lista.",
+      "emptyDate": "Por favor, selecione uma data de viagem.",
+      "pastDate": "A data da viagem não pode ser anterior ao dia de hoje.",
+      "maxDate": "A data da viagem não pode ser superior a 1 ano a partir de hoje."
+    }
+  },
+  "PrivacyPolicy": {
+    "backToHome": "Voltar para o início",
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização: Julho de 2026",
+    "intro": "A sua privacidade é uma prioridade para nós. Esta política de privacidade esclarece de forma transparente como o <bold>Best Route</bold> lida com as suas informações.",
+    "sections": {
+      "geolocation": {
+        "title": "1. Uso de Geolocalização",
+        "content": "Nosso aplicativo solicita acesso à geolocalização do seu dispositivo exclusivamente para preencher de forma automática o campo de cidade de origem no formulário de buscas. Essa funcionalidade visa apenas otimizar a sua experiência de navegação."
+      },
+      "data": {
+        "title": "2. Armazenamento e Retenção de Dados",
+        "content": "<bold>Não armazenamos</bold> os seus dados de localização, o seu endereço IP ou os históricos das rotas pesquisadas em bancos de dados. As informações preenchidas no formulário são processadas em tempo real apenas para calcular e exibir as opções de trajetos, sendo descartadas imediatamente após a requisição."
+      },
+      "cookies": {
+        "title": "3. Cookies e Rastreamento de Terceiros",
+        "content": "Este ambiente digital é livre de ferramentas de rastreamento de terceiros, cookies de marketing ou pixels de redes sociais. Utilizamos apenas o armazenamento local estritamente necessário para o funcionamento técnico da aplicação."
+      },
+      "security": {
+        "title": "4. Segurança",
+        "content": "Todo o tráfego de dados entre o seu navegador e nossos serviços é criptografado utilizando o protocolo HTTPS, garantindo que suas consultas viagem de forma segura."
+      }
+    }
+  },
+  "ErrorPage": {
+    "title": "Ops! Algo deu errado",
+    "messages": {
+      "400": "A cidade e/ou estado informado não é um campo válido.",
+      "422": "Não foi possível gerar um itinerário válido com os locais informados. Verifique os nomes das cidades e tente novamente.",
+      "504": "A IA que utilizamos para calcular a sua rota está com alta demanda neste momento. Tente novamente mais tarde.",
+      "default": "Houve um problema ao processar a sua rota. Tente mais tarde."
+    },
+    "button": "Refazer Nova Busca"
+  },
+  "SuccessPage": {
+    "found": "{count, plural, =1 {# opção encontrada} other {# opções encontradas}}",
+    "note": "Nota:",
+    "disclaimer": "Valores, distâncias e tempos de viagem são estimados por Inteligência Artificial e podem divergir dos dados reais praticados por aplicativos, sites ou guichês oficiais.",
+    "newSearch": "Nova consulta"
+  }
+}

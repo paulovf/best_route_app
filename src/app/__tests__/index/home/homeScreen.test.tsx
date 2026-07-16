@@ -1,5 +1,5 @@
 import { render, screen, act, within } from "@testing-library/react";
-import Home from "@/app/page";
+import Home from "@/app/[locale]/page";
 
 const mockIBGEResponse = [
   {

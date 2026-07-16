@@ -1,6 +1,6 @@
 "use client";
 
-import HomeScreen from "@/app/index/home/HomeScreen";
+import HomeScreen from "@/app/[locale]/index/home/HomeScreen";
 
 export default function Page() {
   return (

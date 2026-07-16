@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Footer } from "@/app/components/layout/Footer";
+import { Footer } from "@/app/[locale]/components/layout/Footer";
 import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 

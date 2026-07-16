@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { OptionCard } from "@/app/components/layout/OptionCard";
+import { OptionCard } from "@/app/[locale]/components/layout/OptionCard";
 import { Option } from "@/types/route";
 
 jest.mock("/src/app/components/layout/OptionCard/Step", () => ({

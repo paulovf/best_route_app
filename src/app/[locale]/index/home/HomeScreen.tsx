@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { GitBranch, ExternalLink } from "lucide-react";
-import Topbar from "@/app/components/layout/Topbar";
+import Topbar from "@/app/[locale]/components/layout/Topbar";
 import { FormScreen } from "../form/FormScreen";
+import { useTranslations } from "next-intl";
 
 export default function HomeScreen() {
   const [showTopbar, setShowTopbar] = useState(false);
   const formSectionRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("Home");
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,7 +55,7 @@ export default function HomeScreen() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/plane.avif"
-            alt="Plane"
+            alt={t("images.planeAlt")}
             fill
             loading="eager"
             className="w-full h-full object-cover"
@@ -64,7 +66,7 @@ export default function HomeScreen() {
         <header className="relative z-10 px-6 pt-8 md:px-10 flex items-center gap-3">
           <Image
             src="/images/logo_v2.png"
-            alt="Best Route home logo"
+            alt={t("images.logoAlt")}
             width={48}
             height={48}
             className="w-12 h-12 object-contain"
@@ -77,17 +79,16 @@ export default function HomeScreen() {
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 -mt-10">
           <h1 className="text-neutral-50 text-[clamp(32px,5vw,56px)] font-bold leading-[1.05] tracking-tight max-w-3xl">
-            Encontre a melhor rota para sua viagem
+            {t("title")}
           </h1>
           <p className="text-neutral-50/80 mt-5 max-w-xl text-base md:text-lg leading-relaxed">
-            Compare caminhos, formas de transporte, preços e tempo de viagem
-            entre cidades de todo o Brasil
+            {t("subtitle")}
           </p>
           <button
             onClick={scrollToForm}
             className="mt-10 bg-neutral-50 text-neutral-900 rounded-full font-semibold px-10 py-3.5 text-sm shadow-sm hover:bg-neutral-200 active:scale-95 transition-all cursor-pointer"
           >
-            Comece aqui
+            {t("cta")}
           </button>
         </div>
 
@@ -99,39 +100,39 @@ export default function HomeScreen() {
             href="https://github.com/paulovf/best_route_api"
             target="_blank"
             rel="noreferrer"
-            aria-label="GitHub API"
+            aria-label={t("links.githubApi")}
           >
             <div className="flex flex-col items-center gap-y-2">
               <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
                 <GitBranch size={18} />
               </div>
-              <span className="text-sm text-neutral-50/80">GitHub API</span>
+              <span className="text-sm text-neutral-50/80">{t("links.githubApi")}</span>
             </div>
           </a>
           <a
             href="https://github.com/paulovf/best_route_app"
             target="_blank"
             rel="noreferrer"
-            aria-label="GitHub App"
+            aria-label={t("links.githubApp")}
           >
             <div className="flex flex-col items-center gap-y-2">
               <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
                 <GitBranch size={18} />
               </div>
-              <span className="text-sm text-neutral-50/80">GitHub App</span>
+              <span className="text-sm text-neutral-50/80">{t("links.githubApp")}</span>
             </div>
           </a>
           <a
             href="https://www.linkedin.com/in/paulo-vitor-francisco"
             target="_blank"
             rel="noreferrer"
-            aria-label="Meu Linkedin"
+            aria-label={t("links.linkedin")}
           >
             <div className="flex flex-col items-center gap-y-2">
               <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
                 <ExternalLink size={18} />
               </div>
-              <span className="text-sm text-neutral-50/80">Meu Linkedin</span>
+              <span className="text-sm text-neutral-50/80">{t("links.linkedin")}</span>
             </div>
           </a>
         </div>

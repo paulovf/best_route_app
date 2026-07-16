@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import ErrorPage from "@/app/result/fail/page";
+import ErrorPage from "@/app/[locale]/result/fail/page";
 import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 

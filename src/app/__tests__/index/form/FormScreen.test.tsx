@@ -5,7 +5,7 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import { FormScreen } from "@/app/index/form/FormScreen";
+import { FormScreen } from "@/app/[locale]/index/form/FormScreen";
 import { useRouter } from "next/navigation";
 import { useRoute } from "@/context/RouteContext";
 import { searchRoute } from "@/services/routeService";
