@@ -63,6 +63,7 @@ describe("API Route - Search Proxy", () => {
           "X-API-KEY": "super-secret-key",
         },
         body: JSON.stringify(mockRequestBody),
+        signal: AbortSignal.timeout(1000),
       },
     );
   });
@@ -91,7 +92,9 @@ describe("API Route - Search Proxy", () => {
   });
 
   it("should fall back to a 500 Internal Server Error when fetch crashes or throws an exception", async () => {
-    const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+    const consoleSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
     global.fetch = jest
       .fn()

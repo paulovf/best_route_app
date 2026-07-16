@@ -7,12 +7,21 @@ import Link from "next/link";
 import { CircleAlert } from "lucide-react";
 import Topbar from "@/app/components/layout/Topbar";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { Fail } from "@/types/fail";
+
+const errorMessages: Record<number, string> = {
+  400: "A cidade e/ou estado informado não é um campo válido.",
+  422: "Não foi possível gerar um itinerário válido com os locais informados. Verifique os nomes das cidades e tente novamente.",
+  504: "A IA que utilizamos para calcular a sua rota está com alta demanda neste momento. Tente novamente mais tarde.",
+};
+
+const listHttpStatusCodeMapping = [400, 422, 504];
 
 export default function ErrorPage() {
   const { errorData } = useRoute();
   const router = useRouter();
   const isMounted = useIsMounted();
-  const errorDataResult = errorData || {
+  const errorDataResult: Fail = errorData || {
     status: 500,
     error: "Internal Server Error",
     message: "An unexpected error occurred.",
@@ -29,9 +38,9 @@ export default function ErrorPage() {
     return null;
   }
 
-  const getFriendlyMessage = (fullMessage?: string) => {
-    if (fullMessage?.includes("Unable to generate a valid itinerary")) {
-      return "Não foi possível gerar um itinerário válido com os locais informados. Verifique os nomes das cidades e tente novamente.";
+  const getFriendlyMessage = (status: number) => {
+    if (listHttpStatusCodeMapping.includes(status)) {
+      return errorMessages[status];
     }
     return "Houve um problema ao processar a sua rota. Tente mais tarde.";
   };
@@ -41,7 +50,7 @@ export default function ErrorPage() {
       <Topbar show={true} />
       <div
         id="result-screen"
-        className="w-screen h-screen flex flex-row items-center justify-center"
+        className="h-screen flex flex-row items-center justify-center"
       >
         <div className="flex flex-col items-center justify-center max-w-md rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="mx-auto mb-4 flex h-[80px] w-[80px] items-center justify-center rounded-full bg-red-50">
@@ -53,7 +62,7 @@ export default function ErrorPage() {
           </h1>
 
           <p className="mt-3 text-sm text-neutral-600 text-center">
-            {getFriendlyMessage(errorDataResult.message)}
+            {getFriendlyMessage(errorDataResult?.status || 500)}
           </p>
 
           <Link
