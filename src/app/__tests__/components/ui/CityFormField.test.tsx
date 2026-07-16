@@ -81,4 +81,26 @@ describe("CityFormField component", () => {
 
     expect(screen.queryByText("Curitibanos")).not.toBeInTheDocument();
   });
+
+  it("should trigger onChange when user types a full city name", async () => {
+    render(
+      <CityFormField
+        placeholder="Digite a cidade"
+        namePrefix="origin"
+        value={null}
+        onChange={mockOnChange}
+      />,
+    );
+
+    const input = screen.getByPlaceholderText("Digite a cidade");
+
+    fireEvent.change(input, { target: { value: "Curitiba" } });
+
+    expect(mockOnChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: "Curitiba",
+        uf: "PR",
+      }),
+    );
+  });
 });

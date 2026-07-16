@@ -9,8 +9,11 @@ import { FormScreen } from "@/app/index/form/FormScreen";
 import { useRouter } from "next/navigation";
 import { useRoute } from "@/context/RouteContext";
 import { searchRoute } from "@/services/routeService";
-import { CityAutocompleteProps, CityOption } from "@/types/ibge";
-import { DatePickerFieldProps } from "@/app/components/ui/DatePickerField";
+import {
+  CityOption,
+  CityFormFieldProps,
+  DatePickerFieldProps,
+} from "@/types/form";
 
 const mockIBGEResponse = [
   {
@@ -43,7 +46,8 @@ jest.mock("/src/app/components/ui/CityFormField", () => ({
     placeholder,
     value,
     onChange,
-  }: CityAutocompleteProps) => {
+    error,
+  }: CityFormFieldProps) => {
     const cityString = value ? `${value.name} - ${value.uf}` : "";
 
     return (
@@ -92,13 +96,15 @@ jest.mock("/src/app/components/ui/CityFormField", () => ({
         >
           Selecionar {namePrefix}
         </button>
+
+        {error && <span className="error-message">{error}</span>}
       </div>
     );
   },
 }));
 
 jest.mock("/src/app/components/ui/DatePickerField", () => ({
-  DatePickerField: ({ value, onChange }: DatePickerFieldProps) => (
+  DatePickerField: ({ value, onChange, error }: DatePickerFieldProps) => (
     <div>
       <input
         placeholder="Selecione uma data"
@@ -113,6 +119,8 @@ jest.mock("/src/app/components/ui/DatePickerField", () => ({
       >
         Selecionar Data
       </button>
+
+      {error && <span className="error-message">{error}</span>}
     </div>
   ),
 }));
@@ -226,7 +234,7 @@ describe("Form page", () => {
     });
   });
 
-  it("when form is empty, display an alert message", async () => {
+  it("when form is empty, display error messages", async () => {
     const { container } = render(<FormScreen />);
 
     await act(async () => {
@@ -234,6 +242,16 @@ describe("Form page", () => {
     });
 
     const form = await container.querySelector("form");
+
+    const originErrorMsg =
+      "Cidade de origem inválida. Por favor, selecione uma opção da lista.";
+    const destinationErrorMsg =
+      "Cidade de destino inválida. Por favor, selecione uma opção da lista.";
+    const dateErrorMsg = "Por favor, selecione uma data de viagem.";
+
+    expect(screen.queryByText(originErrorMsg)).not.toBeInTheDocument();
+    expect(screen.queryByText(destinationErrorMsg)).not.toBeInTheDocument();
+    expect(screen.queryByText(dateErrorMsg)).not.toBeInTheDocument();
 
     if (form) {
       fireEvent.submit(form);
@@ -244,9 +262,14 @@ describe("Form page", () => {
       fireEvent.click(submitButton);
     }
 
-    expect(window.alert).toHaveBeenCalledWith(
-      "Por favor, preencha todos os campos antes de prosseguir.",
-    );
+    const originError = await screen.findByText(originErrorMsg);
+    const destinationError = await screen.findByText(destinationErrorMsg);
+    const dateError = await screen.findByText(dateErrorMsg);
+
+    expect(originError).toBeInTheDocument();
+    expect(destinationError).toBeInTheDocument();
+    expect(dateError).toBeInTheDocument();
+
     expect(searchRoute).not.toHaveBeenCalled();
   });
 

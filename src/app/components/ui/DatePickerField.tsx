@@ -5,13 +5,8 @@ import { DayPicker } from "react-day-picker";
 import { Calendar } from "lucide-react";
 import { format, addYears, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { DatePickerFieldProps } from "@/types/form";
 import "react-day-picker/dist/style.css";
-
-export interface DatePickerFieldProps {
-  value: Date | undefined;
-  onChange: (date: Date | undefined) => void;
-  error?: string;
-}
 
 export function DatePickerField({
   value,

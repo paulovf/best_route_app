@@ -3,12 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
 import { useCity } from "@/context/CityContext";
-import { CityAutocompleteProps } from "@/types/ibge";
-import { CityOption } from "@/types/ibge";
-
-interface CityFormFieldProps extends CityAutocompleteProps {
-  error?: string;
-}
+import { CityFormFieldProps, CityOption } from "@/types/form";
 
 export function CityFormField({
   placeholder,
@@ -40,41 +35,6 @@ export function CityFormField({
   }, [value]);
 
   useEffect(() => {
-    if (!cities || cities.length === 0 || !query) return;
-
-    if (isDeleting.current) return;
-
-    const normalizedQuery = normalize(query);
-
-    const exactDisplayMatch = cities.find(
-      (city) => normalize(city.displayName) === normalizedQuery,
-    );
-
-    if (exactDisplayMatch) {
-      if (!value || value.displayName !== exactDisplayMatch.displayName) {
-        isInternalChange.current = true;
-        onChange(exactDisplayMatch);
-        setIsOpen(false);
-      }
-      return;
-    }
-
-    const nameMatches = cities.filter(
-      (city) => normalize(city.name) === normalizedQuery,
-    );
-
-    if (nameMatches.length === 1) {
-      const uniqueMatch = nameMatches[0];
-      if (!value || value.displayName !== uniqueMatch.displayName) {
-        isInternalChange.current = true;
-        onChange(uniqueMatch);
-        setQuery(uniqueMatch.displayName);
-        setIsOpen(false);
-      }
-    }
-  }, [query, cities, value, onChange]);
-
-  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
         wrapperRef.current &&
@@ -86,6 +46,49 @@ export function CityFormField({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    isDeleting.current = newValue.length < query.length;
+
+    setQuery(newValue);
+
+    if (!isDeleting.current && cities && cities.length > 0) {
+      const normalizedQuery = normalize(newValue);
+
+      const exactDisplayMatch = cities.find(
+        (city) => normalize(city.displayName) === normalizedQuery,
+      );
+
+      if (exactDisplayMatch) {
+        if (!value || value.displayName !== exactDisplayMatch.displayName) {
+          isInternalChange.current = true;
+          onChange(exactDisplayMatch);
+          setIsOpen(false);
+        }
+        return;
+      }
+
+      const nameMatches = cities.filter(
+        (city) => normalize(city.name) === normalizedQuery,
+      );
+
+      if (nameMatches.length === 1) {
+        const uniqueMatch = nameMatches[0];
+        if (!value || value.displayName !== uniqueMatch.displayName) {
+          isInternalChange.current = true;
+          setQuery(uniqueMatch.displayName);
+          onChange(uniqueMatch);
+          setIsOpen(false);
+        }
+        return;
+      }
+    }
+
+    isInternalChange.current = true;
+    onChange(null);
+    setIsOpen(true);
+  };
 
   const filteredCities = filterCities(query, cities);
 
@@ -109,15 +112,7 @@ export function CityFormField({
           }`}
           placeholder={placeholder}
           value={query}
-          onChange={(e) => {
-            const newValue = e.target.value;
-            isDeleting.current = newValue.length < query.length;
-
-            setQuery(newValue);
-            isInternalChange.current = true;
-            onChange(null);
-            setIsOpen(true);
-          }}
+          onChange={handleInputChange}
           onFocus={() => setIsOpen(true)}
         />
       </div>
