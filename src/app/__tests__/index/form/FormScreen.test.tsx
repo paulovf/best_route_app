@@ -120,6 +120,33 @@ jest.mock("/src/app/components/ui/DatePickerField", () => ({
         Selecionar Data
       </button>
 
+      <button
+        type="button"
+        data-testid="mock-btn-date-past"
+        style={{ display: "none" }}
+        onClick={() => {
+          const past = new Date();
+          past.setDate(past.getDate() - 1);
+          onChange(past);
+        }}
+      >
+        Selecionar Data Passada
+      </button>
+
+      <button
+        type="button"
+        data-testid="mock-btn-date-future"
+        style={{ display: "none" }}
+        onClick={() => {
+          const future = new Date();
+          future.setFullYear(future.getFullYear() + 1);
+          future.setDate(future.getDate() + 2);
+          onChange(future);
+        }}
+      >
+        Selecionar Data Futura Excedida
+      </button>
+
       {error && <span className="error-message">{error}</span>}
     </div>
   ),
@@ -343,5 +370,55 @@ describe("Form page", () => {
     });
 
     consoleSpy.mockRestore();
+  });
+
+  it("when date is in the past, display error message", async () => {
+    render(<FormScreen />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    fireEvent.click(screen.getByTestId("mock-btn-origin"));
+    fireEvent.click(screen.getByTestId("mock-btn-destination"));
+
+    fireEvent.click(screen.getByTestId("mock-btn-date-past"));
+
+    const submitButton = await screen.getByRole("button", {
+      name: /calcular rota/i,
+    });
+    fireEvent.click(submitButton);
+
+    const pastDateErrorMsg =
+      "A data da viagem não pode ser anterior ao dia de hoje.";
+    const dateError = await screen.findByText(pastDateErrorMsg);
+
+    expect(dateError).toBeInTheDocument();
+    expect(searchRoute).not.toHaveBeenCalled();
+  });
+
+  it("when date is superior to 1 year, display error message", async () => {
+    render(<FormScreen />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    fireEvent.click(screen.getByTestId("mock-btn-origin"));
+    fireEvent.click(screen.getByTestId("mock-btn-destination"));
+
+    fireEvent.click(screen.getByTestId("mock-btn-date-future"));
+
+    const submitButton = await screen.getByRole("button", {
+      name: /calcular rota/i,
+    });
+    fireEvent.click(submitButton);
+
+    const futureDateErrorMsg =
+      "A data da viagem não pode ser superior a 1 ano a partir de hoje.";
+    const dateError = await screen.findByText(futureDateErrorMsg);
+
+    expect(dateError).toBeInTheDocument();
+    expect(searchRoute).not.toHaveBeenCalled();
   });
 });

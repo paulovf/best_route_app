@@ -3,6 +3,7 @@
 import { forwardRef, FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MapPlus, ArrowUpDown } from "lucide-react";
+import { startOfDay, addYears } from "date-fns";
 import { CityFormField } from "@/app/components/ui/CityFormField";
 import { CityOption } from "@/types/form";
 import { DatePickerField } from "@/app/components/ui/DatePickerField";
@@ -77,6 +78,19 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
       if (!currentDate) {
         tError = "Por favor, selecione uma data de viagem.";
         isValid = false;
+      } else {
+        const today = startOfDay(new Date());
+        const maxDate = addYears(today, 1);
+        const selectedDate = startOfDay(currentDate);
+
+        if (selectedDate < today) {
+          tError = "A data da viagem não pode ser anterior ao dia de hoje.";
+          isValid = false;
+        } else if (selectedDate > maxDate) {
+          tError =
+            "A data da viagem não pode ser superior a 1 ano a partir de hoje.";
+          isValid = false;
+        }
       }
     }
 
