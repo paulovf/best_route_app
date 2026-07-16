@@ -1,4 +1,5 @@
-import { IBGECity, CityOption } from "@/types/ibge";
+import { IBGECity } from "@/types/ibge";
+import { CityOption } from "@/types/form";
 
 export async function getCites() {
   try {

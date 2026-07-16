@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCites } from "@/app/api/ibge/search_cities";
-import { CityOption } from "@/types/ibge";
+import { CityOption } from "@/types/form";
 
 interface CityContextType {
   cities: CityOption[];

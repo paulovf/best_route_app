@@ -5,14 +5,14 @@ import { DayPicker } from "react-day-picker";
 import { Calendar } from "lucide-react";
 import { format, addYears, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { DatePickerFieldProps } from "@/types/form";
 import "react-day-picker/dist/style.css";
 
-export interface DatePickerFieldProps {
-  value: Date | undefined;
-  onChange: (date: Date | undefined) => void;
-}
-
-export function DatePickerField({ value, onChange }: DatePickerFieldProps) {
+export function DatePickerField({
+  value,
+  onChange,
+  error,
+}: DatePickerFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +48,9 @@ export function DatePickerField({ value, onChange }: DatePickerFieldProps) {
           readOnly
           placeholder="dd/mm/aaaa"
           value={value ? format(value, "dd/MM/yyyy") : ""}
-          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none"
+          className={`w-full h-12 pl-11 pr-4 rounded-2xl border bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none ${
+            error ? "border-red-500 text-red-950" : "border-slate-400"
+          }`}
         />
       </div>
 
@@ -57,6 +59,10 @@ export function DatePickerField({ value, onChange }: DatePickerFieldProps) {
         name="travel_date"
         value={value ? format(value, "yyyy-MM-dd") : ""}
       />
+
+      {error && (
+        <span className="text-xs text-red-500 mt-1 ml-3 block">{error}</span>
+      )}
 
       {isOpen && (
         <div className="absolute z-50 mt-2 top-full left-0 bg-white border border-slate-200/60 p-4 rounded-2xl shadow-xl animate-in fade-in-50 duration-150">

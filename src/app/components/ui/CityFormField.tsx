@@ -3,19 +3,36 @@
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
 import { useCity } from "@/context/CityContext";
-import { CityAutocompleteProps } from "@/types/ibge";
-import { CityOption } from "@/types/ibge";
+import { CityFormFieldProps, CityOption } from "@/types/form";
 
 export function CityFormField({
   placeholder,
   namePrefix,
   value,
   onChange,
-}: CityAutocompleteProps) {
+  error,
+}: CityFormFieldProps) {
   const { cities, isLoadingCities } = useCity();
   const [query, setQuery] = useState(value ? value.displayName : "");
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const isInternalChange = useRef(false);
+  const isDeleting = useRef(false);
+
+  const normalize = (str: string) =>
+    str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+
+  useEffect(() => {
+    if (isInternalChange.current) {
+      isInternalChange.current = false;
+      return;
+    }
+    setQuery(value ? value.displayName : "");
+  }, [value]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -30,6 +47,49 @@ export function CityFormField({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    isDeleting.current = newValue.length < query.length;
+
+    setQuery(newValue);
+
+    if (!isDeleting.current && cities && cities.length > 0) {
+      const normalizedQuery = normalize(newValue);
+
+      const exactDisplayMatch = cities.find(
+        (city) => normalize(city.displayName) === normalizedQuery,
+      );
+
+      if (exactDisplayMatch) {
+        if (!value || value.displayName !== exactDisplayMatch.displayName) {
+          isInternalChange.current = true;
+          onChange(exactDisplayMatch);
+          setIsOpen(false);
+        }
+        return;
+      }
+
+      const nameMatches = cities.filter(
+        (city) => normalize(city.name) === normalizedQuery,
+      );
+
+      if (nameMatches.length === 1) {
+        const uniqueMatch = nameMatches[0];
+        if (!value || value.displayName !== uniqueMatch.displayName) {
+          isInternalChange.current = true;
+          setQuery(uniqueMatch.displayName);
+          onChange(uniqueMatch);
+          setIsOpen(false);
+        }
+        return;
+      }
+    }
+
+    isInternalChange.current = true;
+    onChange(null);
+    setIsOpen(true);
+  };
+
   const filteredCities = filterCities(query, cities);
 
   return (
@@ -43,17 +103,17 @@ export function CityFormField({
 
         <input
           id={namePrefix}
+          name={namePrefix}
           type="text"
-          className="w-full h-12 pl-11 pr-4 rounded-2xl border border-slate-400 bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none"
+          className={`w-full h-12 pl-11 pr-4 rounded-2xl border bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none ${
+            error
+              ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              : "border-slate-400"
+          }`}
           placeholder={placeholder}
           value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            onChange(null);
-            setIsOpen(true);
-          }}
+          onChange={handleInputChange}
           onFocus={() => setIsOpen(true)}
-          required
         />
       </div>
 
@@ -68,6 +128,12 @@ export function CityFormField({
         value={value?.uf || ""}
       />
 
+      {error && (
+        <span className="text-xs text-red-500 mt-1.5 block pl-1 font-medium animate-in fade-in duration-200">
+          {error}
+        </span>
+      )}
+
       {isOpen && query.length > 1 && (
         <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
           {isLoadingCities ? (
@@ -79,6 +145,7 @@ export function CityFormField({
               <li
                 key={`${city.uf}-${city.name}-${index}`}
                 onClick={() => {
+                  isInternalChange.current = true;
                   onChange(city);
                   setQuery(city.displayName);
                   setIsOpen(false);
