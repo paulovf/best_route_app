@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
 import { useCity } from "@/context/CityContext";
 import { CityFormFieldProps, CityOption } from "@/types/form";
+import { useTranslations } from "next-intl";
 
 export function CityFormField({
   placeholder,
@@ -18,6 +19,7 @@ export function CityFormField({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const isInternalChange = useRef(false);
   const isDeleting = useRef(false);
+  const t = useTranslations("CityFormField");
 
   const normalize = (str: string) =>
     str
@@ -138,7 +140,7 @@ export function CityFormField({
         <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
           {isLoadingCities ? (
             <li className="p-3 text-neutral-900 text-sm text-center animate-pulse">
-              Carregando cidades...
+              {t("loading")}
             </li>
           ) : filteredCities.length > 0 ? (
             filteredCities.map((city, index) => (
@@ -158,7 +160,7 @@ export function CityFormField({
             ))
           ) : (
             <li className="p-3 text-neutral-500 text-sm text-center">
-              Nenhuma cidade encontrada.
+              {t("notFound")}
             </li>
           )}
         </ul>
@@ -168,18 +170,15 @@ export function CityFormField({
 }
 
 function filterCities(query: string, cities: CityOption[]) {
-  if (query === "") {
-    return [];
-  } else {
-    return cities
-      .filter((city) => {
-        const normalize = (str: string) =>
-          str
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase();
-        return normalize(city.displayName).includes(normalize(query));
-      })
-      .slice(0, 10);
-  }
+  if (query === "") return [];
+  return cities
+    .filter((city) => {
+      const normalize = (str: string) =>
+        str
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+      return normalize(city.displayName).includes(normalize(query));
+    })
+    .slice(0, 10);
 }

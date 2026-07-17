@@ -4,9 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useActiveSection } from "@/hooks/useActiveSection";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { useTranslations } from "next-intl";
 
 interface TopbarProps {
   show: boolean;
@@ -15,6 +16,7 @@ interface TopbarProps {
 export default function Topbar({ show }: TopbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMounted = useIsMounted();
+  const t = useTranslations("Topbar");
 
   const activeSection = useActiveSection([
     "home-screen",
@@ -36,21 +38,21 @@ export default function Topbar({ show }: TopbarProps) {
   }
 
   const navLinks = [
-    { label: "Home", href: "/", id: "home-screen", target: "_self" },
+    { label: t("links.home"), href: "/", id: "home-screen", target: "_self" },
     {
-      label: "Calcular rota",
+      label: t("links.calculate"),
       href: "/#form-screen",
       id: "form-screen",
       target: "_self",
     },
     {
-      label: "Resultados",
-      href: resultHref,
+      label: t("links.results"),
+      href: resultHref as string,
       id: "result-screen",
       target: "_self",
     },
     {
-      label: "Política de privacidade",
+      label: t("links.privacy"),
       href: "/privacy_policy",
       id: "privacy-policy-screen",
       target: "_self",
@@ -97,7 +99,7 @@ export default function Topbar({ show }: TopbarProps) {
         <div className="flex items-center gap-2">
           <Image
             src="/images/logo_v2_dark.png"
-            alt="Best Route topbar logo"
+            alt={t("logoAlt")}
             width={28}
             height={28}
             className="w-7 h-7 object-contain"

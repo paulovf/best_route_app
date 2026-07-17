@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/routing"; 
+import { Link } from "@/i18n/routing";
 import { ArrowLeft } from "lucide-react";
 import Topbar from "@/app/[locale]/components/layout/Topbar";
 import { useTranslations } from "next-intl";
@@ -26,9 +26,7 @@ export default function PrivacyPolicyPage() {
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-neutral-900">
               {t("title")}
             </h1>
-            <p className="text-sm text-slate-500 mt-2">
-              {t("lastUpdated")}
-            </p>
+            <p className="text-sm text-slate-500 mt-2">{t("lastUpdated")}</p>
           </header>
 
           <section className="space-y-3">

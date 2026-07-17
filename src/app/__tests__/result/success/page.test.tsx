@@ -11,26 +11,40 @@ jest.mock("/src/hooks/useIsMounted", () => ({
   useIsMounted: jest.fn(),
 }));
 
-jest.mock("next/navigation", () => ({
+jest.mock("next-intl", () => ({
+  useTranslations: () => (key: string, values?: any) => {
+    if (key === "found") return `${values.count} opção(ões) encontrada(s)`;
+    return key;
+  },
+  useLocale: () => "pt-BR",
+}));
+
+jest.mock("/src/i18n/routing", () => ({
+  Link: ({ children, href, ...rest }: any) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  ),
   useRouter: () => ({
     push: jest.fn(),
     replace: mockReplace,
     prefetch: jest.fn(),
     back: jest.fn(),
   }),
+  usePathname: jest.fn(() => "/"),
 }));
 
 jest.mock("/src/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 
-jest.mock("/src/app/components/layout/Topbar", () => {
+jest.mock("/src/app/[locale]/components/layout/Topbar", () => {
   return function MockTopbar() {
     return <div data-testid="mocked-topbar" />;
   };
 });
 
-jest.mock("/src/app/components/layout/OptionCard", () => {
+jest.mock("/src/app/[locale]/components/layout/OptionCard", () => {
   return {
     OptionCard: function MockOptionCard({
       option,

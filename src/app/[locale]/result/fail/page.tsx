@@ -2,18 +2,11 @@
 
 import React, { useEffect } from "react";
 import { useRoute } from "@/context/RouteContext";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter, Link } from "@/i18n/routing";
 import { CircleAlert } from "lucide-react";
 import Topbar from "@/app/[locale]/components/layout/Topbar";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { Fail } from "@/types/fail";
-
-const errorMessages: Record<number, string> = {
-  400: "A cidade e/ou estado informado não é um campo válido.",
-  422: "Não foi possível gerar um itinerário válido com os locais informados. Verifique os nomes das cidades e tente novamente.",
-  504: "A IA que utilizamos para calcular a sua rota está com alta demanda neste momento. Tente novamente mais tarde.",
-};
+import { useTranslations } from "next-intl";
 
 const listHttpStatusCodeMapping = [400, 422, 504];
 
@@ -21,12 +14,7 @@ export default function ErrorPage() {
   const { errorData } = useRoute();
   const router = useRouter();
   const isMounted = useIsMounted();
-  const errorDataResult: Fail = errorData || {
-    status: 500,
-    error: "Internal Server Error",
-    message: "An unexpected error occurred.",
-    path: "",
-  };
+  const t = useTranslations("ErrorPage");
 
   useEffect(() => {
     if (!errorData) {
@@ -40,9 +28,9 @@ export default function ErrorPage() {
 
   const getFriendlyMessage = (status: number) => {
     if (listHttpStatusCodeMapping.includes(status)) {
-      return errorMessages[status];
+      return t(`messages.${status}`);
     }
-    return "Houve um problema ao processar a sua rota. Tente mais tarde.";
+    return t("messages.default");
   };
 
   return (
@@ -58,11 +46,11 @@ export default function ErrorPage() {
           </div>
 
           <h1 className="text-xl font-semibold text-neutral-700">
-            Ops! Algo deu errado
+            {t("title")}
           </h1>
 
           <p className="mt-3 text-sm text-neutral-600 text-center">
-            {getFriendlyMessage(errorDataResult?.status || 500)}
+            {getFriendlyMessage(errorData.status || 500)}
           </p>
 
           <Link
@@ -70,7 +58,7 @@ export default function ErrorPage() {
             id="btn-new-route"
             className="flex flex-row items-center justify-center w-full mt-6 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
           >
-            Refazer Nova Busca
+            {t("button")}
           </Link>
         </div>
       </div>

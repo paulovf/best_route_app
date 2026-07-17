@@ -1,12 +1,14 @@
-// src/components/ui/LoadingModal.tsx
 import React, { useEffect } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface LoadingModalProps {
   isOpen: boolean;
 }
 
 export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
+  const t = useTranslations("LoadingModal");
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -29,7 +31,7 @@ export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
             <div className="absolute inset-0 rounded-full border-4 border-white/10 border-t-white animate-spin"></div>
             <Image
               src="/images/logo_v2.png"
-              alt="Best Route modal loading logo"
+              alt={t("logoAlt")}
               width={80}
               height={80}
               className="w-[80px] h-[80px] object-contain"
@@ -38,11 +40,9 @@ export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
           </div>
 
           <h3 className="mt-8 text-white text-xl font-semibold tracking-tight">
-            Estamos calculando sua rota
+            {t("title")}
           </h3>
-          <p className="mt-2 text-white/70 text-[15px]">
-            Por favor, aguarde alguns instantes. Não atualize ou feche a página.
-          </p>
+          <p className="mt-2 text-white/70 text-[15px]">{t("subtitle")}</p>
         </div>
       </div>
     </div>

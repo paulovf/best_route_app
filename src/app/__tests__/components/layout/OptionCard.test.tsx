@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { OptionCard } from "@/app/[locale]/components/layout/OptionCard";
 import { Option } from "@/types/route";
 
-jest.mock("/src/app/components/layout/OptionCard/Step", () => ({
+jest.mock("/src/app/[locale]/components/layout/OptionCard/Step", () => ({
   OptionCardStep: () => <div data-testid="mocked-steps-timeline" />,
 }));
 

@@ -5,17 +5,11 @@ import { Option } from "@/types/route";
 import { formatDuration, formatPrice } from "@/utils/routeFormatters";
 import { OptionCardStep } from "./OptionCard/Step";
 import { HighlightType } from "@/types/route";
+import { useTranslations } from "next-intl";
 
 interface OptionCardProps {
   option: Option;
 }
-
-const highlights: Record<HighlightType, string> = {
-  recommended: "RECOMENDADA",
-  cheapest: "ECONÔMICA",
-  fastest: "MAIS RÁPIDA",
-  most_convenient: "MAIS PRÁTICA",
-};
 
 const badgeBorderColor: Record<HighlightType, string> = {
   recommended: "bg-primary-500 text-white",
@@ -26,7 +20,12 @@ const badgeBorderColor: Record<HighlightType, string> = {
 
 export const OptionCard = ({ option }: OptionCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const badge = getBadgeDetails(option.highlight);
+  const t = useTranslations("OptionCard");
+
+  const badge = {
+    label: t(`highlights.${option.highlight}`),
+    css: badgeBorderColor[option.highlight],
+  };
 
   return (
     <article
@@ -52,7 +51,7 @@ export const OptionCard = ({ option }: OptionCardProps) => {
               {formatDuration(option.total_duration_hours)}
             </div>
             <div className="text-sm text-neutral-800/60 font-medium flex flex-row items-center justify-center gap-x-1">
-              {option.total_kilometers} km
+              {option.total_kilometers} {t("km")}
               <Dot size={22} className="text-neutral-800/60" />
               {formatPrice(option.total_amount)}
             </div>
@@ -76,14 +75,9 @@ export const OptionCard = ({ option }: OptionCardProps) => {
           <p className="text-xs text-neutral-700 leading-relaxed bg-neutral-50 p-3 rounded-xl">
             {option.description}
           </p>
-
           <OptionCardStep steps={option.steps} />
         </div>
       )}
     </article>
   );
-};
-
-const getBadgeDetails = (label: HighlightType) => {
-  return { label: highlights[label], css: badgeBorderColor[label] };
 };

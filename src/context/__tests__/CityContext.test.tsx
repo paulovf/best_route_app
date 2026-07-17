@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { CityProvider, useCity } from "../CityContext";
 import { getCites } from "@/app/api/ibge/search_cities";
 
-jest.mock("/src/app/api/ibge/search_cities");
+jest.mock("/src/app/[locale]/api/ibge/search_cities");
 
 const DummyConsumer = () => {
   const { cities, isLoadingCities } = useCity();

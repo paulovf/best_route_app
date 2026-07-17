@@ -40,7 +40,7 @@ jest.mock("/src/services/routeService", () => ({
   searchRoute: jest.fn(),
 }));
 
-jest.mock("/src/app/components/ui/CityFormField", () => ({
+jest.mock("/src/app/[locale]/components/ui/CityFormField", () => ({
   CityFormField: ({
     namePrefix,
     placeholder,
@@ -103,7 +103,7 @@ jest.mock("/src/app/components/ui/CityFormField", () => ({
   },
 }));
 
-jest.mock("/src/app/components/ui/DatePickerField", () => ({
+jest.mock("/src/app/[locale]/components/ui/DatePickerField", () => ({
   DatePickerField: ({ value, onChange, error }: DatePickerFieldProps) => (
     <div>
       <input

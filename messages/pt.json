@@ -80,5 +80,65 @@
     "note": "Nota:",
     "disclaimer": "Valores, distâncias e tempos de viagem são estimados por Inteligência Artificial e podem divergir dos dados reais praticados por aplicativos, sites ou guichês oficiais.",
     "newSearch": "Nova consulta"
+  },
+  "OptionCardStep": {
+    "to": "até",
+    "km": "km"
+  },
+  "Footer": {
+    "logoAlt": "Logo do rodapé do Best Route",
+    "description": "Encontre a melhor rota em segundos. Compare caminhos, preços e tempo entre qualquer cidade do Brasil.",
+    "productTitle": "Produto",
+    "contactsTitle": "Contatos",
+    "links": {
+      "home": "Home",
+      "calculate": "Calcular rota",
+      "result": "Resultado",
+      "privacy": "Política de privacidade",
+      "linkedin": "Meu LinkedIn",
+      "github": "Meu GitHub",
+      "email": "Email"
+    },
+    "copyright": "<bold>© {year} - Paulo Vitor.</bold> <italic>Todos os direitos reservados.</italic>"
+  },
+  "LoadingModal": {
+    "logoAlt": "Logo de carregamento do Best Route",
+    "title": "Estamos calculando sua rota",
+    "subtitle": "Por favor, aguarde alguns instantes. Não atualize ou feche a página."
+  },
+  "OptionCard": {
+    "highlights": {
+      "recommended": "RECOMENDADA",
+      "cheapest": "ECONÔMICA",
+      "fastest": "MAIS RÁPIDA",
+      "most_convenient": "MAIS PRÁTICA"
+    },
+    "km": "km"
+  },
+  "Topbar": {
+    "logoAlt": "Logo da barra superior do Best Route",
+    "links": {
+      "home": "Home",
+      "calculate": "Calcular rota",
+      "results": "Resultados",
+      "privacy": "Política de privacidade"
+    }
+  },
+  "CityFormField": {
+    "loading": "Carregando cidades...",
+    "notFound": "Nenhuma cidade encontrada."
+  },
+  "DatePickerField": {
+    "placeholder": "dd/mm/aaaa",
+    "format": "dd/MM/yyyy"
+  },
+  "Transport": {
+    "bus": "Ônibus",
+    "plane": "Aéreo",
+    "car": "Carro próprio",
+    "boat": "Barco",
+    "train": "Trem",
+    "app_mobile": "App de mobilidade",
+    "default": "Carro"
   }
 }

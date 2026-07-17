@@ -1,6 +1,7 @@
 import React from "react";
 import { Step } from "@/types/route";
 import { MoveRight, Dot } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   getTransportIcon,
   getTransportTypeLabel,
@@ -14,6 +15,8 @@ interface OptionStepsTimelineProps {
 }
 
 export const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
+  const t = useTranslations("OptionCardStep");
+  const tTransport = useTranslations("Transport");
   const sortedSteps = [...steps].sort((a, b) => a.order - b.order);
 
   return (
@@ -41,19 +44,23 @@ export const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
             </div>
 
             <p className="text-xs text-neutral-800/50 mt-0.5">
-              {step.origin_city} ({step.origin_state}) até{" "}
+              {step.origin_city} ({step.origin_state}) {t("to")}{" "}
               {step.destination_city} ({step.destination_state})
             </p>
 
             <div className="mt-2 flex flex-wrap items-center gap-1 text-xs text-neutral-800/60">
               <span className="flex items-center gap-1 bg-primary-50 text-primary-700 px-1.5 py-0.5 rounded font-medium">
                 {getTransportIcon(step.transport_type, "w-3 h-3")}
-                <span>{getTransportTypeLabel(step.transport_type)}</span>
+                <span>
+                  {getTransportTypeLabel(step.transport_type, tTransport)}
+                </span>
               </span>
               <Dot size={20} className="text-neutral-800/60" />
               <span>{formatDuration(step.duration_hours)}</span>
               <Dot size={20} className="text-neutral-800/60" />
-              <span>{step.kilometers} km</span>
+              <span>
+                {step.kilometers} {t("km")}
+              </span>
               <Dot size={20} className="text-neutral-800/60" />
               <span className="font-semibold text-primary-700">
                 {formatPrice(step.average_amount)}

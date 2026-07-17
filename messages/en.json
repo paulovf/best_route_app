@@ -80,5 +80,65 @@
     "note": "Note:",
     "disclaimer": "Travel values, distances, and times are estimated by AI and may differ from real data from apps, websites, or official ticket counters.",
     "newSearch": "New search"
+  },
+  "OptionCardStep": {
+    "to": "to",
+    "km": "km"
+  },
+  "Footer": {
+    "logoAlt": "Best Route footer logo",
+    "description": "Find the best route in seconds. Compare paths, prices, and times between any city in Brazil.",
+    "productTitle": "Product",
+    "contactsTitle": "Contacts",
+    "links": {
+      "home": "Home",
+      "calculate": "Calculate route",
+      "result": "Result",
+      "privacy": "Privacy policy",
+      "linkedin": "My LinkedIn",
+      "github": "My GitHub",
+      "email": "Email"
+    },
+    "copyright": "<bold>© {year} - Paulo Vitor.</bold> <italic>All rights reserved.</italic>"
+  },
+  "LoadingModal": {
+    "logoAlt": "Best Route loading modal logo",
+    "title": "We are calculating your route",
+    "subtitle": "Please wait a few moments. Do not refresh or close the page."
+  },
+  "OptionCard": {
+    "highlights": {
+      "recommended": "RECOMMENDED",
+      "cheapest": "CHEAPEST",
+      "fastest": "FASTEST",
+      "most_convenient": "MOST CONVENIENT"
+    },
+    "km": "km"
+  },
+  "Topbar": {
+    "logoAlt": "Best Route topbar logo",
+    "links": {
+      "home": "Home",
+      "calculate": "Calculate route",
+      "results": "Results",
+      "privacy": "Privacy policy"
+    }
+  },
+  "CityFormField": {
+    "loading": "Loading cities...",
+    "notFound": "No cities found."
+  },
+  "DatePickerField": {
+    "placeholder": "mm/dd/yyyy",
+    "format": "MM/dd/yyyy"
+  },
+  "Transport": {
+    "bus": "Bus",
+    "plane": "Flight",
+    "car": "Own car",
+    "boat": "Boat",
+    "train": "Train",
+    "app_mobile": "Ride-hailing app",
+    "default": "Car"
   }
 }

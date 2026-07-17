@@ -5,12 +5,13 @@ import Image from "next/image";
 import { GitBranch, ExternalLink } from "lucide-react";
 import Topbar from "@/app/[locale]/components/layout/Topbar";
 import { FormScreen } from "../form/FormScreen";
+import LanguageSwitcher from "@/app/[locale]/components/ui/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 
 export default function HomeScreen() {
+  const t = useTranslations("Home");
   const [showTopbar, setShowTopbar] = useState(false);
   const formSectionRef = useRef<HTMLDivElement>(null);
-  const t = useTranslations("Home");
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -63,18 +64,22 @@ export default function HomeScreen() {
           <div className="absolute inset-0 bg-neutral-900/70" />
         </div>
 
-        <header className="relative z-10 px-6 pt-8 md:px-10 flex items-center gap-3">
-          <Image
-            src="/images/logo_v2.png"
-            alt={t("images.logoAlt")}
-            width={48}
-            height={48}
-            className="w-12 h-12 object-contain"
-            priority
-          />
-          <span className="text-neutral-50 font-semibold text-xl tracking-tight">
-            Best Route
-          </span>
+        <header className="relative z-50 px-6 pt-8 md:px-10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/logo_v2.png"
+              alt={t("images.logoAlt")}
+              width={48}
+              height={48}
+              className="w-12 h-12 object-contain"
+              priority
+            />
+            <span className="text-neutral-50 font-semibold text-xl tracking-tight">
+              Best Route
+            </span>
+          </div>
+
+          <LanguageSwitcher />
         </header>
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 -mt-10">
@@ -106,7 +111,9 @@ export default function HomeScreen() {
               <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
                 <GitBranch size={18} />
               </div>
-              <span className="text-sm text-neutral-50/80">{t("links.githubApi")}</span>
+              <span className="text-sm text-neutral-50/80">
+                {t("links.githubApi")}
+              </span>
             </div>
           </a>
           <a
@@ -119,7 +126,9 @@ export default function HomeScreen() {
               <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
                 <GitBranch size={18} />
               </div>
-              <span className="text-sm text-neutral-50/80">{t("links.githubApp")}</span>
+              <span className="text-sm text-neutral-50/80">
+                {t("links.githubApp")}
+              </span>
             </div>
           </a>
           <a
@@ -132,7 +141,9 @@ export default function HomeScreen() {
               <div className="w-10 h-10 rounded-full border border-neutral-50/25 flex items-center justify-center text-neutral-50 hover:bg-white/10 transition">
                 <ExternalLink size={18} />
               </div>
-              <span className="text-sm text-neutral-50/80">{t("links.linkedin")}</span>
+              <span className="text-sm text-neutral-50/80">
+                {t("links.linkedin")}
+              </span>
             </div>
           </a>
         </div>

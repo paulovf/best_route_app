@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { useTranslations } from "next-intl";
 
 export function Footer() {
+  const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
   const { routeData, errorData } = useRoute();
   const isMounted = useIsMounted();
@@ -27,7 +29,7 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <Image
               src="/images/logo_v2.png"
-              alt="Best Route footer logo"
+              alt={t("logoAlt")}
               width={24}
               height={24}
               className="w-6 h-6 object-contain"
@@ -38,18 +40,19 @@ export function Footer() {
             </span>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-neutral-300 max-w-xs">
-            Encontre a melhor rota em segundos. Compare caminhos, preços e tempo
-            entre qualquer cidade do Brasil.
+            {t("description")}
           </p>
         </div>
 
         <div className="md:flex md:flex-col md:items-center">
           <div className="md:flex md:flex-col">
-            <h4 className="font-semibold text-sm text-neutral-50">Produto</h4>
+            <h4 className="font-semibold text-sm text-neutral-50">
+              {t("productTitle")}
+            </h4>
             <ul className="mt-4 space-y-3 text-sm text-[#94A3B8]">
               <li>
                 <Link href="/" className="hover:text-white transition-colors">
-                  Home
+                  {t("links.home")}
                 </Link>
               </li>
               <li>
@@ -57,7 +60,7 @@ export function Footer() {
                   href="/#form-screen"
                   className="hover:text-white transition-colors"
                 >
-                  Calcular rota
+                  {t("links.calculate")}
                 </Link>
               </li>
               <li>
@@ -65,7 +68,7 @@ export function Footer() {
                   href={resultHref}
                   className="hover:text-white transition-colors"
                 >
-                  Resultado
+                  {t("links.result")}
                 </Link>
               </li>
               <li>
@@ -93,7 +96,7 @@ export function Footer() {
                   href="/privacy_policy"
                   className="hover:text-white transition-colors"
                 >
-                  Política de privacidade
+                  {t("links.privacy")}
                 </Link>
               </li>
             </ul>
@@ -101,7 +104,9 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="font-semibold text-sm text-neutral-50">Contatos</h4>
+          <h4 className="font-semibold text-sm text-neutral-50">
+            {t("contactsTitle")}
+          </h4>
           <ul className="mt-4 space-y-3 text-sm text-[#94A3B8]">
             <li>
               <Link
@@ -110,7 +115,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
               >
-                Meu LinkedIn
+                {t("links.linkedin")}
               </Link>
             </li>
             <li>
@@ -120,7 +125,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
               >
-                Meu GitHub
+                {t("links.github")}
               </Link>
             </li>
             <li>
@@ -129,7 +134,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
               >
-                Email
+                {t("links.email")}
               </Link>
             </li>
           </ul>
@@ -140,8 +145,11 @@ export function Footer() {
 
       <div className="max-w-6xl mx-auto px-6 md:px-10 pb-6 flex justify-center text-xs text-[#334155]">
         <p className="mt-8 text-xs text-neutral-400">
-          <b>© {currentYear} - Paulo Vitor.</b>{" "}
-          <i>Todos os direitos reservados.</i>
+          {t.rich("copyright", {
+            year: currentYear,
+            bold: (chunks) => <b>{chunks}</b>,
+            italic: (chunks) => <i>{chunks}</i>,
+          })}
         </p>
       </div>
     </footer>

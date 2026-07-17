@@ -1,7 +1,7 @@
 "use client";
 
-import { forwardRef, FormEvent, useState, useEffect } from "react";
-import { useRouter } from "@/i18n/routing"; 
+import { forwardRef, FormEvent, useState, useEffect, useCallback } from "react";
+import { useRouter } from "@/i18n/routing";
 import { MapPlus, ArrowUpDown } from "lucide-react";
 import { startOfDay, addYears } from "date-fns";
 import { CityFormField } from "@/app/[locale]/components/ui/CityFormField";
@@ -42,65 +42,68 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
     }
   }, [location]);
 
-  const validateForm = (
-    currentOrigin: CityOption | null,
-    currentDestination: CityOption | null,
-    currentDate: Date | undefined,
-    checkRequired: boolean,
-  ): boolean => {
-    let isValid = true;
-    let oError: string | null = null;
-    let dError: string | null = null;
-    let tError: string | null = null;
+  const validateForm = useCallback(
+    (
+      currentOrigin: CityOption | null,
+      currentDestination: CityOption | null,
+      currentDate: Date | undefined,
+      checkRequired: boolean,
+    ): boolean => {
+      let isValid = true;
+      let oError: string | null = null;
+      let dError: string | null = null;
+      let tError: string | null = null;
 
-    if (currentOrigin && currentDestination) {
-      if (
-        currentOrigin.name === currentDestination.name &&
-        currentOrigin.uf === currentDestination.uf
-      ) {
-        oError = t("errors.originSameAsDest");
-        dError = t("errors.destSameAsOrigin");
-        isValid = false;
-      }
-    }
-
-    if (checkRequired) {
-      if (!currentOrigin) {
-        oError = oError || t("errors.invalidOrigin");
-        isValid = false;
-      }
-      if (!currentDestination) {
-        dError = dError || t("errors.invalidDest");
-        isValid = false;
-      }
-      if (!currentDate) {
-        tError = t("errors.emptyDate");
-        isValid = false;
-      } else {
-        const today = startOfDay(new Date());
-        const maxDate = addYears(today, 1);
-        const selectedDate = startOfDay(currentDate);
-
-        if (selectedDate < today) {
-          tError = t("errors.pastDate");
-          isValid = false;
-        } else if (selectedDate > maxDate) {
-          tError = t("errors.maxDate");
+      if (currentOrigin && currentDestination) {
+        if (
+          currentOrigin.name === currentDestination.name &&
+          currentOrigin.uf === currentDestination.uf
+        ) {
+          oError = t("errors.originSameAsDest");
+          dError = t("errors.destSameAsOrigin");
           isValid = false;
         }
       }
-    }
 
-    setOriginError(oError);
-    setDestinationError(dError);
-    setDateError(tError);
+      if (checkRequired) {
+        if (!currentOrigin) {
+          oError = oError || t("errors.invalidOrigin");
+          isValid = false;
+        }
+        if (!currentDestination) {
+          dError = dError || t("errors.invalidDest");
+          isValid = false;
+        }
+        if (!currentDate) {
+          tError = t("errors.emptyDate");
+          isValid = false;
+        } else {
+          const today = startOfDay(new Date());
+          const maxDate = addYears(today, 1);
+          const selectedDate = startOfDay(currentDate);
 
-    return isValid;
-  };
+          if (selectedDate < today) {
+            tError = t("errors.pastDate");
+            isValid = false;
+          } else if (selectedDate > maxDate) {
+            tError = t("errors.maxDate");
+            isValid = false;
+          }
+        }
+      }
+
+      setOriginError(oError);
+      setDestinationError(dError);
+      setDateError(tError);
+
+      return isValid;
+    },
+    [t],
+  );
 
   useEffect(() => {
     validateForm(origin, destination, travelDate, wasSubmitted);
-  }, [origin, destination, travelDate, wasSubmitted]);
+  }, [origin, destination, travelDate, wasSubmitted, validateForm]);
 
   const handleSwap = () => {
     setOrigin(destination);
@@ -160,9 +163,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                 <h2 className="text-xl text-neutral-600 font-semibold leading-tight">
                   {t("title")}
                 </h2>
-                <p className="text-sm text-slate-500 mt-0.5">
-                  {t("subtitle")}
-                </p>
+                <p className="text-sm text-slate-500 mt-0.5">{t("subtitle")}</p>
               </div>
             </header>
 

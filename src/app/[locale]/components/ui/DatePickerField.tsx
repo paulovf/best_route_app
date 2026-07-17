@@ -4,9 +4,18 @@ import { useState, useRef, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import { Calendar } from "lucide-react";
 import { format, addYears, startOfDay } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS, fr, de, es, Locale } from "date-fns/locale";
 import { DatePickerFieldProps } from "@/types/form";
+import { useTranslations, useLocale } from "next-intl";
 import "react-day-picker/dist/style.css";
+
+const fnsLocale: Record<string, Locale> = {
+  en: enUS,
+  pt: ptBR,
+  fr: fr,
+  de: de,
+  es: es,
+};
 
 export function DatePickerField({
   value,
@@ -15,6 +24,10 @@ export function DatePickerField({
 }: DatePickerFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const t = useTranslations("DatePickerField");
+  const locale = useLocale();
+  const dateFnsLocale = fnsLocale[locale];
 
   const today = startOfDay(new Date());
   const maxDate = addYears(today, 1);
@@ -46,8 +59,8 @@ export function DatePickerField({
         <input
           type="text"
           readOnly
-          placeholder="dd/mm/aaaa"
-          value={value ? format(value, "dd/MM/yyyy") : ""}
+          placeholder={t("placeholder")}
+          value={value ? format(value, t("format")) : ""}
           className={`w-full h-12 pl-11 pr-4 rounded-2xl border bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none ${
             error ? "border-red-500 text-red-950" : "border-slate-400"
           }`}
@@ -73,7 +86,7 @@ export function DatePickerField({
               onChange(date);
               setIsOpen(false);
             }}
-            locale={ptBR}
+            locale={dateFnsLocale}
             disabled={[{ before: today }, { after: maxDate }]}
           />
         </div>

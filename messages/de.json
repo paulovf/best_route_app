@@ -1,0 +1,144 @@
+{
+  "Home": {
+    "title": "Finden Sie die beste Route für Ihre Reise",
+    "subtitle": "Vergleichen Sie Routen, Verkehrsmittel, Preise und Reisezeiten zwischen Städten in ganz Brasilien",
+    "cta": "Hier starten",
+    "links": {
+      "githubApi": "GitHub API",
+      "githubApp": "GitHub App",
+      "linkedin": "Mein LinkedIn"
+    },
+    "images": {
+      "planeAlt": "Flugzeug",
+      "logoAlt": "Best Route Startlogo"
+    }
+  },
+  "Form": {
+    "title": "Berechnen Sie Ihre beste Route",
+    "subtitle": "Planen Sie Ihre Reise einfacher",
+    "ariaLabels": {
+      "mapIcon": "Kartensymbol",
+      "swap": "Start und Ziel vertauschen"
+    },
+    "inputs": {
+      "locating": "Standort wird gesucht...",
+      "originPlaceholder": "Wo sind Sie?",
+      "destinationPlaceholder": "Wohin reisen Sie?"
+    },
+    "calculateButton": "Route berechnen",
+    "disclaimers": {
+      "data": "*Wir verwenden öffentliche Daten und KI-Abfragen, um Preise, Routen und Zeiten zu schätzen.",
+      "ai": "*Die KI kann Routenabschnitte vorschlagen, die aufgrund aktueller Änderungen nicht existieren.",
+      "geolocation": "*Wir verwenden Ihren Standort nur, um die aktuelle Startstadt vorzuschlagen."
+    },
+    "errors": {
+      "originSameAsDest": "Die Startstadt darf nicht mit der Zielstadt identisch sein.",
+      "destSameAsOrigin": "Die Zielstadt darf nicht mit der Startstadt identisch sein.",
+      "invalidOrigin": "Ungültige Startstadt. Bitte wählen Sie eine Option aus der Liste.",
+      "invalidDest": "Ungültige Zielstadt. Bitte wählen Sie eine Option aus der Liste.",
+      "emptyDate": "Bitte wählen Sie ein Reisedatum aus.",
+      "pastDate": "Das Reisedatum darf nicht in der Vergangenheit liegen.",
+      "maxDate": "Das Reisedatum darf nicht mehr als 1 Jahr in der Zukunft liegen."
+    }
+  },
+  "PrivacyPolicy": {
+    "backToHome": "Zurück zur Startseite",
+    "title": "Datenschutzrichtlinie",
+    "lastUpdated": "Letzte Aktualisierung: Juli 2026",
+    "intro": "Ihre Privatsphäre hat für uns Priorität. Diese Datenschutzrichtlinie erläutert transparent, wie <bold>Best Route</bold> mit Ihren Informationen umgeht.",
+    "sections": {
+      "geolocation": {
+        "title": "1. Nutzung der Geolokalisierung",
+        "content": "Unsere Anwendung fragt den Zugriff auf die Geolokalisierung Ihres Geräts an, ausschließlich um das Startstadtfeld im Suchformular automatisch auszufüllen. Diese Funktion dient nur dazu, Ihr Navigationserlebnis zu optimieren."
+      },
+      "data": {
+        "title": "2. Datenspeicherung und Aufbewahrung",
+        "content": "<bold>Wir speichern nicht</bold> Ihre Standortdaten, Ihre IP-Adresse oder den Verlauf Ihrer gesuchten Routen in Datenbanken. Die im Formular ausgefüllten Informationen werden in Echtzeit nur verarbeitet, um Routenoptionen zu berechnen und anzuzeigen, und werden sofort nach der Anfrage verworfen."
+      },
+      "cookies": {
+        "title": "3. Cookies und Tracking durch Dritte",
+        "content": "Diese digitale Umgebung ist frei von Tracking-Tools Dritter, Marketing-Cookies oder Social-Media-Pixeln. Wir verwenden nur den lokal gespeicherten Speicher, der für den technischen Betrieb der Anwendung unbedingt erforderlich ist."
+      },
+      "security": {
+        "title": "4. Sicherheit",
+        "content": "Der gesamte Datenverkehr zwischen Ihrem Browser und unseren Diensten wird über das HTTPS-Protokoll verschlüsselt, um sicherzustellen, dass Ihre Anfragen sicher übertragen werden."
+      }
+    }
+  },
+  "ErrorPage": {
+    "title": "Hoppla! Etwas ist schiefgelaufen",
+    "messages": {
+      "400": "Die angegebene Stadt und/oder der Staat ist kein gültiges Feld.",
+      "422": "Mit den angegebenen Orten konnte keine gültige Route generiert werden. Bitte überprüfen Sie die Städtenamen und versuchen Sie es erneut.",
+      "504": "Die KI, die wir zur Berechnung Ihrer Route verwenden, ist derzeit stark ausgelastet. Bitte versuchen Sie es später erneut.",
+      "default": "Bei der Verarbeitung Ihrer Route ist ein Problem aufgetreten. Bitte versuchen Sie es später erneut."
+    },
+    "button": "Neue Suche starten"
+  },
+  "SuccessPage": {
+    "found": "{count, plural, =1 {# Option gefunden} other {# Optionen gefunden}}",
+    "note": "Hinweis:",
+    "disclaimer": "Werte, Entfernungen und Reisezeiten sind KI-Schätzungen und können von den tatsächlichen Daten abweichen, die von offiziellen Apps, Websites oder Schaltern angeboten werden.",
+    "newSearch": "Neue Suche"
+  },
+  "OptionCardStep": {
+    "to": "bis",
+    "km": "km"
+  },
+  "Footer": {
+    "logoAlt": "Best Route Footer-Logo",
+    "description": "Finden Sie die beste Route in Sekunden. Vergleichen Sie Wege, Preise und Zeit zwischen Städten in Brasilien.",
+    "productTitle": "Produkt",
+    "contactsTitle": "Kontakte",
+    "links": {
+      "home": "Startseite",
+      "calculate": "Route berechnen",
+      "result": "Ergebnis",
+      "privacy": "Datenschutzrichtlinie",
+      "linkedin": "Mein LinkedIn",
+      "github": "Mein GitHub",
+      "email": "E-Mail"
+    },
+    "copyright": "<bold>© {year} - Paulo Vitor.</bold> <italic>Alle Rechte vorbehalten.</italic>"
+  },
+  "LoadingModal": {
+    "logoAlt": "Best Route Lade-Logo",
+    "title": "Wir berechnen Ihre Route",
+    "subtitle": "Bitte warten Sie einen Moment. Aktualisieren oder schließen Sie die Seite nicht."
+  },
+  "OptionCard": {
+    "highlights": {
+      "recommended": "EMPFOHLEN",
+      "cheapest": "GÜNSTIG",
+      "fastest": "SCHNELLSTE",
+      "most_convenient": "PRAKTISCHSTE"
+    },
+    "km": "km"
+  },
+  "Topbar": {
+    "logoAlt": "Best Route Topbar-Logo",
+    "links": {
+      "home": "Startseite",
+      "calculate": "Route berechnen",
+      "results": "Ergebnisse",
+      "privacy": "Datenschutzrichtlinie"
+    }
+  },
+  "CityFormField": {
+    "loading": "Städte werden geladen...",
+    "notFound": "Keine Stadt gefunden."
+  },
+  "DatePickerField": {
+    "placeholder": "tt.mm.jjjj",
+    "format": "dd.MM.yyyy"
+  },
+  "Transport": {
+    "bus": "Bus",
+    "plane": "Flug",
+    "car": "Eigenes Auto",
+    "boat": "Boot",
+    "train": "Zug",
+    "app_mobile": "Mobilitäts-App",
+    "default": "Auto"
+  }
+}

@@ -2,7 +2,7 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { useGeolocation } from "../useGeolocation";
 import { getByCoords } from "@/app/api/open_street_map/get_location";
 
-jest.mock("/src/app/api/open_street_map/get_location");
+jest.mock("/src/app/[locale]/api/open_street_map/get_location");
 
 describe("useGeolocation Hook", () => {
   const mockGetCurrentPosition = jest.fn();
