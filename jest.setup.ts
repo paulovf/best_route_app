@@ -1,4 +1,7 @@
 import "@testing-library/jest-dom";
+import { setTestLocale } from "@/test/i18n";
+import "@/test/mocks/next-intl";
+import "@/test/mocks/routing";
 
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -16,3 +19,8 @@ global.fetch = jest.fn(() =>
     json: () => Promise.resolve([]),
   }),
 ) as jest.Mock;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  setTestLocale("pt");
+});

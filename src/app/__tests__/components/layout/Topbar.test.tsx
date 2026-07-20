@@ -9,10 +9,6 @@ jest.mock("/src/context/RouteContext", () => ({
 describe("Topbar component", () => {
   const mockUseRoute = useRoute as jest.Mock;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("display component when prop show is true", () => {
     mockUseRoute.mockReturnValue({
       routeData: null,

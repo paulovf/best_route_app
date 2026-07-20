@@ -76,7 +76,7 @@
     "button": "Start a new search"
   },
   "SuccessPage": {
-    "found": "{count, plural, =1 {# option found} other {# options found}}",
+    "found": "{count} option(s) found",
     "note": "Note:",
     "disclaimer": "Travel values, distances, and times are estimated by AI and may differ from real data from apps, websites, or official ticket counters.",
     "newSearch": "New search"

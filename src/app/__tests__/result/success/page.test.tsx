@@ -4,45 +4,15 @@ import SuccessPage from "@/app/[locale]/result/success/page";
 import { useRoute } from "@/context/RouteContext";
 import { Option } from "@/types/route";
 import { useIsMounted } from "@/hooks/useIsMounted";
-
-const mockReplace = jest.fn();
-
-jest.mock("/src/hooks/useIsMounted", () => ({
-  useIsMounted: jest.fn(),
-}));
-
-jest.mock("next-intl", () => ({
-  useTranslations: () => (key: string, values?: any) => {
-    if (key === "found") return `${values.count} opção(ões) encontrada(s)`;
-    return key;
-  },
-  useLocale: () => "pt-BR",
-}));
-
-jest.mock("/src/i18n/routing", () => ({
-  Link: ({ children, href, ...rest }: any) => (
-    <a href={href} {...rest}>
-      {children}
-    </a>
-  ),
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: mockReplace,
-    prefetch: jest.fn(),
-    back: jest.fn(),
-  }),
-  usePathname: jest.fn(() => "/"),
-}));
+import { mockReplace } from "@/test/mocks/routing";
 
 jest.mock("/src/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 
-jest.mock("/src/app/[locale]/components/layout/Topbar", () => {
-  return function MockTopbar() {
-    return <div data-testid="mocked-topbar" />;
-  };
-});
+jest.mock("/src/hooks/useIsMounted", () => ({
+  useIsMounted: jest.fn(),
+}));
 
 jest.mock("/src/app/[locale]/components/layout/OptionCard", () => {
   return {
@@ -91,7 +61,6 @@ describe("SuccessPage screen", () => {
   const mockUseIsMounted = useIsMounted as jest.Mock;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     mockUseIsMounted.mockReturnValue(true);
   });
 
@@ -145,7 +114,7 @@ describe("SuccessPage screen", () => {
 
     render(<SuccessPage />);
 
-    expect(screen.getByText("2 opções encontradas")).toBeInTheDocument();
+    expect(screen.getByText("2 opção(ões) encontrada(s)")).toBeInTheDocument();
   });
 
   it("should output the singular summary message when only a single route exists", () => {
@@ -159,7 +128,7 @@ describe("SuccessPage screen", () => {
 
     render(<SuccessPage />);
 
-    expect(screen.getByText("1 opção encontrada")).toBeInTheDocument();
+    expect(screen.getByText("1 opção(ões) encontrada(s)")).toBeInTheDocument();
   });
 
   it("should contain a operational link pointing back to the home page form anchor", () => {

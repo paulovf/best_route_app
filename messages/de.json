@@ -76,7 +76,7 @@
     "button": "Neue Suche starten"
   },
   "SuccessPage": {
-    "found": "{count, plural, =1 {# Option gefunden} other {# Optionen gefunden}}",
+    "found": "{count} Option(en) gefunden",
     "note": "Hinweis:",
     "disclaimer": "Werte, Entfernungen und Reisezeiten sind KI-Schätzungen und können von den tatsächlichen Daten abweichen, die von offiziellen Apps, Websites oder Schaltern angeboten werden.",
     "newSearch": "Neue Suche"

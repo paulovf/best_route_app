@@ -18,10 +18,6 @@ describe("Footer Component", () => {
     clearStorage: jest.fn(),
   };
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("should render static content correctly including logo, text, and copyright with current year", () => {
     jest.mocked(useIsMounted).mockReturnValue(true);
     jest.mocked(useRoute).mockReturnValue({
@@ -32,13 +28,16 @@ describe("Footer Component", () => {
 
     render(<Footer />);
 
-    const logo = screen.getByAltText("Best Route footer logo");
+    const logo = screen.getByAltText("Logo do rodapé do Best Route");
     expect(logo).toBeInTheDocument();
     expect(screen.getByText("Best Route")).toBeInTheDocument();
     expect(
       screen.getByText(/Encontre a melhor rota em segundos/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/© 2026 - Paulo Vitor/i)).toBeInTheDocument();
+    expect(screen.getByText(/Paulo Vitor/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Todos os direitos reservados/i),
+    ).toBeInTheDocument();
   });
 
   it("should point to form-screen when the component is not mounted yet", () => {

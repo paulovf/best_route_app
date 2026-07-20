@@ -23,8 +23,6 @@ describe("CityFormField component", () => {
   const mockOnChange = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-
     (useCity as jest.Mock).mockReturnValue({
       cities: mockContextCities,
       isLoadingCities: false,

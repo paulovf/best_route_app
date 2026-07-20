@@ -5,10 +5,6 @@ import { subDays } from "date-fns";
 describe("DatePickerField component", () => {
   const mockOnChange = jest.fn();
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("when click in input open calendar", () => {
     render(<DatePickerField value={undefined} onChange={mockOnChange} />);
 

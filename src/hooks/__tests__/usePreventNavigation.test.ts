@@ -5,10 +5,6 @@ describe("usePreventNavigation hook", () => {
   const addSpy = jest.spyOn(window, "addEventListener");
   const removeSpy = jest.spyOn(window, "removeEventListener");
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("should add 'beforeunload' listener when isBlocking is true", () => {
     renderHook(() => usePreventNavigation(true));
 

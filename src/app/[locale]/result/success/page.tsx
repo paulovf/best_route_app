@@ -17,7 +17,7 @@ export default function SuccessPage() {
   const isMounted = useIsMounted();
 
   useEffect(() => {
-    if (!routeData?.options?.length) router.replace("/");
+    if (!routeData?.options?.length) router.replace("/#form-screen");
   }, [routeData, router]);
 
   if (!isMounted || !routeData?.options?.length) return null;
@@ -79,7 +79,7 @@ export default function SuccessPage() {
 
         <div className="mt-10">
           <Link
-            href="/"
+            href="/#form-screen"
             className="flex items-center justify-center w-full bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 hover:opacity-50 transition-all"
           >
             {t("newSearch")}

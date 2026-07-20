@@ -76,7 +76,7 @@
     "button": "Rehacer Nueva Búsqueda"
   },
   "SuccessPage": {
-    "found": "{count, plural, =1 {# opción encontrada} other {# opciones encontradas}}",
+    "found": "{count} opción(es) encontrada(s)",
     "note": "Nota:",
     "disclaimer": "Valores, distancias y tiempos de viaje son estimados por Inteligencia Artificial y pueden diferir de los datos reales practicados por aplicaciones, sitios o taquillas oficiales.",
     "newSearch": "Nueva consulta"

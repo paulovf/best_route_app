@@ -76,7 +76,7 @@
     "button": "Recommencer la recherche"
   },
   "SuccessPage": {
-    "found": "{count, plural, =1 {# option trouvée} other {# options trouvées}}",
+    "found": "{count} option(s) trouvée(s)",
     "note": "Note :",
     "disclaimer": "Les valeurs, distances et temps de voyage sont estimés par Intelligence Artificielle et peuvent différer des données réelles fournies par les applications, sites ou guichets officiels.",
     "newSearch": "Nouvelle recherche"

@@ -7,7 +7,6 @@ describe("getByCoords Service", () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     process.env = {
       ...originalEnv,
       NEXT_PUBLIC_OPEN_STREET_MAP_URL: "https://api.test.com",

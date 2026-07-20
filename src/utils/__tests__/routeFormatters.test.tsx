@@ -7,6 +7,17 @@ import {
   formatPrice,
 } from "../routeFormatters";
 
+const tTransport = (key: string) => {
+  const translations: Record<string, string> = {
+    bus: "Ônibus",
+    plane: "Aéreo",
+    app_mobile: "App de mobilidade",
+    car: "Carro",
+  };
+
+  return translations[key] ?? "Carro";
+};
+
 describe("routeFormatters Utility Functions", () => {
   describe("getTransportIcon", () => {
     it("should return a valid React component for a known transport type", () => {
@@ -34,14 +45,16 @@ describe("routeFormatters Utility Functions", () => {
 
   describe("getTransportTypeLabel", () => {
     it("should return the correct Portuguese translation for known transport types", () => {
-      expect(getTransportTypeLabel("bus")).toBe("Ônibus");
-      expect(getTransportTypeLabel("plane")).toBe("Aéreo");
-      expect(getTransportTypeLabel("app_mobile")).toBe("App de mobilidade");
+      expect(getTransportTypeLabel("bus", tTransport)).toBe("Ônibus");
+      expect(getTransportTypeLabel("plane", tTransport)).toBe("Aéreo");
+      expect(getTransportTypeLabel("app_mobile", tTransport)).toBe(
+        "App de mobilidade",
+      );
     });
 
     it('should return the fallback label "Carro" when given an unmapped type string', () => {
       // @ts-expect-error - testing invalid runtime value intentionally
-      expect(getTransportTypeLabel("teleport")).toBe("Carro");
+      expect(getTransportTypeLabel("teleport", tTransport)).toBe("Carro");
     });
   });
 
