@@ -34,22 +34,25 @@ export const getTransportIcon = (
   }
 };
 
-export const getTransportTypeLabel = (type: TransportType) => {
+export const getTransportTypeLabel = (
+  type: TransportType,
+  t: (key: string) => string,
+) => {
   switch (type) {
     case "bus":
-      return "Ônibus";
+      return t("bus");
     case "plane":
-      return "Aéreo";
+      return t("plane");
     case "car":
-      return "Carro próprio";
+      return t("car");
     case "boat":
-      return "Barco";
+      return t("boat");
     case "train":
-      return "Trem";
+      return t("train");
     case "app_mobile":
-      return "App de mobilidade";
+      return t("app_mobile");
     default:
-      return "Carro";
+      return t("default");
   }
 };
 
@@ -80,6 +83,9 @@ export const formatDuration = (decimalHours: number): string => {
   return `${hours}h ${minutes}m`;
 };
 
-export const formatPrice = (value: number): string => {
-  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+export const formatPrice = (
+  value: number,
+  locale: string = "pt-BR",
+): string => {
+  return value.toLocaleString(locale, { style: "currency", currency: "BRL" });
 };

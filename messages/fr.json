@@ -1,0 +1,144 @@
+{
+  "Home": {
+    "title": "Trouvez le meilleur itinéraire pour votre voyage",
+    "subtitle": "Comparez les trajets, les modes de transport, les prix et les temps de voyage entre toutes les villes du Brésil",
+    "cta": "Commencez ici",
+    "links": {
+      "githubApi": "GitHub API",
+      "githubApp": "GitHub App",
+      "linkedin": "Mon LinkedIn"
+    },
+    "images": {
+      "planeAlt": "Avion",
+      "logoAlt": "Logo initial de Best Route"
+    }
+  },
+  "Form": {
+    "title": "Calculez votre meilleur itinéraire",
+    "subtitle": "Planifiez votre voyage plus facilement",
+    "ariaLabels": {
+      "mapIcon": "Icône de carte",
+      "swap": "Inverser l'origine et la destination"
+    },
+    "inputs": {
+      "locating": "Localisation en cours...",
+      "originPlaceholder": "Où êtes-vous ?",
+      "destinationPlaceholder": "Où allez-vous ?"
+    },
+    "calculateButton": "Calculer l'itinéraire",
+    "disclaimers": {
+      "data": "*Nous utilisons des données publiques et des requêtes IA pour estimer les prix, les itinéraires et les temps.",
+      "ai": "*L'IA peut suggérer des tronçons d'itinéraire qui n'existent pas en raison de changements récents.",
+      "geolocation": "*Nous utilisons votre géolocalisation uniquement pour suggérer la ville de départ actuelle."
+    },
+    "errors": {
+      "originSameAsDest": "La ville de départ ne peut pas être identique à la ville de destination.",
+      "destSameAsOrigin": "La ville de destination ne peut pas être identique à la ville de départ.",
+      "invalidOrigin": "Ville de départ invalide. Veuillez sélectionner une option dans la liste.",
+      "invalidDest": "Ville de destination invalide. Veuillez sélectionner une option dans la liste.",
+      "emptyDate": "Veuillez sélectionner une date de voyage.",
+      "pastDate": "La date du voyage ne peut pas être antérieure à aujourd'hui.",
+      "maxDate": "La date du voyage ne peut pas être supérieure à 1 an à partir d'aujourd'hui."
+    }
+  },
+  "PrivacyPolicy": {
+    "backToHome": "Retour à l'accueil",
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour : Juillet 2026",
+    "intro": "Votre vie privée est une priorité pour nous. Cette politique de confidentialité explique en toute transparence comment <bold>Best Route</bold> gère vos informations.",
+    "sections": {
+      "geolocation": {
+        "title": "1. Utilisation de la géolocalisation",
+        "content": "Notre application demande l'accès à la géolocalisation de votre appareil uniquement pour remplir automatiquement le champ de la ville de départ dans le formulaire de recherche. Cette fonctionnalité vise uniquement à optimiser votre expérience de navigation."
+      },
+      "data": {
+        "title": "2. Stockage et conservation des données",
+        "content": "<bold>Nous ne stockons pas</bold> vos données de localisation, votre adresse IP ou l'historique des itinéraires recherchés dans des bases de données. Les informations saisies dans le formulaire sont traitées en temps réel uniquement pour calculer et afficher les options d'itinéraire, et sont supprimées immédiatement après la requête."
+      },
+      "cookies": {
+        "title": "3. Cookies et suivi tiers",
+        "content": "Cet environnement numérique est exempt d'outils de suivi tiers, de cookies marketing ou de pixels de réseaux sociaux. Nous utilisons uniquement le stockage local strictement nécessaire au fonctionnement technique de l'application."
+      },
+      "security": {
+        "title": "4. Sécurité",
+        "content": "Tout le trafic de données entre votre navigateur et nos services est chiffré via le protocole HTTPS, garantissant que vos requêtes voyagent en toute sécurité."
+      }
+    }
+  },
+  "ErrorPage": {
+    "title": "Oups ! Quelque chose a mal tourné",
+    "messages": {
+      "400": "La ville et/ou l'état renseigné n'est pas un champ valide.",
+      "422": "Impossible de générer un itinéraire valide avec les lieux indiqués. Vérifiez les noms des villes et réessayez.",
+      "504": "L'IA que nous utilisons pour calculer votre itinéraire est très sollicitée en ce moment. Réessayez plus tard.",
+      "default": "Un problème est survenu lors du traitement de votre itinéraire. Réessayez plus tard."
+    },
+    "button": "Recommencer la recherche"
+  },
+  "SuccessPage": {
+    "found": "{count} option(s) trouvée(s)",
+    "note": "Note :",
+    "disclaimer": "Les valeurs, distances et temps de voyage sont estimés par Intelligence Artificielle et peuvent différer des données réelles fournies par les applications, sites ou guichets officiels.",
+    "newSearch": "Nouvelle recherche"
+  },
+  "OptionCardStep": {
+    "to": "à",
+    "km": "km"
+  },
+  "Footer": {
+    "logoAlt": "Logo de pied de page Best Route",
+    "description": "Trouvez le meilleur itinéraire en quelques secondes. Comparez les trajets, les prix et les temps entre toutes les villes du Brésil.",
+    "productTitle": "Produit",
+    "contactsTitle": "Contacts",
+    "links": {
+      "home": "Accueil",
+      "calculate": "Calculer l'itinéraire",
+      "result": "Résultat",
+      "privacy": "Politique de confidentialité",
+      "linkedin": "Mon LinkedIn",
+      "github": "Mon GitHub",
+      "email": "Email"
+    },
+    "copyright": "<bold>© {year} - Paulo Vitor.</bold> <italic>Tous droits réservés.</italic>"
+  },
+  "LoadingModal": {
+    "logoAlt": "Logo de chargement Best Route",
+    "title": "Nous calculons votre itinéraire",
+    "subtitle": "Veuillez patienter quelques instants. Ne rafraîchissez pas et ne fermez pas la page."
+  },
+  "OptionCard": {
+    "highlights": {
+      "recommended": "RECOMMANDÉ",
+      "cheapest": "ÉCONOMIQUE",
+      "fastest": "PLUS RAPIDE",
+      "most_convenient": "PLUS PRATIQUE"
+    },
+    "km": "km"
+  },
+  "Topbar": {
+    "logoAlt": "Logo de la barre supérieure Best Route",
+    "links": {
+      "home": "Accueil",
+      "calculate": "Calculer l'itinéraire",
+      "results": "Résultats",
+      "privacy": "Politique de confidentialité"
+    }
+  },
+  "CityFormField": {
+    "loading": "Chargement des villes...",
+    "notFound": "Aucune ville trouvée."
+  },
+  "DatePickerField": {
+    "placeholder": "jj/mm/aaaa",
+    "format": "dd/MM/yyyy"
+  },
+  "Transport": {
+    "bus": "Bus",
+    "plane": "Avion",
+    "car": "Voiture personnelle",
+    "boat": "Bateau",
+    "train": "Train",
+    "app_mobile": "App de mobilité",
+    "default": "Voiture"
+  }
+}

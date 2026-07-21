@@ -5,8 +5,8 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import { FormScreen } from "@/app/index/form/FormScreen";
-import { useRouter } from "next/navigation";
+import { FormScreen } from "@/app/[locale]/index/form/FormScreen";
+import { useRouter } from "@/i18n/routing";
 import { useRoute } from "@/context/RouteContext";
 import { searchRoute } from "@/services/routeService";
 import {
@@ -14,6 +14,14 @@ import {
   CityFormFieldProps,
   DatePickerFieldProps,
 } from "@/types/form";
+
+jest.mock("/src/context/RouteContext", () => ({
+  useRoute: jest.fn(),
+}));
+
+jest.mock("/src/services/routeService", () => ({
+  searchRoute: jest.fn(),
+}));
 
 const mockIBGEResponse = [
   {
@@ -28,19 +36,7 @@ const mockIBGEResponse = [
   },
 ];
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
-
-jest.mock("/src/context/RouteContext", () => ({
-  useRoute: jest.fn(),
-}));
-
-jest.mock("/src/services/routeService", () => ({
-  searchRoute: jest.fn(),
-}));
-
-jest.mock("/src/app/components/ui/CityFormField", () => ({
+jest.mock("/src/app/[locale]/components/ui/CityFormField", () => ({
   CityFormField: ({
     namePrefix,
     placeholder,
@@ -103,7 +99,7 @@ jest.mock("/src/app/components/ui/CityFormField", () => ({
   },
 }));
 
-jest.mock("/src/app/components/ui/DatePickerField", () => ({
+jest.mock("/src/app/[locale]/components/ui/DatePickerField", () => ({
   DatePickerField: ({ value, onChange, error }: DatePickerFieldProps) => (
     <div>
       <input
@@ -156,9 +152,9 @@ describe("Form page", () => {
   const mockPush = jest.fn();
   const mockSetRouteData = jest.fn();
   const mockSetErrorData = jest.fn();
+  const mockUseRouter = useRouter as jest.Mock;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockIBGEResponse),
@@ -172,6 +168,13 @@ describe("Form page", () => {
     });
 
     jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    mockUseRouter.mockReturnValue({
+      push: mockPush,
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+      back: jest.fn(),
+    });
   });
 
   it("Render form page", async () => {

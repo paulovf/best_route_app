@@ -1,5 +1,5 @@
 import { render, screen, act, within } from "@testing-library/react";
-import Home from "@/app/page";
+import Home from "@/app/[locale]/page";
 
 const mockIBGEResponse = [
   {
@@ -14,15 +14,6 @@ const mockIBGEResponse = [
   },
 ];
 
-jest.mock("next/navigation", () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-    prefetch: jest.fn(),
-    back: jest.fn(),
-  }),
-}));
-
 jest.mock("/src/context/RouteContext", () => ({
   useRoute: () => ({
     routeData: null,
@@ -35,8 +26,6 @@ jest.mock("/src/context/RouteContext", () => ({
 
 describe("Home page", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-
     global.IntersectionObserver = jest.fn().mockImplementation(() => ({
       observe: jest.fn(),
       unobserve: jest.fn(),
@@ -57,7 +46,7 @@ describe("Home page", () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    const logo = await screen.getByAltText("Best Route home logo");
+    const logo = await screen.getByAltText("Logo inicial do Best Route");
     expect(logo).toBeInTheDocument();
   });
 

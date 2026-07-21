@@ -25,7 +25,6 @@ describe("CityContext", () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
     sessionStorage.clear();
   });
 

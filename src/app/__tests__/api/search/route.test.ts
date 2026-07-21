@@ -13,7 +13,6 @@ describe("API Route - Search Proxy", () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     process.env = {
       ...originalEnv,
       API_URL: "https://api.backend.mock",

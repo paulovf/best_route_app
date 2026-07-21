@@ -6,7 +6,6 @@ describe("getCites Service", () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     process.env = {
       ...originalEnv,
       NEXT_PUBLIC_API_IBGE_URL: "https://api.test.com",

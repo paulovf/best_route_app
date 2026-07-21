@@ -1,0 +1,96 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { DayPicker } from "react-day-picker";
+import { Calendar } from "lucide-react";
+import { format, addYears, startOfDay } from "date-fns";
+import { ptBR, enUS, fr, de, es, Locale } from "date-fns/locale";
+import { DatePickerFieldProps } from "@/types/form";
+import { useTranslations, useLocale } from "next-intl";
+import "react-day-picker/dist/style.css";
+
+const fnsLocale: Record<string, Locale> = {
+  en: enUS,
+  pt: ptBR,
+  fr: fr,
+  de: de,
+  es: es,
+};
+
+export function DatePickerField({
+  value,
+  onChange,
+  error,
+}: DatePickerFieldProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const t = useTranslations("DatePickerField");
+  const locale = useLocale();
+  const dateFnsLocale = fnsLocale[locale];
+
+  const today = startOfDay(new Date());
+  const maxDate = addYears(today, 1);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative flex flex-col w-full" ref={wrapperRef}>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="relative flex items-center cursor-pointer"
+      >
+        <Calendar
+          className={`w-5 h-5 absolute left-3 pointer-events-none ${
+            value ? "text-neutral-900" : "text-slate-400"
+          }`}
+        />
+        <input
+          type="text"
+          readOnly
+          placeholder={t("placeholder")}
+          value={value ? format(value, t("format")) : ""}
+          className={`w-full h-12 pl-11 pr-4 rounded-2xl border bg-white text-sm text-neutral-900 focus-primary focus:border-neutral-900 transition placeholder-slate-400 focus:outline-none ${
+            error ? "border-red-500 text-red-950" : "border-slate-400"
+          }`}
+        />
+      </div>
+
+      <input
+        type="hidden"
+        name="travel_date"
+        value={value ? format(value, "yyyy-MM-dd") : ""}
+      />
+
+      {error && (
+        <span className="text-xs text-red-500 mt-1 ml-3 block">{error}</span>
+      )}
+
+      {isOpen && (
+        <div className="absolute z-50 mt-2 top-full left-0 bg-white border border-slate-200/60 p-4 rounded-2xl shadow-xl animate-in fade-in-50 duration-150">
+          <DayPicker
+            mode="single"
+            selected={value}
+            onSelect={(date) => {
+              onChange(date);
+              setIsOpen(false);
+            }}
+            locale={dateFnsLocale}
+            disabled={[{ before: today }, { after: maxDate }]}
+          />
+        </div>
+      )}
+    </div>
+  );
+}

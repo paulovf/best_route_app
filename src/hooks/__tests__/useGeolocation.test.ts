@@ -18,7 +18,6 @@ describe("useGeolocation Hook", () => {
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
     mockGetCurrentPosition.mockReset();
   });
 

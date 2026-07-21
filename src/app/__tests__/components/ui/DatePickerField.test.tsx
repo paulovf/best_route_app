@@ -1,13 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { DatePickerField } from "@/app/components/ui/DatePickerField";
+import { DatePickerField } from "@/app/[locale]/components/ui/DatePickerField";
 import { subDays } from "date-fns";
 
 describe("DatePickerField component", () => {
   const mockOnChange = jest.fn();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   it("when click in input open calendar", () => {
     render(<DatePickerField value={undefined} onChange={mockOnChange} />);

@@ -1,26 +1,16 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import ErrorPage from "@/app/result/fail/page";
+import ErrorPage from "@/app/[locale]/result/fail/page";
 import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
-
-const mockReplace = jest.fn();
-
-jest.mock("/src/hooks/useIsMounted", () => ({
-  useIsMounted: jest.fn(),
-}));
-
-jest.mock("next/navigation", () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: mockReplace,
-    prefetch: jest.fn(),
-    back: jest.fn(),
-  }),
-}));
+import { mockReplace } from "@/test/mocks/routing";
 
 jest.mock("/src/context/RouteContext", () => ({
   useRoute: jest.fn(),
+}));
+
+jest.mock("/src/hooks/useIsMounted", () => ({
+  useIsMounted: jest.fn(),
 }));
 
 describe("ErrorPage Screen", () => {
@@ -28,7 +18,6 @@ describe("ErrorPage Screen", () => {
   const mockUseIsMounted = useIsMounted as jest.Mock;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     mockUseIsMounted.mockReturnValue(true);
   });
 

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Topbar from "@/app/components/layout/Topbar";
+import Topbar from "@/app/[locale]/components/layout/Topbar";
 import { useRoute } from "@/context/RouteContext";
 
 jest.mock("/src/context/RouteContext", () => ({
@@ -8,10 +8,6 @@ jest.mock("/src/context/RouteContext", () => ({
 
 describe("Topbar component", () => {
   const mockUseRoute = useRoute as jest.Mock;
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   it("display component when prop show is true", () => {
     mockUseRoute.mockReturnValue({

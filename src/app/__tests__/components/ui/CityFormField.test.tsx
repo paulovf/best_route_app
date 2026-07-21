@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { CityFormField } from "@/app/components/ui/CityFormField";
+import { CityFormField } from "@/app/[locale]/components/ui/CityFormField";
 import { useCity } from "@/context/CityContext";
 
 jest.mock("/src/context/CityContext", () => ({
@@ -23,8 +23,6 @@ describe("CityFormField component", () => {
   const mockOnChange = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-
     (useCity as jest.Mock).mockReturnValue({
       cities: mockContextCities,
       isLoadingCities: false,

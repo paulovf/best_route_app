@@ -1,7 +1,9 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import PrivacyPolicyPage from "@/app/privacy_policy/page";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import PrivacyPolicyPage from "@/app/[locale]/privacy_policy/page";
 
-jest.mock("/src/app/components/layout/Topbar", () => {
+jest.mock("/src/app/[locale]/components/layout/Topbar", () => {
   return function MockTopbar({ show }: { show: boolean }) {
     return (
       <div data-testid="mock-topbar">Topbar - Show: {show.toString()}</div>
@@ -9,8 +11,16 @@ jest.mock("/src/app/components/layout/Topbar", () => {
   };
 });
 
+jest.mock("/src/hooks/useIsMounted", () => ({
+  useIsMounted: jest.fn(),
+}));
+
 describe("PrivacyPolicyPage Page", () => {
+  const mockUseIsMounted = useIsMounted as jest.Mock;
+
   beforeEach(() => {
+    mockUseIsMounted.mockReturnValue(true);
+
     render(<PrivacyPolicyPage />);
   });
 
