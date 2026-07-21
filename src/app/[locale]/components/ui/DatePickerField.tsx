@@ -17,7 +17,13 @@ const fnsLocale: Record<string, Locale> = {
   es: es,
 };
 
-export function DatePickerField({
+export /**
+ * A date picker field component that allows users to select a date from a calendar.
+ *
+ * @param {DatePickerFieldProps} { value, onChange, error } The properties for the component.
+ * @return {*} The rendered date picker field.
+ */
+function DatePickerField({
   value,
   onChange,
   error,

@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { getByCoords } from "@/app/api/open_street_map/get_location";
 import { LocationData, NominatimAddress } from "@/types/openStreetMap";
 
-export function useGeolocation() {
+export /**
+ * Get current gelolocation user browser.
+ *
+ * @return {*} a gelolocation user browser formatted (e.g.: São Paulo - SP).
+ */
+function useGeolocation() {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

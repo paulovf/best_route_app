@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 
-export const usePreventNavigation = (isBlocking: boolean) => {
+export /**
+ * Create a event listener for monitoring close tab and browser window.
+ *
+ * @param {boolean} isBlocking - status for allow or deny monitoring close tab and window browser.
+ */
+const usePreventNavigation = (isBlocking: boolean) => {
   useEffect(() => {
     if (!isBlocking) return;
 

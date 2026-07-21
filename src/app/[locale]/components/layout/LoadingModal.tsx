@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { LoadingModalProps } from "@/types/components";
 
-interface LoadingModalProps {
-  isOpen: boolean;
-}
-
-export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
+export /**
+ * A modal component that displays a loading spinner and message.
+ *
+ * @param {LoadingModalProps} { isOpen } The properties for the component.
+ * @return {*} The rendered loading modal or null if not open.
+ */
+const LoadingModal = ({ isOpen }: LoadingModalProps) => {
   const t = useTranslations("LoadingModal");
 
   useEffect(() => {

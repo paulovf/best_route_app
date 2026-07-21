@@ -1,15 +1,11 @@
 // src/components/ui/OptionCard.tsx
 import React, { useState } from "react";
 import { ChevronDown, Dot } from "lucide-react";
-import { Option } from "@/types/route";
 import { formatDuration, formatPrice } from "@/utils/routeFormatters";
 import { OptionCardStep } from "./OptionCard/Step";
 import { HighlightType } from "@/types/route";
 import { useTranslations } from "next-intl";
-
-interface OptionCardProps {
-  option: Option;
-}
+import { OptionCardProps } from "@/types/components";
 
 const badgeBorderColor: Record<HighlightType, string> = {
   recommended: "bg-primary-500 text-white",
@@ -18,7 +14,15 @@ const badgeBorderColor: Record<HighlightType, string> = {
   most_convenient: "border border-success text-success",
 };
 
-export const OptionCard = ({ option }: OptionCardProps) => {
+export /**
+ * Renders a card component to display a single travel route option.
+ * It shows a summary of the route including duration, distance, and price.
+ * The card can be expanded to show a detailed step-by-step breakdown of the route.
+ *
+ * @param {OptionCardProps} { option } - The properties for the OptionCard component.
+ * @return {*} The rendered option card component.
+ */
+const OptionCard = ({ option }: OptionCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("OptionCard");
 

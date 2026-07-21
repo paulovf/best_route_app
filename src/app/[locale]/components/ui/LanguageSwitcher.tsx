@@ -13,7 +13,12 @@ const langs = [
   { code: "pt", label: "Português", short: "PT" },
 ];
 
-export default function LanguageSwitcher() {
+export /**
+ * A component that allows the user to switch the application's language.
+ *
+ * @return {*} The rendered language switcher component.
+ */
+default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement>(null);

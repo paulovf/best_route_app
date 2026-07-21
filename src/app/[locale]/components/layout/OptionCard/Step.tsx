@@ -2,6 +2,7 @@ import React from "react";
 import { Step } from "@/types/route";
 import { MoveRight, Dot } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { OptionStepsTimelineProps } from "@/types/components";
 import {
   getTransportIcon,
   getTransportTypeLabel,
@@ -10,11 +11,13 @@ import {
   formatPrice,
 } from "@/utils/routeFormatters";
 
-interface OptionStepsTimelineProps {
-  steps: Step[];
-}
-
-export const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
+export /**
+ * Renders a timeline of steps for a travel route option.
+ *
+ * @param {OptionStepsTimelineProps} { steps } The properties for the component.
+ * @return {*} The rendered steps timeline.
+ */
+const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
   const t = useTranslations("OptionCardStep");
   const tTransport = useTranslations("Transport");
   const sortedSteps = [...steps].sort((a, b) => a.order - b.order);

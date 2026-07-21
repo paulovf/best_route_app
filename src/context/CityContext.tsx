@@ -3,15 +3,17 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCites } from "@/app/api/ibge/search_cities";
 import { CityOption } from "@/types/form";
+import { CityContextType } from "@/types/contexts";
 
-interface CityContextType {
-  cities: CityOption[];
-  isLoadingCities: boolean;
-}
+export const CityContext = createContext<CityContextType | undefined>(undefined);
 
-const CityContext = createContext<CityContextType | undefined>(undefined);
-
-export function CityProvider({ children }: { children: React.ReactNode }) {
+export /**
+ * Get a cities list in provider (if exists) or call get cities api for get a new list.
+ *
+ * @param {{ children: React.ReactNode }} { children } - children components for add inner city provider.
+ * @return {*} a provider with cities list.
+ */
+function CityProvider({ children }: { children: React.ReactNode }) {
   const [cities, setCities] = useState<CityOption[]>(() => {
     if (typeof window !== "undefined") {
       const savedCities = sessionStorage.getItem("best_route_cities");
@@ -52,7 +54,13 @@ export function CityProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useCity() {
+export /**
+ * Get a use city context.
+ * 
+ * @return {*} a current use city context.
+ * @throws Error in use city without in provider.
+ */
+function useCity() {
   const context = useContext(CityContext);
   if (!context) {
     throw new Error("useCity must be used within a CityProvider");

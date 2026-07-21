@@ -6,7 +6,15 @@ import { useCity } from "@/context/CityContext";
 import { CityFormFieldProps, CityOption } from "@/types/form";
 import { useTranslations } from "next-intl";
 
-export function CityFormField({
+export /**
+ * A city form field component with autocomplete functionality.
+ *
+ * @param {CityFormFieldProps} props The properties for the component.
+ * @param {string} props.placeholder The placeholder text for the input.
+ * @param {string} props.namePrefix The prefix for the input name attribute.
+ * @return {*} The rendered city form field.
+ */
+function CityFormField({
   placeholder,
   namePrefix,
   value,

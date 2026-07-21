@@ -6,7 +6,12 @@ import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
 
-export function Footer() {
+export /**
+ * Renders the footer component for the application.
+ *
+ * @return {*} The rendered footer component.
+ */
+function Footer() {
   const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
   const { routeData, errorData } = useRoute();

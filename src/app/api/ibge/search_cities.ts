@@ -1,7 +1,12 @@
 import { IBGECity } from "@/types/ibge";
 import { CityOption } from "@/types/form";
 
-export async function getCites() {
+export /**
+ * Get a brazilian cities list by external IBGE api.
+ *
+ * @return {*} a brazilian cities list.
+ */
+async function getCites() {
   try {
     const apiIbgeUrl = `${process.env.NEXT_PUBLIC_API_IBGE_URL}`;
 
