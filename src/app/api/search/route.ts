@@ -21,9 +21,15 @@ const TIMEOUT_MS = 50000;
  *               origin_city:
  *                 type: string
  *                 example: "São Paulo"
+ *               origin_state:
+ *                 type: string
+ *                 example: "SP"
  *               destination_city:
  *                 type: string
  *                 example: "Rio de Janeiro"
+ *               destination_state:
+ *                 type: string
+ *                 example: "RJ"
  *               travel_date:
  *                 type: string
  *                 format: date

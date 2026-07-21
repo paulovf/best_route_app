@@ -19,10 +19,7 @@ export /**
  * @param {string} [className="w-4 h-4"] - custom class.
  * @return {*} a corrected icon for transport type.
  */
-const getTransportIcon = (
-  type: TransportType,
-  className = "w-4 h-4",
-) => {
+const getTransportIcon = (type: TransportType, className = "w-4 h-4") => {
   switch (type) {
     case "bus":
       return <Bus className={className} />;
@@ -117,9 +114,6 @@ export /**
  * @param {string} [locale="pt-BR"] - currency locale
  * @return {*} {string} a travel amount formatted (e.g.: R$ 1,00)
  */
-const formatPrice = (
-  value: number,
-  locale: string = "pt-BR",
-): string => {
+const formatPrice = (value: number, locale: string = "pt-BR"): string => {
   return value.toLocaleString(locale, { style: "currency", currency: "BRL" });
 };

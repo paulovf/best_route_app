@@ -10,10 +10,12 @@ export default async function ApiDocPage() {
   const spec = await getApiDocs();
 
   return (
-    <section className="bg-white min-h-screen py-10">
-      <div className="container mx-auto">
-        <SwaggerUI spec={spec} />
-      </div>
-    </section>
+    <html lang="en">
+      <body className="bg-white min-h-screen">
+        <div className="container mx-auto py-10">
+          <SwaggerUI spec={spec} />
+        </div>
+      </body>
+    </html>
   );
 }

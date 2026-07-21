@@ -6,7 +6,7 @@ export /**
  * Call a internal api for search new route.
  *
  * @param {RouteApiRequest} payload - post form to send a external api.
- * @return {*} {Promise<RouteApiResponse>} a internal api response with nre routes 
+ * @return {*} {Promise<RouteApiResponse>} a internal api response with nre routes
  * @throws Error when internal api return error.
  */
 async function searchRoute(

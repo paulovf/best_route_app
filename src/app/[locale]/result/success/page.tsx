@@ -9,12 +9,12 @@ import { Signpost, Info, MoveRight, Dot } from "lucide-react";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations, useLocale } from "next-intl";
 
-export /**
+export default /**
  * Renders the success page with the route results.
  *
  * @return {*} The rendered success page component.
  */
-default function SuccessPage() {
+function SuccessPage() {
   const { routeData } = useRoute();
   const router = useRouter();
   const t = useTranslations("SuccessPage");

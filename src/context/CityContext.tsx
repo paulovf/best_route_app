@@ -5,7 +5,9 @@ import { getCites } from "@/app/api/ibge/search_cities";
 import { CityOption } from "@/types/form";
 import { CityContextType } from "@/types/contexts";
 
-export const CityContext = createContext<CityContextType | undefined>(undefined);
+export const CityContext = createContext<CityContextType | undefined>(
+  undefined,
+);
 
 export /**
  * Get a cities list in provider (if exists) or call get cities api for get a new list.
@@ -56,7 +58,7 @@ function CityProvider({ children }: { children: React.ReactNode }) {
 
 export /**
  * Get a use city context.
- * 
+ *
  * @return {*} a current use city context.
  * @throws Error in use city without in provider.
  */

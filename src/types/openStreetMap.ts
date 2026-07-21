@@ -1,5 +1,4 @@
 export interface NominatimAddress {
-
   municipality: string;
   /** Location state. */
   state: string;

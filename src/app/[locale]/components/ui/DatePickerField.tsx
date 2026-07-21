@@ -23,11 +23,7 @@ export /**
  * @param {DatePickerFieldProps} { value, onChange, error } The properties for the component.
  * @return {*} The rendered date picker field.
  */
-function DatePickerField({
-  value,
-  onChange,
-  error,
-}: DatePickerFieldProps) {
+function DatePickerField({ value, onChange, error }: DatePickerFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 

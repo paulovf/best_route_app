@@ -26,12 +26,18 @@ const meta: Meta<typeof CityFormField> = {
   tags: ["autodocs"],
   decorators: [
     (Story, context) => {
-      const isLoadingCities = context.args.error === "loading"; 
-      
+      const isLoadingCities = context.args.error === "loading";
+
       return (
         <NextIntlClientProvider locale="pt" messages={mockMessages}>
           <CityContext.Provider value={{ cities: mockCities, isLoadingCities }}>
-            <div style={{ padding: "2rem", maxWidth: "400px", backgroundColor: "#f8fafc" }}>
+            <div
+              style={{
+                padding: "2rem",
+                maxWidth: "400px",
+                backgroundColor: "#f8fafc",
+              }}
+            >
               <Story />
             </div>
           </CityContext.Provider>
@@ -47,11 +53,7 @@ type Story = StoryObj<typeof CityFormField>;
 const InteractiveCityField = (args: any) => {
   const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
   return (
-    <CityFormField
-      {...args}
-      value={selectedCity}
-      onChange={setSelectedCity}
-    />
+    <CityFormField {...args} value={selectedCity} onChange={setSelectedCity} />
   );
 };
 
@@ -77,6 +79,6 @@ export const LoadingState: Story = {
   args: {
     placeholder: "Buscando...",
     namePrefix: "origin",
-    error: "loading", 
+    error: "loading",
   },
 };
