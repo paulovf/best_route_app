@@ -8,13 +8,13 @@ import { FormScreen } from "../form/FormScreen";
 import LanguageSwitcher from "@/app/[locale]/components/ui/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 
-export default /**
+/**
  * Renders the home screen of the application, which includes a hero section
  * and the main form for calculating routes.
  *
- * @return {*} The rendered home screen component.
+ * @returns The rendered home screen component.
  */
-function HomeScreen() {
+export default function HomeScreen() {
   const t = useTranslations("Home");
   const [showTopbar, setShowTopbar] = useState(false);
   const formSectionRef = useRef<HTMLDivElement>(null);

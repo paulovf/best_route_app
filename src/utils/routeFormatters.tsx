@@ -12,14 +12,17 @@ import {
 } from "lucide-react";
 import { TransportType, LocationType } from "@/types/route";
 
-export /**
+/**
  * Get icon for display transport type in Step component.
  *
- * @param {TransportType} type - transport type.
- * @param {string} [className="w-4 h-4"] - custom class.
- * @return {*} a corrected icon for transport type.
+ * @param type - transport type.
+ * @param className - custom class.
+ * @returns a corrected icon for transport type.
  */
-const getTransportIcon = (type: TransportType, className = "w-4 h-4") => {
+export const getTransportIcon = (
+  type: TransportType,
+  className = "w-4 h-4",
+) => {
   switch (type) {
     case "bus":
       return <Bus className={className} />;
@@ -38,14 +41,14 @@ const getTransportIcon = (type: TransportType, className = "w-4 h-4") => {
   }
 };
 
-export /**
+/**
  * Get transport label for display in Step component.
  *
- * @param {TransportType} type - transport type.
- * @param {(key: string) => string} t - intl key for display transport label by selected language.
- * @return {*} a translated transport label by transport type.
+ * @param type - transport type.
+ * @param t - intl key for display transport label by selected language.
+ * @returns a translated transport label by transport type.
  */
-const getTransportTypeLabel = (
+export const getTransportTypeLabel = (
   type: TransportType,
   t: (key: string) => string,
 ) => {
@@ -67,14 +70,14 @@ const getTransportTypeLabel = (
   }
 };
 
-export /**
+/**
  * Get icon for display location type in Step component.
  *
- * @param {LocationType} type - location type.
- * @param {string} [className="w-4 h-4"] - custom class.
- * @return {*} a corrected icon for location type.
+ * @param type - location type.
+ * @param className - custom class.
+ * @returns a corrected icon for location type.
  */
-const getLocationIcon = (type: LocationType, className = "w-4 h-4") => {
+export const getLocationIcon = (type: LocationType, className = "w-4 h-4") => {
   switch (type) {
     case "airport":
       return <Plane className={className} />;
@@ -92,13 +95,13 @@ const getLocationIcon = (type: LocationType, className = "w-4 h-4") => {
   }
 };
 
-export /**
+/**
  * Format a time travel to display in OptionCard and Step components
  *
- * @param {number} decimalHours - a decimal travel time
- * @return {*} {string} a travel time formatted (e.g.: '02h 30m')
+ * @param decimalHours - a decimal travel time
+ * @returns a travel time formatted (e.g.: '02h 30m')
  */
-const formatDuration = (decimalHours: number): string => {
+export const formatDuration = (decimalHours: number): string => {
   const hours = Math.floor(decimalHours);
   const minutes = Math.round((decimalHours - hours) * 60);
 
@@ -107,13 +110,16 @@ const formatDuration = (decimalHours: number): string => {
   return `${hours}h ${minutes}m`;
 };
 
-export /**
+/**
  * Format a travel amount to display in OptionCard and Step components
  *
- * @param {number} value - amount valur
- * @param {string} [locale="pt-BR"] - currency locale
- * @return {*} {string} a travel amount formatted (e.g.: R$ 1,00)
+ * @param value - amount valur
+ * @param locale - currency locale
+ * @returns a travel amount formatted (e.g.: R$ 1,00)
  */
-const formatPrice = (value: number, locale: string = "pt-BR"): string => {
+export const formatPrice = (
+  value: number,
+  locale: string = "pt-BR",
+): string => {
   return value.toLocaleString(locale, { style: "currency", currency: "BRL" });
 };

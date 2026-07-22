@@ -3,13 +3,13 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { LoadingModalProps } from "@/types/components";
 
-export /**
+/**
  * A modal component that displays a loading spinner and message.
  *
- * @param {LoadingModalProps} { isOpen } The properties for the component.
- * @return {*} The rendered loading modal or null if not open.
+ * @param isOpen - The properties for the component.
+ * @returns The rendered loading modal or null if not open.
  */
-const LoadingModal = ({ isOpen }: LoadingModalProps) => {
+export const LoadingModal = ({ isOpen }: LoadingModalProps) => {
   const t = useTranslations("LoadingModal");
 
   useEffect(() => {

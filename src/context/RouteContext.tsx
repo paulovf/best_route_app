@@ -7,13 +7,13 @@ import { RouteContextType } from "@/types/contexts";
 
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
 
-export /**
+/**
  * Get a route api response in provider (if exists) or call routes api for get a new routes response.
  *
- * @param {{ children: React.ReactNode }} { children } - children components for add inner route provider.
- * @return {*} a provider with route response api.
+ * @param children - children components for add inner route provider.
+ * @returns a provider with route response api.
  */
-function RouteProvider({ children }: { children: React.ReactNode }) {
+export function RouteProvider({ children }: { children: React.ReactNode }) {
   const [routeData, setRouteDataState] = useState<RouteApiResponse | null>(
     () => {
       if (typeof window !== "undefined") {
@@ -62,13 +62,13 @@ function RouteProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export /**
+/**
  * Get a use route context.
  *
- * @return {*} a current use route context.
+ * @returns a current use route context.
  * @throws Error in use route without in provider.
  */
-function useRoute() {
+export function useRoute() {
   const context = useContext(RouteContext);
   if (!context) {
     throw new Error("useRoute must be used into RouteProvider");

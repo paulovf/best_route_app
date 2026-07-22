@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { CityFormField } from "./CityFormField";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { CityContext } from "@/context/CityContext";
 import { CityOption } from "@/types/form";
+import { CityFormFieldProps } from "@/types/form";
 
 const mockMessages = {
   CityFormField: {
@@ -50,7 +51,7 @@ const meta: Meta<typeof CityFormField> = {
 export default meta;
 type Story = StoryObj<typeof CityFormField>;
 
-const InteractiveCityField = (args: any) => {
+const InteractiveCityField = (args: CityFormFieldProps) => {
   const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
   return (
     <CityFormField {...args} value={selectedCity} onChange={setSelectedCity} />

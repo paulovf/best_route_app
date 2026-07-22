@@ -16,16 +16,16 @@ import { useGeolocation } from "@/hooks/useGeolocation";
 import { CityProvider } from "@/context/CityContext";
 import { useTranslations } from "next-intl";
 
-export /**
+/**
  * A form screen component for users to input their travel origin, destination, and date
  * to find the best travel route. It includes fields for origin and destination cities,
  * a date picker, and handles form submission and validation.
  *
  * @param _ - The props for the component (unused).
  * @param ref - The ref to forward to the main section element.
- * @return {*} The rendered form screen component.
+ * @returns The rendered form screen component.
  */
-const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
+export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const router = useRouter();
   const t = useTranslations("Form");
   const { routeData, setRouteData, errorData, setErrorData } = useRoute();

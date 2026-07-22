@@ -10,13 +10,13 @@ import { useTranslations } from "next-intl";
 
 const listHttpStatusCodeMapping = [400, 422, 504];
 
-export default /**
+/**
  * Renders the error page when route calculation fails.
  * It displays a friendly message based on the error status code.
  *
- * @return {*} The rendered error page component or null if there's no error data.
+ * @returns The rendered error page component or null if there's no error data.
  */
-function ErrorPage() {
+export default function ErrorPage() {
   const { errorData } = useRoute();
   const router = useRouter();
   const isMounted = useIsMounted();

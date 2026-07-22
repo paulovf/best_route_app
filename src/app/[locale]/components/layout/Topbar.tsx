@@ -10,13 +10,13 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
 import { TopbarProps } from "@/types/components";
 
-export default /**
+/**
  * Renders the top navigation bar for the application.
  *
- * @param {TopbarProps} { show } The properties for the component.
- * @return {*} The rendered topbar component.
+ * @param show - The properties for the component.
+ * @returns The rendered topbar component.
  */
-function Topbar({ show }: TopbarProps) {
+export default function Topbar({ show }: TopbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMounted = useIsMounted();
   const t = useTranslations("Topbar");

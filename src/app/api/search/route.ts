@@ -33,7 +33,7 @@ const TIMEOUT_MS = 50000;
  *               travel_date:
  *                 type: string
  *                 format: date
- *                 example: "2024-12-25"
+ *                 example: "2026-12-25T03:00:00.000Z"
  *     responses:
  *       200:
  *         description: Route list returned successfully

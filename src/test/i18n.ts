@@ -14,21 +14,21 @@ const locales = {
 
 let currentLocale: keyof typeof locales = "pt";
 
-export /**
+/**
  * Get a current locale.
  *
- * @return {*} a cuurent locale.
+ * @returns a cuurent locale.
  */
-function getCurrentLocale() {
+export function getCurrentLocale() {
   return currentLocale;
 }
 
-export /**
+/**
  * Set a new current locale.
  *
- * @param {keyof typeof locales} locale - a new locale for updated.
+ * @param locale - a new locale for updated.
  */
-function setTestLocale(locale: keyof typeof locales) {
+export function setTestLocale(locale: keyof typeof locales) {
   currentLocale = locale;
 }
 
@@ -45,14 +45,14 @@ function getMessage(
   }, obj) as string | undefined;
 }
 
-export /**
+/**
  * Get a translated message by key.
  *
- * @param {string} namespace - translate namespace in translated file.
- * @param {string} key - translated key.
- * @return {*} a translated messgae by key.
+ * @param namespace - translate namespace in translated file.
+ * @param key - translated key.
+ * @returns a translated messgae by key.
  */
-function translate(namespace: string, key: string) {
+export function translate(namespace: string, key: string) {
   const value = getMessage(locales[currentLocale], `${namespace}.${key}`);
 
   if (typeof value !== "string") {

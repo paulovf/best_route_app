@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { DatePickerField } from "./DatePickerField";
+import { DatePickerFieldProps } from "@/types/form";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
 
@@ -31,7 +32,7 @@ const meta: Meta<typeof DatePickerField> = {
 export default meta;
 type Story = StoryObj<typeof DatePickerField>;
 
-const InteractiveDatePicker = (args: any) => {
+const InteractiveDatePicker = (args: DatePickerFieldProps) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   return <DatePickerField {...args} value={date} onChange={setDate} />;
 };
