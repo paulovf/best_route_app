@@ -3,14 +3,18 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCites } from "@/app/api/ibge/search_cities";
 import { CityOption } from "@/types/form";
+import { CityContextType } from "@/types/contexts";
 
-interface CityContextType {
-  cities: CityOption[];
-  isLoadingCities: boolean;
-}
+export const CityContext = createContext<CityContextType | undefined>(
+  undefined,
+);
 
-const CityContext = createContext<CityContextType | undefined>(undefined);
-
+/**
+ * Get a cities list in provider (if exists) or call get cities api for get a new list.
+ *
+ * @param children - children components for add inner city provider.
+ * @returns a provider with cities list.
+ */
 export function CityProvider({ children }: { children: React.ReactNode }) {
   const [cities, setCities] = useState<CityOption[]>(() => {
     if (typeof window !== "undefined") {
@@ -52,6 +56,12 @@ export function CityProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Get a use city context.
+ *
+ * @returns a current use city context.
+ * @throws Error in use city without in provider.
+ */
 export function useCity() {
   const context = useContext(CityContext);
   if (!context) {

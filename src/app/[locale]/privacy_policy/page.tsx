@@ -3,6 +3,11 @@ import { ArrowLeft } from "lucide-react";
 import Topbar from "@/app/[locale]/components/layout/Topbar";
 import { useTranslations } from "next-intl";
 
+/**
+ * Renders the privacy policy page for the application.
+ *
+ * @returns The rendered privacy policy page component.
+ */
 export default function PrivacyPolicyPage() {
   const t = useTranslations("PrivacyPolicy");
 

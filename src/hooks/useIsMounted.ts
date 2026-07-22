@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Check if page is mounted.
+ *
+ * @returns mounted page status.
+ */
 export function useIsMounted() {
   const [isMounted, setIsMounted] = useState(false);
 

@@ -8,11 +8,14 @@ import { Link } from "@/i18n/routing";
 import { useRoute } from "@/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
+import { TopbarProps } from "@/types/components";
 
-interface TopbarProps {
-  show: boolean;
-}
-
+/**
+ * Renders the top navigation bar for the application.
+ *
+ * @param show - The properties for the component.
+ * @returns The rendered topbar component.
+ */
 export default function Topbar({ show }: TopbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMounted = useIsMounted();

@@ -17,6 +17,14 @@ const fnsLocale: Record<string, Locale> = {
   es: es,
 };
 
+/**
+ * A date picker field component that allows users to select a date from a calendar.
+ *
+ * @param value - The input value attribute.
+ * @param onChange - The input onchange event attribute.
+ * @param error - The input error message attribute.
+ * @returns The rendered date picker field.
+ */
 export function DatePickerField({
   value,
   onChange,

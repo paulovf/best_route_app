@@ -1,5 +1,13 @@
 import { NominatimReverseResponse } from "@/types/openStreetMap";
 
+/**
+ * Get a city location by coords in Open Street map external api.
+ *
+ * @param lat - city lat for search.
+ * @param lon - city lon for search.
+ * @returns a city location by cords.
+ * @throws Error in get city localtion by cords.
+ */
 export async function getByCoords(
   lat: number,
   lon: number,

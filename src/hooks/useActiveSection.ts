@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Monitoring if element has scrolled.
+ *
+ * @param sectionIds - element id will be monitored.
+ * @returns a active session monitored.
+ */
 export function useActiveSection(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 

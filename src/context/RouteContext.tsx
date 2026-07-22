@@ -3,17 +3,16 @@
 import React, { createContext, useContext, useState } from "react";
 import { Fail } from "@/types/fail";
 import { RouteApiResponse } from "@/types/route";
-
-interface RouteContextType {
-  routeData: RouteApiResponse | null;
-  errorData: Fail | null;
-  setRouteData: (data: RouteApiResponse) => void;
-  setErrorData: (error: Fail) => void;
-  clearStorage: () => void;
-}
+import { RouteContextType } from "@/types/contexts";
 
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
 
+/**
+ * Get a route api response in provider (if exists) or call routes api for get a new routes response.
+ *
+ * @param children - children components for add inner route provider.
+ * @returns a provider with route response api.
+ */
 export function RouteProvider({ children }: { children: React.ReactNode }) {
   const [routeData, setRouteDataState] = useState<RouteApiResponse | null>(
     () => {
@@ -63,6 +62,12 @@ export function RouteProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Get a use route context.
+ *
+ * @returns a current use route context.
+ * @throws Error in use route without in provider.
+ */
 export function useRoute() {
   const context = useContext(RouteContext);
   if (!context) {
