@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { OptionCardStep } from "@/app/components/layout/OptionCard/Step";
+import { OptionCardStep } from "@/app/[locale]/components/layout/OptionCard/Step";
 import { Step } from "@/types/route";
 
 jest.mock("/src/utils/routeFormatters", () => ({

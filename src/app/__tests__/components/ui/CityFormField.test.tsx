@@ -1,16 +1,21 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { CityFormField } from "@/app/components/ui/CityFormField";
+import { CityFormField } from "@/app/[locale]/components/ui/CityFormField";
+import { useCity } from "@/context/CityContext";
 
-const mockIBGEResponse = [
+jest.mock("/src/context/CityContext", () => ({
+  useCity: jest.fn(),
+}));
+
+const mockContextCities = [
   {
-    id: 1,
-    nome: "Curitiba",
-    microrregiao: { mesorregiao: { UF: { sigla: "PR" } } },
+    name: "Curitiba",
+    uf: "PR",
+    displayName: "Curitiba - PR",
   },
   {
-    id: 2,
-    nome: "Curitibanos",
-    microrregiao: { mesorregiao: { UF: { sigla: "SC" } } },
+    name: "Curitibanos",
+    uf: "SC",
+    displayName: "Curitibanos - SC",
   },
 ];
 
@@ -18,13 +23,10 @@ describe("CityFormField component", () => {
   const mockOnChange = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockIBGEResponse),
-      }),
-    ) as jest.Mock;
+    (useCity as jest.Mock).mockReturnValue({
+      cities: mockContextCities,
+      isLoadingCities: false,
+    });
   });
 
   it("when user input any text search and display cities suggestions", async () => {
@@ -76,5 +78,27 @@ describe("CityFormField component", () => {
     );
 
     expect(screen.queryByText("Curitibanos")).not.toBeInTheDocument();
+  });
+
+  it("should trigger onChange when user types a full city name", async () => {
+    render(
+      <CityFormField
+        placeholder="Digite a cidade"
+        namePrefix="origin"
+        value={null}
+        onChange={mockOnChange}
+      />,
+    );
+
+    const input = screen.getByPlaceholderText("Digite a cidade");
+
+    fireEvent.change(input, { target: { value: "Curitiba" } });
+
+    expect(mockOnChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: "Curitiba",
+        uf: "PR",
+      }),
+    );
   });
 });

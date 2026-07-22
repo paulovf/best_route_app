@@ -10,10 +10,6 @@ describe("routeService - searchRoute", () => {
     travel_date: "2026-12-25T00:00:00.000Z",
   };
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("should return route data successfully on 200 OK", async () => {
     const mockApiResponse = {
       origin_city: "Belo Horizonte",

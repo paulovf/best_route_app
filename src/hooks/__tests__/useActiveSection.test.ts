@@ -9,8 +9,6 @@ describe("useActiveSection hook", () => {
   ) => void;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-
     global.IntersectionObserver = jest.fn().mockImplementation((callback) => {
       intersectionCallback = callback;
       return {

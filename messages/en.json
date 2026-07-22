@@ -1,0 +1,144 @@
+{
+  "Home": {
+    "title": "Find the best route for your trip",
+    "subtitle": "Compare paths, transport modes, prices, and travel times between cities all over Brazil",
+    "cta": "Start here",
+    "links": {
+      "githubApi": "GitHub API",
+      "githubApp": "GitHub App",
+      "linkedin": "My LinkedIn"
+    },
+    "images": {
+      "planeAlt": "Plane",
+      "logoAlt": "Best Route home logo"
+    }
+  },
+  "Form": {
+    "title": "Calculate your best route",
+    "subtitle": "Plan your trip with ease",
+    "ariaLabels": {
+      "mapIcon": "Map icon",
+      "swap": "Swap origin and destination"
+    },
+    "inputs": {
+      "locating": "Fetching your location...",
+      "originPlaceholder": "Where are you?",
+      "destinationPlaceholder": "Where are you going?"
+    },
+    "calculateButton": "Calculate route",
+    "disclaimers": {
+      "data": "*We use public data and AI queries to estimate prices, itineraries, and times.",
+      "ai": "*AI may suggest route segments that don't exist due to recent changes.",
+      "geolocation": "*We use your geolocation only to suggest the current departure city."
+    },
+    "errors": {
+      "originSameAsDest": "The origin city cannot be the same as the destination.",
+      "destSameAsOrigin": "The destination city cannot be the same as the origin.",
+      "invalidOrigin": "Invalid origin city. Please select an option from the list.",
+      "invalidDest": "Invalid destination city. Please select an option from the list.",
+      "emptyDate": "Please select a travel date.",
+      "pastDate": "The travel date cannot be before today.",
+      "maxDate": "The travel date cannot be more than 1 year from today."
+    }
+  },
+  "PrivacyPolicy": {
+    "backToHome": "Back to home",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: July 2026",
+    "intro": "Your privacy is a priority for us. This privacy policy transparently clarifies how <bold>Best Route</bold> handles your information.",
+    "sections": {
+      "geolocation": {
+        "title": "1. Geolocation Usage",
+        "content": "Our application requests access to your device's geolocation exclusively to automatically fill in the origin city field in the search form. This feature is solely intended to optimize your browsing experience."
+      },
+      "data": {
+        "title": "2. Data Storage and Retention",
+        "content": "<bold>We do not store</bold> your location data, IP address, or searched route histories in databases. The information entered in the form is processed in real time solely to calculate and display route options, being discarded immediately after the request."
+      },
+      "cookies": {
+        "title": "3. Cookies and Third-Party Tracking",
+        "content": "This digital environment is free from third-party tracking tools, marketing cookies, or social media pixels. We only use local storage strictly necessary for the technical functioning of the application."
+      },
+      "security": {
+        "title": "4. Security",
+        "content": "All data traffic between your browser and our services is encrypted using the HTTPS protocol, ensuring your queries travel securely."
+      }
+    }
+  },
+  "ErrorPage": {
+    "title": "Oops! Something went wrong",
+    "messages": {
+      "400": "The city and/or state provided is not a valid field.",
+      "422": "It was not possible to generate a valid itinerary with the locations provided. Please check the city names and try again.",
+      "504": "The AI we use to calculate your route is under high demand right now. Please try again later.",
+      "default": "There was a problem processing your route. Please try again later."
+    },
+    "button": "Start a new search"
+  },
+  "SuccessPage": {
+    "found": "{count} option(s) found",
+    "note": "Note:",
+    "disclaimer": "Travel values, distances, and times are estimated by AI and may differ from real data from apps, websites, or official ticket counters.",
+    "newSearch": "New search"
+  },
+  "OptionCardStep": {
+    "to": "to",
+    "km": "km"
+  },
+  "Footer": {
+    "logoAlt": "Best Route footer logo",
+    "description": "Find the best route in seconds. Compare paths, prices, and times between any city in Brazil.",
+    "productTitle": "Product",
+    "contactsTitle": "Contacts",
+    "links": {
+      "home": "Home",
+      "calculate": "Calculate route",
+      "result": "Result",
+      "privacy": "Privacy policy",
+      "linkedin": "My LinkedIn",
+      "github": "My GitHub",
+      "email": "Email"
+    },
+    "copyright": "<bold>© {year} - Paulo Vitor.</bold> <italic>All rights reserved.</italic>"
+  },
+  "LoadingModal": {
+    "logoAlt": "Best Route loading modal logo",
+    "title": "We are calculating your route",
+    "subtitle": "Please wait a few moments. Do not refresh or close the page."
+  },
+  "OptionCard": {
+    "highlights": {
+      "recommended": "RECOMMENDED",
+      "cheapest": "CHEAPEST",
+      "fastest": "FASTEST",
+      "most_convenient": "MOST CONVENIENT"
+    },
+    "km": "km"
+  },
+  "Topbar": {
+    "logoAlt": "Best Route topbar logo",
+    "links": {
+      "home": "Home",
+      "calculate": "Calculate route",
+      "results": "Results",
+      "privacy": "Privacy policy"
+    }
+  },
+  "CityFormField": {
+    "loading": "Loading cities...",
+    "notFound": "No cities found."
+  },
+  "DatePickerField": {
+    "placeholder": "mm/dd/yyyy",
+    "format": "MM/dd/yyyy"
+  },
+  "Transport": {
+    "bus": "Bus",
+    "plane": "Flight",
+    "car": "Own car",
+    "boat": "Boat",
+    "train": "Train",
+    "app_mobile": "Ride-hailing app",
+    "default": "Car"
+  }
+}

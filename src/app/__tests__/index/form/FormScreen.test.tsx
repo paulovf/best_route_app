@@ -5,12 +5,23 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import { FormScreen } from "@/app/index/form/FormScreen";
-import { useRouter } from "next/navigation";
+import { FormScreen } from "@/app/[locale]/index/form/FormScreen";
+import { useRouter } from "@/i18n/routing";
 import { useRoute } from "@/context/RouteContext";
 import { searchRoute } from "@/services/routeService";
-import { CityAutocompleteProps, CityOption } from "@/types/ibge";
-import { DatePickerFieldProps } from "@/app/components/ui/DatePickerField";
+import {
+  CityOption,
+  CityFormFieldProps,
+  DatePickerFieldProps,
+} from "@/types/form";
+
+jest.mock("/src/context/RouteContext", () => ({
+  useRoute: jest.fn(),
+}));
+
+jest.mock("/src/services/routeService", () => ({
+  searchRoute: jest.fn(),
+}));
 
 const mockIBGEResponse = [
   {
@@ -25,25 +36,14 @@ const mockIBGEResponse = [
   },
 ];
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
-
-jest.mock("/src/context/RouteContext", () => ({
-  useRoute: jest.fn(),
-}));
-
-jest.mock("/src/services/routeService", () => ({
-  searchRoute: jest.fn(),
-}));
-
-jest.mock("/src/app/components/ui/CityFormField", () => ({
+jest.mock("/src/app/[locale]/components/ui/CityFormField", () => ({
   CityFormField: ({
     namePrefix,
     placeholder,
     value,
     onChange,
-  }: CityAutocompleteProps) => {
+    error,
+  }: CityFormFieldProps) => {
     const cityString = value ? `${value.name} - ${value.uf}` : "";
 
     return (
@@ -92,13 +92,15 @@ jest.mock("/src/app/components/ui/CityFormField", () => ({
         >
           Selecionar {namePrefix}
         </button>
+
+        {error && <span className="error-message">{error}</span>}
       </div>
     );
   },
 }));
 
-jest.mock("/src/app/components/ui/DatePickerField", () => ({
-  DatePickerField: ({ value, onChange }: DatePickerFieldProps) => (
+jest.mock("/src/app/[locale]/components/ui/DatePickerField", () => ({
+  DatePickerField: ({ value, onChange, error }: DatePickerFieldProps) => (
     <div>
       <input
         placeholder="Selecione uma data"
@@ -113,6 +115,35 @@ jest.mock("/src/app/components/ui/DatePickerField", () => ({
       >
         Selecionar Data
       </button>
+
+      <button
+        type="button"
+        data-testid="mock-btn-date-past"
+        style={{ display: "none" }}
+        onClick={() => {
+          const past = new Date();
+          past.setDate(past.getDate() - 1);
+          onChange(past);
+        }}
+      >
+        Selecionar Data Passada
+      </button>
+
+      <button
+        type="button"
+        data-testid="mock-btn-date-future"
+        style={{ display: "none" }}
+        onClick={() => {
+          const future = new Date();
+          future.setFullYear(future.getFullYear() + 1);
+          future.setDate(future.getDate() + 2);
+          onChange(future);
+        }}
+      >
+        Selecionar Data Futura Excedida
+      </button>
+
+      {error && <span className="error-message">{error}</span>}
     </div>
   ),
 }));
@@ -121,9 +152,9 @@ describe("Form page", () => {
   const mockPush = jest.fn();
   const mockSetRouteData = jest.fn();
   const mockSetErrorData = jest.fn();
+  const mockUseRouter = useRouter as jest.Mock;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockIBGEResponse),
@@ -137,6 +168,13 @@ describe("Form page", () => {
     });
 
     jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    mockUseRouter.mockReturnValue({
+      push: mockPush,
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+      back: jest.fn(),
+    });
   });
 
   it("Render form page", async () => {
@@ -167,8 +205,14 @@ describe("Form page", () => {
     const button = await screen.getByRole("button", {
       name: /Calcular rota/i,
     });
-    const infoLabel = await screen.getByText(
-      "Usamos dados públicos e consultas em IA para estimar preços, itinerários e tempo",
+    const infoLabel1 = await screen.getByText(
+      "*Usamos dados públicos e consultas em IA para estimar preços, itinerários e tempo.",
+    );
+    const infoLabel2 = await screen.getByText(
+      "*A IA pode sugerir trechos de rotas que não existem devido a mudanças recentes.",
+    );
+    const infoLabel3 = await screen.getByText(
+      "*Utilizamos sua geolocalização apenas para sugerir a cidade de partida atual.",
     );
 
     expect(title).toBeInTheDocument();
@@ -177,7 +221,9 @@ describe("Form page", () => {
     expect(destinationLabel).toBeInTheDocument();
     expect(swap).toBeInTheDocument();
     expect(button).toBeInTheDocument();
-    expect(infoLabel).toBeInTheDocument();
+    expect(infoLabel1).toBeInTheDocument();
+    expect(infoLabel2).toBeInTheDocument();
+    expect(infoLabel3).toBeInTheDocument();
   });
 
   it("when click swap button, invert cities", async () => {
@@ -218,7 +264,7 @@ describe("Form page", () => {
     });
   });
 
-  it("when form is empty, display an alert message", async () => {
+  it("when form is empty, display error messages", async () => {
     const { container } = render(<FormScreen />);
 
     await act(async () => {
@@ -226,6 +272,16 @@ describe("Form page", () => {
     });
 
     const form = await container.querySelector("form");
+
+    const originErrorMsg =
+      "Cidade de origem inválida. Por favor, selecione uma opção da lista.";
+    const destinationErrorMsg =
+      "Cidade de destino inválida. Por favor, selecione uma opção da lista.";
+    const dateErrorMsg = "Por favor, selecione uma data de viagem.";
+
+    expect(screen.queryByText(originErrorMsg)).not.toBeInTheDocument();
+    expect(screen.queryByText(destinationErrorMsg)).not.toBeInTheDocument();
+    expect(screen.queryByText(dateErrorMsg)).not.toBeInTheDocument();
 
     if (form) {
       fireEvent.submit(form);
@@ -236,9 +292,14 @@ describe("Form page", () => {
       fireEvent.click(submitButton);
     }
 
-    expect(window.alert).toHaveBeenCalledWith(
-      "Por favor, preencha todos os campos antes de prosseguir.",
-    );
+    const originError = await screen.findByText(originErrorMsg);
+    const destinationError = await screen.findByText(destinationErrorMsg);
+    const dateError = await screen.findByText(dateErrorMsg);
+
+    expect(originError).toBeInTheDocument();
+    expect(destinationError).toBeInTheDocument();
+    expect(dateError).toBeInTheDocument();
+
     expect(searchRoute).not.toHaveBeenCalled();
   });
 
@@ -312,5 +373,55 @@ describe("Form page", () => {
     });
 
     consoleSpy.mockRestore();
+  });
+
+  it("when date is in the past, display error message", async () => {
+    render(<FormScreen />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    fireEvent.click(screen.getByTestId("mock-btn-origin"));
+    fireEvent.click(screen.getByTestId("mock-btn-destination"));
+
+    fireEvent.click(screen.getByTestId("mock-btn-date-past"));
+
+    const submitButton = await screen.getByRole("button", {
+      name: /calcular rota/i,
+    });
+    fireEvent.click(submitButton);
+
+    const pastDateErrorMsg =
+      "A data da viagem não pode ser anterior ao dia de hoje.";
+    const dateError = await screen.findByText(pastDateErrorMsg);
+
+    expect(dateError).toBeInTheDocument();
+    expect(searchRoute).not.toHaveBeenCalled();
+  });
+
+  it("when date is superior to 1 year, display error message", async () => {
+    render(<FormScreen />);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    fireEvent.click(screen.getByTestId("mock-btn-origin"));
+    fireEvent.click(screen.getByTestId("mock-btn-destination"));
+
+    fireEvent.click(screen.getByTestId("mock-btn-date-future"));
+
+    const submitButton = await screen.getByRole("button", {
+      name: /calcular rota/i,
+    });
+    fireEvent.click(submitButton);
+
+    const futureDateErrorMsg =
+      "A data da viagem não pode ser superior a 1 ano a partir de hoje.";
+    const dateError = await screen.findByText(futureDateErrorMsg);
+
+    expect(dateError).toBeInTheDocument();
+    expect(searchRoute).not.toHaveBeenCalled();
   });
 });

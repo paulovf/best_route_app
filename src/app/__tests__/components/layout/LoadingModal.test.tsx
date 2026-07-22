@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { LoadingModal } from "@/app/components/layout/LoadingModal";
+import { LoadingModal } from "@/app/[locale]/components/layout/LoadingModal";
 
 describe("LoadingModal Component", () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe("LoadingModal Component", () => {
     const subtitle = screen.getByText(
       "Por favor, aguarde alguns instantes. Não atualize ou feche a página.",
     );
-    const logo = screen.getByAltText("Best Route modal loading logo");
+    const logo = screen.getByAltText("Logo de carregamento do Best Route");
 
     expect(title).toBeInTheDocument();
     expect(subtitle).toBeInTheDocument();
