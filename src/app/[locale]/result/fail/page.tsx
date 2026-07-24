@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useRoute } from "@/context/RouteContext";
+import { useRoute } from "@/features/routing/context/RouteContext";
 import { useRouter, Link } from "@/i18n/routing";
 import { CircleAlert } from "lucide-react";
-import Topbar from "@/app/[locale]/components/layout/Topbar";
+import Topbar from "@/components/layout/Topbar";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
 
-const listHttpStatusCodeMapping = [400, 422, 504];
+const listHttpStatusCodeMapping = new Set([400, 422, 504]);
 
 /**
  * Renders the error page when route calculation fails.
@@ -33,7 +33,7 @@ export default function ErrorPage() {
   }
 
   const getFriendlyMessage = (status: number) => {
-    if (listHttpStatusCodeMapping.includes(status)) {
+    if (listHttpStatusCodeMapping.has(status)) {
       return t(`messages.${status}`);
     }
     return t("messages.default");

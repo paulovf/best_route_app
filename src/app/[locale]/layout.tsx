@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { RouteProvider } from "@/context/RouteContext";
+import { RouteProvider } from "@/features/routing/context/RouteContext";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Footer } from "./components/layout/Footer";
+import { Footer } from "../../components/layout/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "../globals.css";
