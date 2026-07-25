@@ -40,7 +40,7 @@ jest.mock("next-intl", () => ({
       const text = translate(namespace, key);
 
       const parse = (value: string): React.ReactNode => {
-        const match = value.match(/^<(\w+)>([\s\S]*)<\/\1>$/);
+        const match = /^<(\w+)>([\s\S]*)<\/\1>$/.exec(value);
 
         if (!match) {
           return value;

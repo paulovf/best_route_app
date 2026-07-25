@@ -14,10 +14,10 @@ interface LocationIconProps {
  * @param className - custom class.
  * @returns a corrected icon for location type.
  */
-export const getLocationIcon = (
-  origin_departure_type: string,
-  { type, className = "w-4 h-4" }: LocationIconProps,
-) => {
+export const getLocationIcon = ({
+  type,
+  className = "w-4 h-4",
+}: LocationIconProps) => {
   switch (type) {
     case "airport":
       return <Plane className={className} />;

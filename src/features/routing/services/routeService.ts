@@ -1,5 +1,4 @@
-import { RouteApiRequest } from "@/types/route";
-import { RouteApiResponse } from "@/types/route";
+import { RouteApiRequest, RouteApiResponse } from "@/types/route";
 import { Fail } from "@/types/fail";
 
 /**

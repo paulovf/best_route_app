@@ -6,7 +6,7 @@ import { Option } from "@/types/route";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { mockReplace } from "@/test/mocks/routing";
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 
@@ -14,7 +14,7 @@ jest.mock("/src/hooks/useIsMounted", () => ({
   useIsMounted: jest.fn(),
 }));
 
-jest.mock("/src/app/[locale]/components/layout/OptionCard", () => {
+jest.mock("/src/components/layout/OptionCard", () => {
   return {
     OptionCard: function MockOptionCard({
       option,

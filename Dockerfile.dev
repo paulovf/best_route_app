@@ -2,13 +2,13 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash \
+    && addgroup -S appgroup \
+    && adduser -S appuser -G appgroup
 
 COPY package*.json ./
 
 RUN npm install
-
-COPY . .
 
 EXPOSE 3000
 

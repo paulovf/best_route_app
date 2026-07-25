@@ -16,7 +16,7 @@ import { TopbarProps } from "@/types/components";
  * @param show - The properties for the component.
  * @returns The rendered topbar component.
  */
-export default function Topbar({ show }: TopbarProps) {
+export default function Topbar({ show }: Readonly<TopbarProps>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMounted = useIsMounted();
   const t = useTranslations("Topbar");
@@ -33,7 +33,7 @@ export default function Topbar({ show }: TopbarProps) {
   let resultHref = "/#form-screen";
 
   if (isMounted) {
-    if (routeData && routeData.options && routeData.options.length > 0) {
+    if (routeData?.options?.length && routeData.options.length > 0) {
       resultHref = "/result/success";
     } else if (errorData) {
       resultHref = "/result/fail";
@@ -65,6 +65,15 @@ export default function Topbar({ show }: TopbarProps) {
   const renderLinks = (isMobile: boolean) => {
     return navLinks.map((link) => {
       const isActive = activeSection === link.id;
+      const paddingClasses = isMobile
+        ? "px-4 py-3 rounded-xl text-left"
+        : "px-3.5 py-1.5 rounded-full";
+      const baseColorClasses = isMobile
+        ? "text-slate-600 hover:bg-slate-50"
+        : "text-slate-600 hover:bg-slate-100";
+      const colorClasses = isActive
+        ? "bg-neutral-600 text-white"
+        : baseColorClasses;
 
       return (
         <Link
@@ -72,17 +81,7 @@ export default function Topbar({ show }: TopbarProps) {
           href={link.href}
           onClick={() => isMobile && setIsMenuOpen(false)}
           target={link.target}
-          className={`text-sm font-medium transition ${
-            isMobile
-              ? "px-4 py-3 rounded-xl text-left"
-              : "px-3.5 py-1.5 rounded-full"
-          } ${
-            isActive
-              ? "bg-neutral-600 text-white"
-              : isMobile
-                ? "text-slate-600 hover:bg-slate-50"
-                : "text-slate-600 hover:bg-slate-100"
-          }`}
+          className={`text-sm font-medium transition ${paddingClasses} ${colorClasses}`}
         >
           {link.label}
         </Link>

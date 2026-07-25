@@ -14,7 +14,7 @@ const mockIBGEResponse = [
   },
 ];
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: () => ({
     routeData: null,
     errorData: null,

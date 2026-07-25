@@ -5,7 +5,7 @@ import { useRoute } from "@/features/routing/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { mockReplace } from "@/test/mocks/routing";
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 

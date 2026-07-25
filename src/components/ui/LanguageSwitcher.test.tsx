@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { setTestLocale } from "@/test/i18n";
-import Home from "@/app/[locale]/page";
+import Page from "@/app/[locale]/(main)/page";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
 const replaceMock = jest.fn((pathname, options) => {
@@ -15,7 +15,7 @@ jest.mock("/src/i18n/routing", () => ({
   usePathname: () => "/",
 }));
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: () => ({
     routeData: null,
     errorData: null,
@@ -25,7 +25,7 @@ jest.mock("/src/context/RouteContext", () => ({
   }),
 }));
 
-jest.mock("/src/app/[locale]/components/layout/Topbar", () => {
+jest.mock("/src/components/layout/Topbar", () => {
   return function MockTopbar({ show }: { show: boolean }) {
     return (
       <div data-testid="mock-topbar">Topbar - Show: {show.toString()}</div>
@@ -58,7 +58,7 @@ describe("LanguageSwitcher component", () => {
   test("Change app language to english", async () => {
     setTestLocale("pt");
 
-    const { rerender } = render(<Home />);
+    const { rerender } = render(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -70,7 +70,7 @@ describe("LanguageSwitcher component", () => {
 
     await userEvent.click(screen.getByText("English"));
 
-    rerender(<Home />);
+    rerender(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -82,7 +82,7 @@ describe("LanguageSwitcher component", () => {
   test("Change app language to spanish", async () => {
     setTestLocale("pt");
 
-    const { rerender } = render(<Home />);
+    const { rerender } = render(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -94,7 +94,7 @@ describe("LanguageSwitcher component", () => {
 
     await userEvent.click(screen.getByText("Español"));
 
-    rerender(<Home />);
+    rerender(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -106,7 +106,7 @@ describe("LanguageSwitcher component", () => {
   test("Change app language to french", async () => {
     setTestLocale("pt");
 
-    const { rerender } = render(<Home />);
+    const { rerender } = render(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -118,7 +118,7 @@ describe("LanguageSwitcher component", () => {
 
     await userEvent.click(screen.getByText("Français"));
 
-    rerender(<Home />);
+    rerender(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -130,7 +130,7 @@ describe("LanguageSwitcher component", () => {
   test("Change app language to germany", async () => {
     setTestLocale("pt");
 
-    const { rerender } = render(<Home />);
+    const { rerender } = render(<Page />);
 
     expect(
       screen.getByRole("heading", {
@@ -142,7 +142,7 @@ describe("LanguageSwitcher component", () => {
 
     await userEvent.click(screen.getByText("Deutsch"));
 
-    rerender(<Home />);
+    rerender(<Page />);
 
     expect(
       screen.getByRole("heading", {

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { getCites } from "@/app/api/ibge/search_cities/route";
 import { CityOption } from "@/types/form";
 import { CityContextType } from "@/types/contexts";
@@ -15,7 +21,11 @@ export const CityContext = createContext<CityContextType | undefined>(
  * @param children - children components for add inner city provider.
  * @returns a provider with cities list.
  */
-export function CityProvider({ children }: { children: React.ReactNode }) {
+export function CityProvider({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   const [cities, setCities] = useState<CityOption[]>(() => {
     if (typeof window !== "undefined") {
       const savedCities = sessionStorage.getItem("best_route_cities");
@@ -50,7 +60,12 @@ export function CityProvider({ children }: { children: React.ReactNode }) {
   }, [cities.length]);
 
   return (
-    <CityContext.Provider value={{ cities, isLoadingCities }}>
+    <CityContext.Provider
+      value={useMemo(
+        () => ({ cities, isLoadingCities }),
+        [cities, isLoadingCities],
+      )}
+    >
       {children}
     </CityContext.Provider>
   );

@@ -3,11 +3,11 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { OptionCard } from "@/components/layout/OptionCard";
 import { Option } from "@/types/route";
 
-jest.mock("/src/app/[locale]/components/layout/OptionCard/Step", () => ({
+jest.mock("/src/components/layout/OptionCard/Step", () => ({
   OptionCardStep: () => <div data-testid="mocked-steps-timeline" />,
 }));
 
-jest.mock("/src/utils/routeFormatters", () => ({
+jest.mock("/src/features/routing/utils/formatters", () => ({
   formatDuration: (hours: number) => `${hours} hrs`,
   formatPrice: (amount: number) => `$${amount}`,
 }));
@@ -23,11 +23,13 @@ const baseMockOption: Option = {
 };
 
 describe("OptionCard Component", () => {
-  it("should call onSelect callback when the main card article layout is clicked", () => {
+  it("should allow clicking the main card article layout", () => {
     render(<OptionCard option={baseMockOption} />);
 
     const cardArticle = screen.getByRole("article");
     fireEvent.click(cardArticle);
+
+    expect(cardArticle).toBeInTheDocument();
   });
 
   it("should toggle accordion visibility and show internal steps when header row is clicked", () => {
@@ -55,39 +57,34 @@ describe("OptionCard Component", () => {
     expect(badge).toHaveClass("bg-primary-500");
   });
 
-  it('should apply CHEAPSET badge when highlight field is "cheapest"', () => {
-    const fastestOption: Option = {
-      ...baseMockOption,
-      order: 3,
+  it.each([
+    {
       highlight: "cheapest",
-    };
-    render(<OptionCard option={fastestOption} />);
-
-    const badge = screen.getByText("ECONÔMICA");
-    expect(badge).toHaveClass("text-success");
-  });
-
-  it('should apply FASTES badge when highlight field is "fastest"', () => {
-    const fastestOption: Option = {
-      ...baseMockOption,
-      order: 3,
+      badgeText: "ECONÔMICA",
+      badgeClass: "text-success",
+    },
+    {
       highlight: "fastest",
-    };
-    render(<OptionCard option={fastestOption} />);
-
-    const badge = screen.getByText("MAIS RÁPIDA");
-    expect(badge).toHaveClass("text-primary-600");
-  });
-
-  it('should apply MOST_CONVENIENT badge when highlight field is "most_convenient"', () => {
-    const fastestOption: Option = {
-      ...baseMockOption,
-      order: 3,
+      badgeText: "MAIS RÁPIDA",
+      badgeClass: "text-primary-600",
+    },
+    {
       highlight: "most_convenient",
-    };
-    render(<OptionCard option={fastestOption} />);
+      badgeText: "MAIS PRÁTICA",
+      badgeClass: "text-success",
+    },
+  ])(
+    "should apply correct badge when highlight field is '$highlight'",
+    ({ highlight, badgeText, badgeClass }) => {
+      const option: Option = {
+        ...baseMockOption,
+        order: 3,
+        highlight: highlight as any,
+      };
+      render(<OptionCard option={option} />);
 
-    const badge = screen.getByText("MAIS PRÁTICA");
-    expect(badge).toHaveClass("text-success");
-  });
+      const badge = screen.getByText(badgeText);
+      expect(badge).toHaveClass(badgeClass);
+    },
+  );
 });

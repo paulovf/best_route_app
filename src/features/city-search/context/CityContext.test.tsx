@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { CityProvider, useCity } from "../../features/city-search/context/CityContext";
+import { CityProvider, useCity } from "./CityContext";
 import { getCites } from "@/app/api/ibge/search_cities/route";
 
-jest.mock("/src/app/api/ibge/search_cities");
+jest.mock("/src/app/api/ibge/search_cities/route");
 
 const DummyConsumer = () => {
   const { cities, isLoadingCities } = useCity();

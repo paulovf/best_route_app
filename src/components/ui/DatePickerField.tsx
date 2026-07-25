@@ -29,7 +29,7 @@ export function DatePickerField({
   value,
   onChange,
   error,
-}: DatePickerFieldProps) {
+}: Readonly<DatePickerFieldProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -55,8 +55,15 @@ export function DatePickerField({
 
   return (
     <div className="relative flex flex-col w-full" ref={wrapperRef}>
-      <div
+      <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          }
+        }}
         className="relative flex items-center cursor-pointer"
       >
         <Calendar
@@ -73,7 +80,7 @@ export function DatePickerField({
             error ? "border-red-500 text-red-950" : "border-slate-400"
           }`}
         />
-      </div>
+      </button>
 
       <input
         type="hidden"

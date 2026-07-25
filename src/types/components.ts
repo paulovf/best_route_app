@@ -1,5 +1,4 @@
-import { Option } from "./route";
-import { Step } from "./route";
+import { Option, Step } from "./route";
 
 export interface LoadingModalProps {
   /** Modal open status. */

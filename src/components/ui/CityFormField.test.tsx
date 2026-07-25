@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { CityFormField } from "@/components/ui/CityFormField";
 import { useCity } from "@/features/city-search/context/CityContext";
 
-jest.mock("/src/context/CityContext", () => ({
+jest.mock("/src/features/city-search/context/CityContext", () => ({
   useCity: jest.fn(),
 }));
 

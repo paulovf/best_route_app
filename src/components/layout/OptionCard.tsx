@@ -1,7 +1,10 @@
 // src/components/ui/OptionCard.tsx
 import React, { useState } from "react";
 import { ChevronDown, Dot } from "lucide-react";
-import { formatDuration, formatPrice } from "@/components/utils/routeFormatters";
+import {
+  formatDuration,
+  formatPrice,
+} from "@/features/routing/utils/formatters";
 import { OptionCardStep } from "./OptionCard/Step";
 import { HighlightType } from "@/types/route";
 import { useTranslations } from "next-intl";
@@ -37,12 +40,11 @@ export const OptionCard = ({ option }: OptionCardProps) => {
         isOpen ? "border-neutral-400 shadow-md" : "border-slate-300"
       }`}
     >
-      <div
-        className="flex items-start justify-between gap-4"
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpen(!isOpen);
-        }}
+      <button
+        type="button"
+        className="flex items-start justify-between gap-4 w-full text-left"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <div>
           <span
@@ -62,17 +64,17 @@ export const OptionCard = ({ option }: OptionCardProps) => {
           </div>
         </div>
 
-        <button
-          type="button"
+        <span
           className={`w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center transition-transform duration-300 ${
             isOpen
               ? "rotate-180 bg-primary-50 border-primary-500 text-primary-600"
               : "text-neutral-800"
           }`}
+          aria-hidden="true"
         >
-          <ChevronDown className="w-4 h-4" />
-        </button>
-      </div>
+          <ChevronDown className="w-4 h-4" aria-hidden="true" />
+        </span>
+      </button>
 
       {isOpen && (
         <div className="mt-4 pt-4 border-t border-neutral-100 animate-fadeIn">

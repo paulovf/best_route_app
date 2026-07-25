@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { Fail } from "@/types/fail";
 import { RouteApiResponse } from "@/types/route";
 import { RouteContextType } from "@/types/contexts";
@@ -13,18 +19,18 @@ const RouteContext = createContext<RouteContextType | undefined>(undefined);
  * @param children - children components for add inner route provider.
  * @returns a provider with route response api.
  */
-export function RouteProvider({ children }: { children: React.ReactNode }) {
-  const [routeData, setRouteDataState] = useState<RouteApiResponse | null>(
-    () => {
-      if (typeof window !== "undefined") {
-        const savedRoute = sessionStorage.getItem("best_route_data");
-        return savedRoute ? JSON.parse(savedRoute) : null;
-      }
-      return null;
-    },
-  );
+export function RouteProvider({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const [routeData, setRouteData] = useState<RouteApiResponse | null>(() => {
+    if (typeof window !== "undefined") {
+      const savedRoute = sessionStorage.getItem("best_route_data");
+      return savedRoute ? JSON.parse(savedRoute) : null;
+    }
+    return null;
+  });
 
-  const [errorData, setErrorDataState] = useState<Fail | null>(() => {
+  const [errorData, setErrorData] = useState<Fail | null>(() => {
     if (typeof window !== "undefined") {
       const savedError = sessionStorage.getItem("best_route_error");
       return savedError ? JSON.parse(savedError) : null;
@@ -32,30 +38,47 @@ export function RouteProvider({ children }: { children: React.ReactNode }) {
     return null;
   });
 
-  const setRouteData = (data: RouteApiResponse) => {
-    setRouteDataState(data);
-    setErrorDataState(null);
-    sessionStorage.setItem("best_route_data", JSON.stringify(data));
-    sessionStorage.removeItem("best_route_error");
-  };
+  const setRouteDataState = setRouteData;
 
-  const setErrorData = (error: Fail) => {
-    setErrorDataState(error);
-    setRouteDataState(null);
-    sessionStorage.setItem("best_route_error", JSON.stringify(error));
-    sessionStorage.removeItem("best_route_data");
-  };
+  const updateRouteData = useCallback(
+    (data: RouteApiResponse) => {
+      setRouteDataState(data);
+      setErrorData(null);
+      sessionStorage.setItem("best_route_data", JSON.stringify(data));
+      sessionStorage.removeItem("best_route_error");
+    },
+    [setRouteDataState, setErrorData],
+  );
 
-  const clearStorage = () => {
+  const updateErrorData = useCallback(
+    (error: Fail) => {
+      setErrorData(error);
+      setRouteDataState(null);
+      sessionStorage.setItem("best_route_error", JSON.stringify(error));
+      sessionStorage.removeItem("best_route_data");
+    },
+    [setErrorData, setRouteDataState],
+  );
+
+  const clearStorage = useCallback(() => {
     setRouteDataState(null);
-    setErrorDataState(null);
+    setErrorData(null);
     sessionStorage.removeItem("best_route_data");
     sessionStorage.removeItem("best_route_error");
-  };
+  }, []);
 
   return (
     <RouteContext.Provider
-      value={{ routeData, errorData, setRouteData, setErrorData, clearStorage }}
+      value={useMemo(
+        () => ({
+          routeData,
+          errorData,
+          setRouteData: updateRouteData,
+          setErrorData: updateErrorData,
+          clearStorage,
+        }),
+        [routeData, errorData, updateRouteData, updateErrorData, clearStorage],
+      )}
     >
       {children}
     </RouteContext.Provider>

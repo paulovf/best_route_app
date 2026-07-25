@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import PrivacyPolicyPage from "@/app/[locale]/privacy-policy/page";
 
-jest.mock("/src/app/[locale]/components/layout/Topbar", () => {
+jest.mock("/src/components/layout/Topbar", () => {
   return function MockTopbar({ show }: { show: boolean }) {
     return (
       <div data-testid="mock-topbar">Topbar - Show: {show.toString()}</div>

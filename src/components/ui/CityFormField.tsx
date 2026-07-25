@@ -22,9 +22,9 @@ export function CityFormField({
   value,
   onChange,
   error,
-}: CityFormFieldProps) {
+}: Readonly<CityFormFieldProps>) {
   const { cities, isLoadingCities } = useCity();
-  const [query, setQuery] = useState(value ? value.displayName : "");
+  const [query, setQuery] = useState(value?.displayName || "");
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const isInternalChange = useRef(false);
@@ -43,7 +43,7 @@ export function CityFormField({
       isInternalChange.current = false;
       return;
     }
-    setQuery(value ? value.displayName : "");
+    setQuery(value?.displayName || "");
   }, [value]);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export function CityFormField({
 
     setQuery(newValue);
 
-    if (!isDeleting.current && cities && cities.length > 0) {
+    if (!isDeleting.current && cities?.length > 0) {
       const normalizedQuery = normalize(newValue);
 
       const exactDisplayMatch = cities.find(
@@ -73,7 +73,7 @@ export function CityFormField({
       );
 
       if (exactDisplayMatch) {
-        if (!value || value.displayName !== exactDisplayMatch.displayName) {
+        if (value?.displayName !== exactDisplayMatch.displayName) {
           isInternalChange.current = true;
           onChange(exactDisplayMatch);
           setIsOpen(false);
@@ -87,7 +87,7 @@ export function CityFormField({
 
       if (nameMatches.length === 1) {
         const uniqueMatch = nameMatches[0];
-        if (!value || value.displayName !== uniqueMatch.displayName) {
+        if (value?.displayName !== uniqueMatch.displayName) {
           isInternalChange.current = true;
           setQuery(uniqueMatch.displayName);
           onChange(uniqueMatch);
@@ -103,6 +103,42 @@ export function CityFormField({
   };
 
   const filteredCities = filterCities(query, cities);
+
+  const cityOptionsContent = (() => {
+    if (isLoadingCities) {
+      return (
+        <li className="p-3 text-neutral-900 text-sm text-center animate-pulse">
+          {t("loading")}
+        </li>
+      );
+    }
+
+    if (filteredCities.length > 0) {
+      return filteredCities.map((city, index) => (
+        <li key={`${city.uf}-${city.name}-${index}`} className="w-full">
+          <button
+            type="button"
+            onClick={() => {
+              isInternalChange.current = true;
+              onChange(city);
+              setQuery(city.displayName);
+              setIsOpen(false);
+            }}
+            className="w-full p-3 text-sm text-neutral-900 font-medium hover:font-semibold cursor-pointer transition-colors flex flex-row gap-x-1 justify-start items-center text-left"
+          >
+            <span>{city.name}</span>
+            <span>- {city.uf}</span>
+          </button>
+        </li>
+      ));
+    }
+
+    return (
+      <li className="p-3 text-neutral-500 text-sm text-center">
+        {t("notFound")}
+      </li>
+    );
+  })();
 
   return (
     <div className="relative" ref={wrapperRef}>
@@ -148,31 +184,7 @@ export function CityFormField({
 
       {isOpen && query.length > 1 && (
         <ul className="absolute z-50 w-full mt-1 bg-white border border-neutral-700 rounded-lg shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
-          {isLoadingCities ? (
-            <li className="p-3 text-neutral-900 text-sm text-center animate-pulse">
-              {t("loading")}
-            </li>
-          ) : filteredCities.length > 0 ? (
-            filteredCities.map((city, index) => (
-              <li
-                key={`${city.uf}-${city.name}-${index}`}
-                onClick={() => {
-                  isInternalChange.current = true;
-                  onChange(city);
-                  setQuery(city.displayName);
-                  setIsOpen(false);
-                }}
-                className="p-3 text-sm text-neutral-900 font-medium hover:font-semibold cursor-pointer transition-colors flex flex-row gap-x-1 justify-start items-center"
-              >
-                <span>{city.name}</span>
-                <span>- {city.uf}</span>
-              </li>
-            ))
-          ) : (
-            <li className="p-3 text-neutral-500 text-sm text-center">
-              {t("notFound")}
-            </li>
-          )}
+          {cityOptionsContent}
         </ul>
       )}
     </div>

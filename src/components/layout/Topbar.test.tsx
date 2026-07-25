@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Topbar from "@/components/layout/Topbar";
 import { useRoute } from "@/features/routing/context/RouteContext";
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 

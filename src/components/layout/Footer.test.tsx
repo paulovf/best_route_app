@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { useRoute } from "@/features/routing/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 

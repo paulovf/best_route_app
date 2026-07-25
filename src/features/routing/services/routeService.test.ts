@@ -1,4 +1,4 @@
-import { searchRoute } from "../../features/routing/services/routeService";
+import { searchRoute } from "@/features/routing/services/routeService";
 import { RouteApiRequest } from "@/types/route";
 
 describe("routeService - searchRoute", () => {

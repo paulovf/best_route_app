@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { useGeolocation } from "../../features/geolocation/hooks/useGeolocation";
+import { useGeolocation } from "./useGeolocation";
 import { getByCoords } from "@/app/api/open_street_map/get_location/route";
 
-jest.mock("/src/app/api/open_street_map/get_location");
+jest.mock("/src/app/api/open_street_map/get_location/route");
 
 describe("useGeolocation Hook", () => {
   const mockGetCurrentPosition = jest.fn();

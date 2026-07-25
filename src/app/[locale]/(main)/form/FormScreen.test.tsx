@@ -15,11 +15,11 @@ import {
   DatePickerFieldProps,
 } from "@/types/form";
 
-jest.mock("/src/context/RouteContext", () => ({
+jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
 }));
 
-jest.mock("/src/services/routeService", () => ({
+jest.mock("/src/features/routing/services/routeService", () => ({
   searchRoute: jest.fn(),
 }));
 
@@ -36,7 +36,7 @@ const mockIBGEResponse = [
   },
 ];
 
-jest.mock("/src/app/[locale]/components/ui/CityFormField", () => ({
+jest.mock("/src/components/ui/CityFormField", () => ({
   CityFormField: ({
     namePrefix,
     placeholder,
@@ -99,7 +99,7 @@ jest.mock("/src/app/[locale]/components/ui/CityFormField", () => ({
   },
 }));
 
-jest.mock("/src/app/[locale]/components/ui/DatePickerField", () => ({
+jest.mock("/src/components/ui/DatePickerField", () => ({
   DatePickerField: ({ value, onChange, error }: DatePickerFieldProps) => (
     <div>
       <input

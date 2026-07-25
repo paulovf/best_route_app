@@ -3,8 +3,7 @@ import { CityFormField } from "./CityFormField";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { CityContext } from "@/features/city-search/context/CityContext";
-import { CityOption } from "@/types/form";
-import { CityFormFieldProps } from "@/types/form";
+import { CityOption, CityFormFieldProps } from "@/types/form";
 
 const mockMessages = {
   CityFormField: {

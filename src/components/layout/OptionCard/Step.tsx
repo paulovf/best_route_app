@@ -30,18 +30,13 @@ export const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
           )}
 
           <div className="absolute -left-[31px] top-0.5 w-6 h-6 rounded-full border-2 flex items-center justify-center bg-white border-neutral-400 text-neutral-800 z-10">
-            {getLocationIcon(
-              index === 0
-                ? step.origin_departure_type
-                : step.destination_arrival_type,
-              {
-                type:
-                  index === 0
-                    ? step.origin_departure_type
-                    : step.destination_arrival_type,
-                className: "w-3 h-3",
-              },
-            )}
+            {getLocationIcon({
+              type:
+                index === 0
+                  ? step.origin_departure_type
+                  : step.destination_arrival_type,
+              className: "w-3 h-3",
+            })}
           </div>
 
           <div>
