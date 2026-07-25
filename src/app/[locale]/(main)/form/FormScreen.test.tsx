@@ -23,6 +23,16 @@ jest.mock("/src/features/routing/services/routeService", () => ({
   searchRoute: jest.fn(),
 }));
 
+jest.mock("/src/features/city-search/context/CityContext", () => ({
+  useCity: () => ({
+    cities: [],
+    isLoadingCities: false,
+  }),
+  CityProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+}));
+
 const mockIBGEResponse = [
   {
     id: 1,

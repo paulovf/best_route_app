@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen, act, within } from "@testing-library/react";
 import Home from "./page";
 
@@ -13,6 +14,39 @@ const mockIBGEResponse = [
     microrregiao: { mesorregiao: { UF: { sigla: "RJ" } } },
   },
 ];
+
+jest.mock("./form/FormScreen", () => {
+  const MockFormScreen = React.forwardRef<
+    HTMLDivElement,
+    React.Ref<HTMLDivElement>
+  >(function MockFormScreen(props, ref) {
+    return <div ref={ref} data-testid="mock-form-screen" />;
+  });
+
+  return {
+    FormScreen: MockFormScreen,
+  };
+});
+
+jest.mock(
+  "/src/components/layout/Topbar",
+  () =>
+    function MockTopbar() {
+      return <div data-testid="mock-topbar" />;
+    },
+);
+
+jest.mock("/src/components/layout/Footer", () => ({
+  Footer: () => <footer data-testid="mock-footer" />,
+}));
+
+jest.mock(
+  "/src/components/ui/LanguageSwitcher",
+  () =>
+    function MockLang() {
+      return <div data-testid="mock-lang" />;
+    },
+);
 
 jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: () => ({

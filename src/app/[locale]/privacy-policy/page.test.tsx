@@ -11,8 +11,22 @@ jest.mock("/src/components/layout/Topbar", () => {
   };
 });
 
+jest.mock("/src/components/layout/Footer", () => ({
+  Footer: () => <footer data-testid="mock-footer" />,
+}));
+
 jest.mock("/src/hooks/useIsMounted", () => ({
   useIsMounted: jest.fn(),
+}));
+
+jest.mock("/src/features/routing/context/RouteContext", () => ({
+  useRoute: () => ({
+    routeData: null,
+    errorData: null,
+    setRouteData: jest.fn(),
+    setErrorData: jest.fn(),
+    clearStorage: jest.fn(),
+  }),
 }));
 
 describe("PrivacyPolicyPage Page", () => {

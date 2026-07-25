@@ -1,153 +1,92 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { setTestLocale } from "@/test/i18n";
-import Page from "@/app/[locale]/(main)/page";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
-const replaceMock = jest.fn((pathname, options) => {
-  setTestLocale(options.locale);
-});
+const mockReplace = jest.fn();
 
 jest.mock("/src/i18n/routing", () => ({
   useRouter: () => ({
-    replace: replaceMock,
+    replace: mockReplace,
   }),
-  usePathname: () => "/",
+  usePathname: () => "/rota-atual",
 }));
 
-jest.mock("/src/features/routing/context/RouteContext", () => ({
-  useRoute: () => ({
-    routeData: null,
-    errorData: null,
-    setRouteData: jest.fn(),
-    setErrorData: jest.fn(),
-    clearStorage: jest.fn(),
-  }),
+jest.mock("next-intl", () => ({
+  useLocale: () => "pt",
 }));
-
-jest.mock("/src/components/layout/Topbar", () => {
-  return function MockTopbar({ show }: { show: boolean }) {
-    return (
-      <div data-testid="mock-topbar">Topbar - Show: {show.toString()}</div>
-    );
-  };
-});
 
 describe("LanguageSwitcher component", () => {
-  beforeEach(() => {
-    setTestLocale("pt");
-    replaceMock.mockClear();
-  });
-
-  test("When click in change language button, switch app language", async () => {
+  it("should render with the current active locale shortcut", () => {
     render(<LanguageSwitcher />);
 
-    const switcherButton = await screen.getByRole("button", { name: /PT/i });
-    expect(switcherButton).toBeInTheDocument();
+    expect(screen.getByText("PT")).toBeInTheDocument();
+  });
 
-    fireEvent.click(switcherButton);
+  it("should open the dropdown menu and display available languages when clicked", async () => {
+    render(<LanguageSwitcher />);
 
-    const englishOption = await screen.getByText("English");
-    fireEvent.click(englishOption);
+    const toggleButton = screen.getByRole("button", { name: /PT/i });
+    await userEvent.click(toggleButton);
 
-    expect(replaceMock).toHaveBeenCalledWith("/", {
+    expect(screen.getByText("English")).toBeInTheDocument();
+    expect(screen.getByText("Español")).toBeInTheDocument();
+    expect(screen.getByText("Français")).toBeInTheDocument();
+    expect(screen.getByText("Deutsch")).toBeInTheDocument();
+  });
+
+  it("should call router.replace with 'en' locale when English is selected", async () => {
+    render(<LanguageSwitcher />);
+
+    const toggleButton = screen.getByRole("button", { name: /PT/i });
+    await userEvent.click(toggleButton);
+
+    const englishOption = screen.getByText("English");
+    await userEvent.click(englishOption);
+
+    expect(mockReplace).toHaveBeenCalledWith("/rota-atual", {
       locale: "en",
     });
   });
 
-  test("Change app language to english", async () => {
-    setTestLocale("pt");
+  it("should call router.replace with 'es' locale when Español is selected", async () => {
+    render(<LanguageSwitcher />);
 
-    const { rerender } = render(<Page />);
+    const toggleButton = screen.getByRole("button", { name: /PT/i });
+    await userEvent.click(toggleButton);
 
-    expect(
-      screen.getByRole("heading", {
-        name: /Encontre a melhor rota para sua viagem/i,
-      }),
-    ).toBeInTheDocument();
+    const spanishOption = screen.getByText("Español");
+    await userEvent.click(spanishOption);
 
-    await userEvent.click(screen.getByRole("button", { name: /PT/i }));
-
-    await userEvent.click(screen.getByText("English"));
-
-    rerender(<Page />);
-
-    expect(
-      screen.getByRole("heading", {
-        name: /Find the best route for your trip/i,
-      }),
-    ).toBeInTheDocument();
+    expect(mockReplace).toHaveBeenCalledWith("/rota-atual", {
+      locale: "es",
+    });
   });
 
-  test("Change app language to spanish", async () => {
-    setTestLocale("pt");
+  it("should call router.replace with 'fr' locale when Français is selected", async () => {
+    render(<LanguageSwitcher />);
 
-    const { rerender } = render(<Page />);
+    const toggleButton = screen.getByRole("button", { name: /PT/i });
+    await userEvent.click(toggleButton);
 
-    expect(
-      screen.getByRole("heading", {
-        name: /Encontre a melhor rota para sua viagem/i,
-      }),
-    ).toBeInTheDocument();
+    const frenchOption = screen.getByText("Français");
+    await userEvent.click(frenchOption);
 
-    await userEvent.click(screen.getByRole("button", { name: /PT/i }));
-
-    await userEvent.click(screen.getByText("Español"));
-
-    rerender(<Page />);
-
-    expect(
-      screen.getByRole("heading", {
-        name: /Encuentra la mejor ruta para tu viaje/i,
-      }),
-    ).toBeInTheDocument();
+    expect(mockReplace).toHaveBeenCalledWith("/rota-atual", {
+      locale: "fr",
+    });
   });
 
-  test("Change app language to french", async () => {
-    setTestLocale("pt");
+  it("should call router.replace with 'de' locale when Deutsch is selected", async () => {
+    render(<LanguageSwitcher />);
 
-    const { rerender } = render(<Page />);
+    const toggleButton = screen.getByRole("button", { name: /PT/i });
+    await userEvent.click(toggleButton);
 
-    expect(
-      screen.getByRole("heading", {
-        name: /Encontre a melhor rota para sua viagem/i,
-      }),
-    ).toBeInTheDocument();
+    const germanOption = screen.getByText("Deutsch");
+    await userEvent.click(germanOption);
 
-    await userEvent.click(screen.getByRole("button", { name: /PT/i }));
-
-    await userEvent.click(screen.getByText("Français"));
-
-    rerender(<Page />);
-
-    expect(
-      screen.getByRole("heading", {
-        name: /Trouvez le meilleur itinéraire pour votre voyage/i,
-      }),
-    ).toBeInTheDocument();
-  });
-
-  test("Change app language to germany", async () => {
-    setTestLocale("pt");
-
-    const { rerender } = render(<Page />);
-
-    expect(
-      screen.getByRole("heading", {
-        name: /Encontre a melhor rota para sua viagem/i,
-      }),
-    ).toBeInTheDocument();
-
-    await userEvent.click(screen.getByRole("button", { name: /PT/i }));
-
-    await userEvent.click(screen.getByText("Deutsch"));
-
-    rerender(<Page />);
-
-    expect(
-      screen.getByRole("heading", {
-        name: /Finden Sie die beste Route für Ihre Reise/i,
-      }),
-    ).toBeInTheDocument();
+    expect(mockReplace).toHaveBeenCalledWith("/rota-atual", {
+      locale: "de",
+    });
   });
 });

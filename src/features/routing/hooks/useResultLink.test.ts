@@ -5,7 +5,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { RouteContextType } from "@/types/contexts";
 
 jest.mock("/src/features/routing/context/RouteContext");
-jest.mock("/scr/hooks/useIsMounted");
+jest.mock("/src/hooks/useIsMounted");
 
 describe("useResultLink Hook", () => {
   beforeEach(() => {
