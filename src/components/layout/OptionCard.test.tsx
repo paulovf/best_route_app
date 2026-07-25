@@ -1,13 +1,13 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { OptionCard } from "@/components/layout/OptionCard";
-import { Option } from "@/types/route";
+import { Option, HighlightType } from "@/types/route";
 
 jest.mock("/src/components/layout/OptionCard/Step", () => ({
   OptionCardStep: () => <div data-testid="mocked-steps-timeline" />,
 }));
 
-jest.mock("/src/features/routing/utils/formatters", () => ({
+jest.mock("/src/components/utils/formatters", () => ({
   formatDuration: (hours: number) => `${hours} hrs`,
   formatPrice: (amount: number) => `$${amount}`,
 }));
@@ -79,7 +79,7 @@ describe("OptionCard Component", () => {
       const option: Option = {
         ...baseMockOption,
         order: 3,
-        highlight: highlight as any,
+        highlight: highlight as HighlightType,
       };
       render(<OptionCard option={option} />);
 

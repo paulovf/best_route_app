@@ -13,6 +13,8 @@ export interface OptionCardProps {
 export interface TopbarProps {
   /** Topbar display status. */
   show: boolean;
+  /** Topbar result link. */
+  resultHref: string;
 }
 
 export interface OptionStepsTimelineProps {

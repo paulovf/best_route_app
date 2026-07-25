@@ -1,10 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CityFormField } from "@/components/ui/CityFormField";
-import { useCity } from "@/features/city-search/context/CityContext";
-
-jest.mock("/src/features/city-search/context/CityContext", () => ({
-  useCity: jest.fn(),
-}));
 
 const mockContextCities = [
   {
@@ -22,13 +17,6 @@ const mockContextCities = [
 describe("CityFormField component", () => {
   const mockOnChange = jest.fn();
 
-  beforeEach(() => {
-    (useCity as jest.Mock).mockReturnValue({
-      cities: mockContextCities,
-      isLoadingCities: false,
-    });
-  });
-
   it("when user input any text search and display cities suggestions", async () => {
     render(
       <CityFormField
@@ -36,6 +24,8 @@ describe("CityFormField component", () => {
         namePrefix="origin"
         value={null}
         onChange={mockOnChange}
+        cities={mockContextCities}
+        isLoadingCities={false}
       />,
     );
 
@@ -59,6 +49,8 @@ describe("CityFormField component", () => {
         namePrefix="origin"
         value={null}
         onChange={mockOnChange}
+        cities={mockContextCities}
+        isLoadingCities={false}
       />,
     );
 
@@ -87,6 +79,8 @@ describe("CityFormField component", () => {
         namePrefix="origin"
         value={null}
         onChange={mockOnChange}
+        cities={mockContextCities}
+        isLoadingCities={false}
       />,
     );
 

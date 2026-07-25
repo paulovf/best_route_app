@@ -2,7 +2,7 @@ import {
   getTransportTypeLabel,
   formatDuration,
   formatPrice,
-} from "./formatters";
+} from "@/components/utils/formatters";
 
 const tTransport = (key: string) => {
   const translations: Record<string, string> = {

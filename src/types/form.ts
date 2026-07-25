@@ -14,6 +14,10 @@ export interface CityAutocompleteProps {
   namePrefix: string;
   /** Input value. */
   value: CityOption | null;
+  /** List of available cities. */
+  cities: CityOption[];
+  /** Cities list loading status. */
+  isLoadingCities: boolean;
   /** Input onchange event. */
   onChange: (city: CityOption | null) => void;
 }

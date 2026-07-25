@@ -65,7 +65,7 @@ export function RouteProvider({
     setErrorData(null);
     sessionStorage.removeItem("best_route_data");
     sessionStorage.removeItem("best_route_error");
-  }, []);
+  }, [setRouteDataState]);
 
   return (
     <RouteContext.Provider

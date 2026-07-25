@@ -13,7 +13,10 @@ import { useRoute } from "@/features/routing/context/RouteContext";
 import { Fail } from "@/types/fail";
 import { usePreventNavigation } from "@/hooks/usePreventNavigation";
 import { useGeolocation } from "@/features/geolocation/hooks/useGeolocation";
-import { CityProvider } from "@/features/city-search/context/CityContext";
+import {
+  CityProvider,
+  useCity,
+} from "@/features/city-search/context/CityContext";
 import { useTranslations } from "next-intl";
 
 const getSameCityErrors = (
@@ -82,6 +85,7 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const { location, loading: isGeolocating } = useGeolocation();
+  const { cities, isLoadingCities } = useCity();
 
   usePreventNavigation(isCalculating);
 
@@ -231,6 +235,8 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                   value={origin}
                   onChange={setOrigin}
                   error={originError || undefined}
+                  cities={cities}
+                  isLoadingCities={isLoadingCities}
                 />
               </div>
 
@@ -253,6 +259,8 @@ export const FormScreen = forwardRef<HTMLDivElement>((_, ref) => {
                   value={destination}
                   onChange={setDestination}
                   error={destinationError || undefined}
+                  cities={cities}
+                  isLoadingCities={isLoadingCities}
                 />
               </div>
 

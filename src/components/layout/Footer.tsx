@@ -3,9 +3,11 @@
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { useRoute } from "@/features/routing/context/RouteContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
+
+type FooterProps = {
+  resultHref: string;
+};
 
 function FooterBold(chunks: ReactNode) {
   return <b>{chunks}</b>;
@@ -20,21 +22,9 @@ function FooterItalic(chunks: ReactNode) {
  *
  * @returns The rendered footer component.
  */
-export function Footer() {
+export function Footer({ resultHref }: Readonly<FooterProps>) {
   const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
-  const { routeData, errorData } = useRoute();
-  const isMounted = useIsMounted();
-
-  let resultHref = "/#form-screen";
-
-  if (isMounted) {
-    if (routeData?.options && routeData.options.length > 0) {
-      resultHref = "/result/success";
-    } else if (errorData) {
-      resultHref = "/result/fail";
-    }
-  }
 
   return (
     <footer className="bg-neutral-800">

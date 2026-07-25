@@ -1,11 +1,6 @@
 import React from "react";
 import { Bus, Plane, Car, Ship, Train, Smartphone } from "lucide-react";
-import { TransportType } from "@/types/route";
-
-interface TransportIconProps {
-  type: TransportType;
-  className?: string;
-}
+import { TransportIconProps } from "@/types/utils";
 
 export const TransportIcon = ({
   type,

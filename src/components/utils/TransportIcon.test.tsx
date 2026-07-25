@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { TransportIcon } from "./TransportIcon";
+import { TransportIcon } from "@/components/utils/TransportIcon";
 
 describe("getTransportIcon", () => {
   it("should return a valid React component for a known transport type", () => {

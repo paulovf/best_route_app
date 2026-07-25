@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { CityFormField } from "./CityFormField";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
-import { CityContext } from "@/features/city-search/context/CityContext";
 import { CityOption, CityFormFieldProps } from "@/types/form";
 
 const mockMessages = {
@@ -25,22 +24,18 @@ const meta: Meta<typeof CityFormField> = {
   component: CityFormField,
   tags: ["autodocs"],
   decorators: [
-    (Story, context) => {
-      const isLoadingCities = context.args.error === "loading";
-
+    (Story) => {
       return (
         <NextIntlClientProvider locale="pt" messages={mockMessages}>
-          <CityContext.Provider value={{ cities: mockCities, isLoadingCities }}>
-            <div
-              style={{
-                padding: "2rem",
-                maxWidth: "400px",
-                backgroundColor: "#f8fafc",
-              }}
-            >
-              <Story />
-            </div>
-          </CityContext.Provider>
+          <div
+            style={{
+              padding: "2rem",
+              maxWidth: "400px",
+              backgroundColor: "#f8fafc",
+            }}
+          >
+            <Story />
+          </div>
         </NextIntlClientProvider>
       );
     },
@@ -53,7 +48,13 @@ type Story = StoryObj<typeof CityFormField>;
 const InteractiveCityField = (args: CityFormFieldProps) => {
   const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
   return (
-    <CityFormField {...args} value={selectedCity} onChange={setSelectedCity} />
+    <CityFormField
+      {...args}
+      value={selectedCity}
+      onChange={setSelectedCity}
+      cities={mockCities}
+      isLoadingCities={false}
+    />
   );
 };
 

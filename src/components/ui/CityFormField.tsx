@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
-import { useCity } from "@/features/city-search/context/CityContext";
 import { CityFormFieldProps, CityOption } from "@/types/form";
 import { useTranslations } from "next-intl";
 
@@ -22,8 +21,9 @@ export function CityFormField({
   value,
   onChange,
   error,
+  cities,
+  isLoadingCities,
 }: Readonly<CityFormFieldProps>) {
-  const { cities, isLoadingCities } = useCity();
   const [query, setQuery] = useState(value?.displayName || "");
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);

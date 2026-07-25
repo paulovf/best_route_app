@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { RouteProvider } from "@/features/routing/context/RouteContext";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Footer } from "../../components/layout/Footer";
+// import { Footer } from "../../components/layout/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "../globals.css";
@@ -38,10 +38,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider messages={messages}>
-          <RouteProvider>
-            {children}
-            <Footer />
-          </RouteProvider>
+          <RouteProvider>{children}</RouteProvider>
         </NextIntlClientProvider>
       </body>
     </html>

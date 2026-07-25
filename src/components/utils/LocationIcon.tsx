@@ -1,11 +1,6 @@
 import React from "react";
 import { Bus, Plane, Anchor, Home, Train, MapPin } from "lucide-react";
-import { LocationType } from "@/types/route";
-
-interface LocationIconProps {
-  type: LocationType;
-  className?: string;
-}
+import { LocationIconProps } from "@/types/utils";
 
 /**
  * Get icon for display location type in Step component.

@@ -1,32 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Footer } from "@/components/layout/Footer";
-import { useRoute } from "@/features/routing/context/RouteContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
-
-jest.mock("/src/features/routing/context/RouteContext", () => ({
-  useRoute: jest.fn(),
-}));
-
-jest.mock("/src/hooks/useIsMounted", () => ({
-  useIsMounted: jest.fn(),
-}));
 
 describe("Footer Component", () => {
-  const baseMockContext = {
-    setRouteData: jest.fn(),
-    setErrorData: jest.fn(),
-    clearStorage: jest.fn(),
-  };
-
   it("should render static content correctly including logo, text, and copyright with current year", () => {
-    jest.mocked(useIsMounted).mockReturnValue(true);
-    jest.mocked(useRoute).mockReturnValue({
-      ...baseMockContext,
-      routeData: null,
-      errorData: null,
-    });
-
-    render(<Footer />);
+    render(<Footer resultHref="/#form-screen" />);
 
     const logo = screen.getByAltText("Logo do rodapé do Best Route");
     expect(logo).toBeInTheDocument();
@@ -40,65 +17,22 @@ describe("Footer Component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should point to form-screen when the component is not mounted yet", () => {
-    jest.mocked(useIsMounted).mockReturnValue(false);
-    jest.mocked(useRoute).mockReturnValue({
-      ...baseMockContext,
-      routeData: null,
-      errorData: null,
-    });
-
-    render(<Footer />);
-
-    const resultLink = screen.getByRole("link", { name: "Resultado" });
-    expect(resultLink).toHaveAttribute("href", "/#form-screen");
-  });
-
   it("should point to success result page when mounted and route data has options", () => {
-    jest.mocked(useIsMounted).mockReturnValue(true);
-    jest.mocked(useRoute).mockReturnValue({
-      ...baseMockContext,
-      routeData: {
-        id: "123",
-        origin_city: "Belo Horizonte",
-        origin_state: "MG",
-        destination_city: "Vitoria",
-        destination_state: "ES",
-        travel_date: "2026-12-25",
-        options: [],
-      },
-      errorData: null,
-    });
-
-    render(<Footer />);
+    render(<Footer resultHref="/result/success" />);
 
     const resultLink = screen.getByRole("link", { name: "Resultado" });
-    expect(resultLink).toHaveAttribute("href", "/#form-screen");
+    expect(resultLink).toHaveAttribute("href", "/result/success");
   });
 
   it("should point to fail result page when mounted and error data exists", () => {
-    jest.mocked(useIsMounted).mockReturnValue(true);
-    jest.mocked(useRoute).mockReturnValue({
-      ...baseMockContext,
-      routeData: null,
-      errorData: { message: "API Error" },
-    });
-
-    render(<Footer />);
+    render(<Footer resultHref="/result/fail" />);
 
     const resultLink = screen.getByRole("link", { name: "Resultado" });
     expect(resultLink).toHaveAttribute("href", "/result/fail");
   });
 
   it("should render external product and contact links with correct attributes", () => {
-    jest.mocked(useIsMounted).mockReturnValue(true);
-    jest.mocked(useRoute).mockReturnValue({
-      ...baseMockContext,
-      routeData: null,
-      errorData: null,
-    });
-
-    render(<Footer />);
+    render(<Footer resultHref="/#form-screen" />);
 
     const homeLink = screen.getByRole("link", { name: "Home" });
     expect(homeLink).toHaveAttribute("href", "/");

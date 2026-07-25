@@ -1,10 +1,7 @@
 // src/components/ui/OptionCard.tsx
 import React, { useState } from "react";
 import { ChevronDown, Dot } from "lucide-react";
-import {
-  formatDuration,
-  formatPrice,
-} from "@/features/routing/utils/formatters";
+import { formatDuration, formatPrice } from "@/components/utils/formatters";
 import { OptionCardStep } from "./OptionCard/Step";
 import { HighlightType } from "@/types/route";
 import { useTranslations } from "next-intl";

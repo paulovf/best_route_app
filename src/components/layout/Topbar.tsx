@@ -5,8 +5,6 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { Link } from "@/i18n/routing";
-import { useRoute } from "@/features/routing/context/RouteContext";
-import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
 import { TopbarProps } from "@/types/components";
 
@@ -16,9 +14,8 @@ import { TopbarProps } from "@/types/components";
  * @param show - The properties for the component.
  * @returns The rendered topbar component.
  */
-export default function Topbar({ show }: Readonly<TopbarProps>) {
+export default function Topbar({ show, resultHref }: Readonly<TopbarProps>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMounted = useIsMounted();
   const t = useTranslations("Topbar");
 
   const activeSection = useActiveSection([
@@ -27,18 +24,6 @@ export default function Topbar({ show }: Readonly<TopbarProps>) {
     "result-screen",
     "privacy-policy-screen",
   ]);
-
-  const { routeData, errorData } = useRoute();
-
-  let resultHref = "/#form-screen";
-
-  if (isMounted) {
-    if (routeData?.options?.length && routeData.options.length > 0) {
-      resultHref = "/result/success";
-    } else if (errorData) {
-      resultHref = "/result/fail";
-    }
-  }
 
   const navLinks = [
     { label: t("links.home"), href: "/", id: "home-screen", target: "_self" },

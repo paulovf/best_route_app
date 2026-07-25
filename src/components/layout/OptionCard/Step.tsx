@@ -6,9 +6,9 @@ import {
   formatDuration,
   getTransportTypeLabel,
   formatPrice,
-} from "@/features/routing/utils/formatters";
-import { TransportIcon } from "@/features/routing/components/TransportIcon";
-import { getLocationIcon } from "@/features/routing/components/LocationIcon";
+} from "@/components/utils/formatters";
+import { TransportIcon } from "../../utils/TransportIcon";
+import { getLocationIcon } from "../../utils/LocationIcon";
 
 /**
  * Renders a timeline of steps for a travel route option.

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { getLocationIcon } from "./LocationIcon";
+import { getLocationIcon } from "@/components/utils/LocationIcon";
 import { LocationType } from "@/types/route";
 
 describe("getLocationIcon", () => {

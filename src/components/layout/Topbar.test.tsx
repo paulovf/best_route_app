@@ -1,21 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import Topbar from "@/components/layout/Topbar";
-import { useRoute } from "@/features/routing/context/RouteContext";
-
-jest.mock("/src/features/routing/context/RouteContext", () => ({
-  useRoute: jest.fn(),
-}));
 
 describe("Topbar component", () => {
-  const mockUseRoute = useRoute as jest.Mock;
-
   it("display component when prop show is true", () => {
-    mockUseRoute.mockReturnValue({
-      routeData: null,
-      errorData: { status: 500, message: "Error" },
-    });
-
-    render(<Topbar show={true} />);
+    render(<Topbar show={true} resultHref="/#form-screen" />);
 
     const header = screen.getByRole("banner");
 
@@ -24,12 +12,7 @@ describe("Topbar component", () => {
   });
 
   it("hide component when prop show is false", () => {
-    mockUseRoute.mockReturnValue({
-      routeData: null,
-      errorData: { status: 500, message: "Error" },
-    });
-
-    render(<Topbar show={false} />);
+    render(<Topbar show={false} resultHref="/#form-screen" />);
 
     const header = screen.getByRole("banner");
 

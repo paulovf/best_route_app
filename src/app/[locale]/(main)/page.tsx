@@ -7,6 +7,8 @@ import Topbar from "@/components/layout/Topbar";
 import { FormScreen } from "./form/FormScreen";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations } from "next-intl";
+import { useResultLink } from "@/features/routing/hooks/useResultLink";
+import { Footer } from "@/components/layout/Footer";
 
 /**
  * The main entry page for the application.
@@ -17,6 +19,7 @@ export default function Page() {
   const t = useTranslations("Home");
   const [showTopbar, setShowTopbar] = useState(false);
   const formSectionRef = useRef<HTMLDivElement>(null);
+  const resultHref = useResultLink();
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -54,7 +57,7 @@ export default function Page() {
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
       <main className="pt-0">
         <div className="relative min-h-screen bg-neutral-900 text-white selection:bg-emerald-500">
-          <Topbar show={showTopbar} />
+          <Topbar show={showTopbar} resultHref={resultHref} />
 
           <section
             id="home-screen"
@@ -159,6 +162,7 @@ export default function Page() {
           <FormScreen ref={formSectionRef} />
         </div>
       </main>
+      <Footer resultHref={resultHref} />
     </div>
   );
 }
