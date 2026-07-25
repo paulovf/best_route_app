@@ -28,7 +28,7 @@ const getSameCityErrors = (
     currentOrigin &&
     currentDestination &&
     currentOrigin?.name === currentDestination?.name &&
-    currentOrigin.uf === currentDestination.uf
+    currentOrigin?.uf === currentDestination?.uf
   ) {
     return {
       oError: t("errors.originSameAsDest"),
