@@ -1,4 +1,4 @@
-import { RouteApiResponse } from "@/types/route";
+import { RouteApiResponse } from "@/features/routing/types";
 
 export const MOCK_API_RESPONSE: RouteApiResponse = {
   id: "bf5079df-5194-4516-bc80-2e6577ecb29b",

@@ -1,0 +1,116 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { useActiveSection } from "@/hooks/useActiveSection";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { TopbarProps } from "@/types/components";
+
+/**
+ * Renders the top navigation bar for the application.
+ *
+ * @param show - The properties for the component.
+ * @returns The rendered topbar component.
+ */
+export default function Topbar({ show, resultHref }: Readonly<TopbarProps>) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useTranslations("Topbar");
+
+  const activeSection = useActiveSection([
+    "home-screen",
+    "form-screen",
+    "result-screen",
+    "privacy-policy-screen",
+  ]);
+
+  const navLinks = [
+    { label: t("links.home"), href: "/", id: "home-screen", target: "_self" },
+    {
+      label: t("links.calculate"),
+      href: "/#form-screen",
+      id: "form-screen",
+      target: "_self",
+    },
+    {
+      label: t("links.results"),
+      href: resultHref as string,
+      id: "result-screen",
+      target: "_self",
+    },
+    {
+      label: t("links.privacy"),
+      href: "/privacy_policy",
+      id: "privacy-policy-screen",
+      target: "_self",
+    },
+  ];
+
+  const renderLinks = (isMobile: boolean) => {
+    return navLinks.map((link) => {
+      const isActive = activeSection === link.id;
+      const paddingClasses = isMobile
+        ? "px-4 py-3 rounded-xl text-left"
+        : "px-3.5 py-1.5 rounded-full";
+      const baseColorClasses = isMobile
+        ? "text-slate-600 hover:bg-slate-50"
+        : "text-slate-600 hover:bg-slate-100";
+      const colorClasses = isActive
+        ? "bg-neutral-600 text-white"
+        : baseColorClasses;
+
+      return (
+        <Link
+          key={link.label}
+          href={link.href}
+          onClick={() => isMobile && setIsMenuOpen(false)}
+          target={link.target}
+          className={`text-sm font-medium transition ${paddingClasses} ${colorClasses}`}
+        >
+          {link.label}
+        </Link>
+      );
+    });
+  };
+
+  return (
+    <header
+      className={`fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-600/10 ${
+        show
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 -translate-y-full pointer-events-none"
+      }`}
+    >
+      <div className="w-full mx-auto px-10 h-14 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/images/logo_v2_dark.png"
+            alt={t("logoAlt")}
+            width={28}
+            height={28}
+            className="w-7 h-7 object-contain"
+            priority
+          />
+          <span className="font-semibold tracking-tight text-neutral-600">
+            Best Route
+          </span>
+        </div>
+        <nav className="hidden md:flex gap-1">{renderLinks(false)}</nav>
+
+        <button
+          className="md:hidden p-2 text-neutral-600"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-14 left-0 w-full bg-white border-b border-neutral-600/10 shadow-lg p-6 flex flex-col gap-4 animate-in slide-in-from-top-5">
+          {renderLinks(true)}
+        </div>
+      )}
+    </header>
+  );
+}

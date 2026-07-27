@@ -1,4 +1,4 @@
-import { NominatimReverseResponse } from "@/types/openStreetMap";
+import { NominatimReverseResponse } from "@/features/geolocation/types";
 
 export const mockSuccessResponse: NominatimReverseResponse = {
   place_id: 9861328,

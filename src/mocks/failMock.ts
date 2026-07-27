@@ -1,4 +1,4 @@
-import { Fail } from "@/types/fail";
+import { Fail } from "@/features/routing/types";
 
 export const MOCK_API_ERROR: Fail = {
   timestamp: "2026-07-07T11:46:15.538907395",

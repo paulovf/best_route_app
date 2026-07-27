@@ -56,7 +56,7 @@ export function translate(namespace: string, key: string) {
   const value = getMessage(locales[currentLocale], `${namespace}.${key}`);
 
   if (typeof value !== "string") {
-    throw new Error(
+    throw new TypeError(
       `Translation not found: ${currentLocale}.${namespace}.${key}`,
     );
   }

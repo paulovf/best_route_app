@@ -20,7 +20,7 @@ services:
       - bestroute-app-network
       - bestroute-shared-network
 
-  test:
+  tests:
     build:
       context: .
       dockerfile: Dockerfile.test

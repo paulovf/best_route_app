@@ -1,0 +1,89 @@
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import ErrorPage from "@/app/[locale]/result/fail/page";
+import { useRoute } from "@/features/routing/context/RouteContext";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import { mockReplace } from "@/test/setup/routing";
+
+jest.mock("/src/features/routing/context/RouteContext", () => ({
+  useRoute: jest.fn(),
+}));
+
+jest.mock("/src/hooks/useIsMounted", () => ({
+  useIsMounted: jest.fn(),
+}));
+
+describe("ErrorPage Screen", () => {
+  const mockUseRoute = useRoute as jest.Mock;
+  const mockUseIsMounted = useIsMounted as jest.Mock;
+
+  beforeEach(() => {
+    mockUseIsMounted.mockReturnValue(true);
+  });
+
+  it("should render the main title and layout structure", () => {
+    mockUseRoute.mockReturnValue({
+      routeData: null,
+      errorData: { status: 500, message: "Error" },
+      setRouteData: jest.fn(),
+      setErrorData: jest.fn(),
+      clearStorage: jest.fn(),
+    });
+
+    render(<ErrorPage />);
+
+    expect(screen.getByText("Ops! Algo deu errado")).toBeInTheDocument();
+  });
+
+  it("should render specific friendly message for Route API failure (invalid itinerary)", () => {
+    mockUseRoute.mockReturnValue({
+      routeData: null,
+      errorData: {
+        status: 500,
+        message: "Unable to generate a valid itinerary",
+      },
+      setRouteData: jest.fn(),
+      setErrorData: jest.fn(),
+      clearStorage: jest.fn(),
+    });
+
+    render(<ErrorPage />);
+
+    expect(
+      screen.getByText(
+        "Houve um problema ao processar a sua rota. Tente mais tarde.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("should render default fallback friendly message for AI search failure or general errors", () => {
+    mockUseRoute.mockReturnValue({
+      routeData: null,
+      errorData: {
+        status: 502,
+        message: "AI LLM service parsing failed or service unavailable",
+      },
+      setRouteData: jest.fn(),
+      setErrorData: jest.fn(),
+      clearStorage: jest.fn(),
+    });
+
+    render(<ErrorPage />);
+
+    expect(
+      screen.getByText(
+        "Houve um problema ao processar a sua rota. Tente mais tarde.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("should redirect to /#form-screen when errorData is null", () => {
+    mockUseRoute.mockReturnValue({
+      errorData: null,
+    });
+
+    render(<ErrorPage />);
+
+    expect(mockReplace).toHaveBeenCalledWith("/#form-screen");
+  });
+});
