@@ -101,6 +101,7 @@ export default function Page() {
               </p>
               <button
                 onClick={scrollToForm}
+                type="button"
                 className="mt-10 bg-neutral-50 text-neutral-900 rounded-full font-semibold px-10 py-3.5 text-sm shadow-sm hover:bg-neutral-200 active:scale-95 transition-all cursor-pointer"
               >
                 {t("cta")}
