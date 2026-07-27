@@ -1,5 +1,5 @@
 import { getCites } from "@/features/city-search/services/citySearchService";
-import { CitySearchRouteApiResponse } from "@/types/citySearch";
+import { CitySearchRouteApiResponse } from "@/features/city-search/types";
 
 describe("routeService - getCites", () => {
   const mockApiResponse: CitySearchRouteApiResponse = {

@@ -1,8 +1,7 @@
 import React from "react";
 import { renderHook, act } from "@testing-library/react";
 import { RouteProvider, useRoute } from "./RouteContext";
-import { RouteApiResponse } from "@/types/route";
-import { Fail } from "@/types/fail";
+import { RouteApiResponse, Fail } from "@/features/routing/types";
 
 describe("RouteContext & useRoute", () => {
   const mockRouteData: RouteApiResponse = {

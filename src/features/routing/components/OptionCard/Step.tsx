@@ -1,14 +1,14 @@
 import React from "react";
 import { MoveRight, Dot } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { OptionStepsTimelineProps } from "@/types/components";
+import { OptionStepsTimelineProps } from "@/features/routing/types";
 import {
   formatDuration,
   getTransportTypeLabel,
   formatPrice,
-} from "@/components/utils/formatters";
-import { TransportIcon } from "../../utils/TransportIcon";
-import { getLocationIcon } from "../../utils/LocationIcon";
+} from "@/utils/formatters";
+import { TransportIcon } from "../../../../components/ui/icons/Transport";
+import { getLocationIcon } from "../../../../components/ui/icons/Location";
 
 /**
  * Renders a timeline of steps for a travel route option.

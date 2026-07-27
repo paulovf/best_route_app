@@ -2,7 +2,7 @@ import {
   getTransportTypeLabel,
   formatDuration,
   formatPrice,
-} from "@/components/utils/formatters";
+} from "@/utils/formatters";
 
 const tTransport = (key: string) => {
   const translations: Record<string, string> = {
@@ -25,7 +25,6 @@ describe("getTransportTypeLabel", () => {
   });
 
   it('should return the fallback label "Carro" when given an unmapped type string', () => {
-    // @ts-expect-error: Allow for test use case
     expect(getTransportTypeLabel("teleport", tTransport)).toBe("Carro");
   });
 });

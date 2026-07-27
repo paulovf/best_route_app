@@ -1,13 +1,13 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { OptionCard } from "@/components/layout/OptionCard";
-import { Option, HighlightType } from "@/types/route";
+import { OptionCard } from "./OptionCard";
+import { Option, HighlightType } from "@/features/routing/types";
 
-jest.mock("/src/components/layout/OptionCard/Step", () => ({
+jest.mock("/src/features/routing/components/OptionCard/Step", () => ({
   OptionCardStep: () => <div data-testid="mocked-steps-timeline" />,
 }));
 
-jest.mock("/src/components/utils/formatters", () => ({
+jest.mock("/src/utils/formatters", () => ({
   formatDuration: (hours: number) => `${hours} hrs`,
   formatPrice: (amount: number) => `$${amount}`,
 }));

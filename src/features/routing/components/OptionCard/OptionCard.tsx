@@ -1,11 +1,10 @@
 // src/components/ui/OptionCard.tsx
 import React, { useState } from "react";
 import { ChevronDown, Dot } from "lucide-react";
-import { formatDuration, formatPrice } from "@/components/utils/formatters";
-import { OptionCardStep } from "./OptionCard/Step";
-import { HighlightType } from "@/types/route";
+import { formatDuration, formatPrice } from "@/utils/formatters";
+import { OptionCardStep } from "./Step";
 import { useTranslations } from "next-intl";
-import { OptionCardProps } from "@/types/components";
+import { OptionCardProps, HighlightType } from "@/features/routing/types";
 
 const badgeBorderColor: Record<HighlightType, string> = {
   recommended: "bg-primary-500 text-white",

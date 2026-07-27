@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { NominatimReverseResponse } from "@/types/openStreetMap";
+import { NominatimReverseResponse } from "@/features/geolocation/types";
 
 /**
  * Get a city location by coords in Open Street map external api.

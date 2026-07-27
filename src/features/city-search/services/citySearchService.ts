@@ -1,4 +1,4 @@
-import { CitySearchRouteApiResponse } from "@/types/citySearch";
+import { CitySearchRouteApiResponse } from "@/features/city-search/types";
 
 /**
  * Call a internal api for search new route.

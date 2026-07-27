@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useRoute } from "@/features/routing/context/RouteContext";
 import { useRouter, Link } from "@/i18n/routing";
-import { OptionCard } from "../../../../components/layout/OptionCard";
+import { OptionCard } from "@/features/routing/components/OptionCard";
 import Topbar from "@/components/layout/Topbar";
 import { Signpost, Info, MoveRight, Dot } from "lucide-react";
 import { useIsMounted } from "@/hooks/useIsMounted";

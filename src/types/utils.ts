@@ -1,4 +1,13 @@
-import { LocationType, TransportType } from "@/types/route";
+export type TransportType =
+  "bus" | "plane" | "car" | "boat" | "train" | "app_mobile";
+
+export type LocationType =
+  | "airport"
+  | "bus_station"
+  | "train_station"
+  | "boat_station"
+  | "street"
+  | "home";
 
 export interface LocationIconProps {
   /** Location type. */

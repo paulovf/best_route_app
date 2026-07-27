@@ -9,11 +9,8 @@ import { FormScreen } from "@/app/[locale]/(main)/form/FormScreen";
 import { useRouter } from "@/i18n/routing";
 import { useRoute } from "@/features/routing/context/RouteContext";
 import { searchRoute } from "@/features/routing/services/routeService";
-import {
-  CityOption,
-  CityFormFieldProps,
-  DatePickerFieldProps,
-} from "@/types/form";
+import { CityOption, CityFormFieldProps } from "@/features/city-search/types";
+import { DatePickerFieldProps } from "@/types/components";
 
 jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
@@ -46,7 +43,7 @@ const mockIBGEResponse = [
   },
 ];
 
-jest.mock("/src/components/ui/CityFormField", () => ({
+jest.mock("/src/features/city-search/components/CityFormField", () => ({
   CityFormField: ({
     namePrefix,
     placeholder,

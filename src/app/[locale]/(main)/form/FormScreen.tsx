@@ -4,13 +4,13 @@ import React, { forwardRef, useState, useEffect, useCallback } from "react";
 import { useRouter } from "@/i18n/routing";
 import { MapPlus, ArrowUpDown } from "lucide-react";
 import { startOfDay, addYears } from "date-fns";
-import { CityFormField } from "@/components/ui/CityFormField";
-import { CityOption } from "@/types/form";
+import { CityFormField } from "@/features/city-search/components/CityFormField";
 import { DatePickerField } from "@/components/ui/DatePickerField";
 import { LoadingModal } from "@/components/layout/LoadingModal";
 import { searchRoute } from "@/features/routing/services/routeService";
 import { useRoute } from "@/features/routing/context/RouteContext";
-import { Fail } from "@/types/fail";
+import { CityOption } from "@/features/city-search/types";
+import { Fail } from "@/features/routing/types";
 import { usePreventNavigation } from "@/hooks/usePreventNavigation";
 import { useGeolocation } from "@/features/geolocation/hooks/useGeolocation";
 import {

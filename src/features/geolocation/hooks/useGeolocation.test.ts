@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useGeolocation } from "./useGeolocation";
 import { getByCoords } from "@/features/geolocation/services/geolocationService";
-import { GeolocationApiResponse } from "@/types/geolocation";
+import { GeolocationApiResponse } from "@/features/geolocation/types";
 
 jest.mock("/src/features/geolocation/services/geolocationService", () => ({
   getByCoords: jest.fn(),

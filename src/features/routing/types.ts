@@ -1,12 +1,4 @@
-export type TransportType =
-  "bus" | "plane" | "car" | "boat" | "train" | "app_mobile";
-export type LocationType =
-  | "airport"
-  | "bus_station"
-  | "train_station"
-  | "boat_station"
-  | "street"
-  | "home";
+import { LocationType, TransportType } from "@/types/utils";
 
 export type HighlightType =
   "recommended" | "cheapest" | "fastest" | "most_convenient";
@@ -85,4 +77,42 @@ export interface RouteApiResponse {
   travel_date: string;
   /** Route Api Response list routes. */
   options: Option[];
+}
+
+export interface Fail {
+  /** Timestamp route. */
+  timestamp?: string;
+  /** Http response status. */
+  status?: number;
+  /** Http response error. */
+  error?: string;
+  /** Http response message. */
+  message?: string;
+  /** Request path. */
+  path?: string;
+  /** Http error key. */
+  [key: string]: unknown;
+}
+
+export interface RouteContextType {
+  /** Route data when api result is ok. */
+  routeData: RouteApiResponse | null;
+  /** Route data error when api result is fail. */
+  errorData: Fail | null;
+  /** Set route data function. */
+  setRouteData: (data: RouteApiResponse) => void;
+  /** Set error data function. */
+  setErrorData: (error: Fail) => void;
+  /** Clear storage function. */
+  clearStorage: () => void;
+}
+
+export interface OptionCardProps {
+  /** Option component props. */
+  option: Option;
+}
+
+export interface OptionStepsTimelineProps {
+  /** Routes list. */
+  steps: Step[];
 }

@@ -1,5 +1,5 @@
 import { searchRoute } from "@/features/routing/services/routeService";
-import { RouteApiRequest } from "@/types/route";
+import { RouteApiRequest } from "@/features/routing/types";
 
 describe("routeService - searchRoute", () => {
   const mockPayload: RouteApiRequest = {

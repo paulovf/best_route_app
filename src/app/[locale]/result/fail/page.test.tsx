@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import ErrorPage from "@/app/[locale]/result/fail/page";
 import { useRoute } from "@/features/routing/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { mockReplace } from "@/test/mocks/routing";
+import { mockReplace } from "@/test/setup/routing";
 
 jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),

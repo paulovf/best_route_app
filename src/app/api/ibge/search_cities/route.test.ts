@@ -1,5 +1,5 @@
 import { GET } from "./route";
-import { CityOption } from "@/types/form";
+import { CityOption } from "@/features/city-search/types";
 
 jest.mock("next/server", () => ({
   NextResponse: {

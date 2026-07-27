@@ -2,7 +2,7 @@ import {
   GeolocationApiRequest,
   GeolocationApiResponse,
   GeolocationApiFail,
-} from "@/types/geolocation";
+} from "@/features/geolocation/types";
 
 /**
  * Get a city location by coords in IBGE external api.

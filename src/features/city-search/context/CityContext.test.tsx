@@ -2,7 +2,7 @@ import React from "react";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { CityProvider, useCity } from "./CityContext";
 import { getCites } from "@/features/city-search/services/citySearchService";
-import { CitySearchRouteApiResponse } from "@/types/citySearch";
+import { CitySearchRouteApiResponse } from "@/features/city-search/types";
 
 jest.mock("/src/features/city-search/services/citySearchService", () => ({
   getCites: jest.fn(),

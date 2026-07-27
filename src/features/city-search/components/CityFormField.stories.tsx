@@ -2,9 +2,13 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { CityFormField } from "./CityFormField";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
-import { CityOption, CityFormFieldProps } from "@/types/form";
+import {
+  CityOption,
+  CityFormFieldProps,
+  MockMessages,
+} from "@/features/city-search/types";
 
-const mockMessages = {
+const mockMessages: MockMessages = {
   CityFormField: {
     loading: "Carregando cidades...",
     notFound: "Nenhuma cidade encontrada.",
@@ -59,7 +63,7 @@ const InteractiveCityField = (args: CityFormFieldProps) => {
 };
 
 export const Default: Story = {
-  render: (args) => <InteractiveCityField {...args} />,
+  render: (args: CityFormFieldProps) => <InteractiveCityField {...args} />,
   args: {
     placeholder: "Origem (ex: São Paulo)",
     namePrefix: "origin",
@@ -67,7 +71,7 @@ export const Default: Story = {
 };
 
 export const WithError: Story = {
-  render: (args) => <InteractiveCityField {...args} />,
+  render: (args: CityFormFieldProps) => <InteractiveCityField {...args} />,
   args: {
     placeholder: "Destino",
     namePrefix: "destination",
@@ -76,7 +80,7 @@ export const WithError: Story = {
 };
 
 export const LoadingState: Story = {
-  render: (args) => <InteractiveCityField {...args} />,
+  render: (args: CityFormFieldProps) => <InteractiveCityField {...args} />,
   args: {
     placeholder: "Buscando...",
     namePrefix: "origin",

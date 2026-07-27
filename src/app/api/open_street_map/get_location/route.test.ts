@@ -1,5 +1,5 @@
 import { GET } from "./route";
-import { GeolocationApiResponse } from "@/types/geolocation";
+import { GeolocationApiResponse } from "@/features/geolocation/types";
 
 jest.mock("next/server", () => ({
   NextResponse: {

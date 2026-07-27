@@ -1,5 +1,8 @@
-import { RouteApiRequest, RouteApiResponse } from "@/types/route";
-import { Fail } from "@/types/fail";
+import {
+  RouteApiRequest,
+  RouteApiResponse,
+  Fail,
+} from "@/features/routing/types";
 
 /**
  * Call a internal api for search new route.

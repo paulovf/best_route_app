@@ -1,21 +1,21 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { OptionCardStep } from "@/components/layout/OptionCard/Step";
-import { Step } from "@/types/route";
+import { OptionCardStep } from "@/features/routing/components/OptionCard/Step";
+import { Step } from "@/features/routing/types";
 
-jest.mock("/src/components/utils/TransportIcon", () => ({
+jest.mock("/src/components/ui/icons/Transport", () => ({
   TransportIcon: ({ type }: { type: string }) => (
     <span data-testid={`transport-icon-${type}`} />
   ),
 }));
 
-jest.mock("/src/components/utils/LocationIcon", () => ({
+jest.mock("/src/components/ui/icons/Location", () => ({
   getLocationIcon: ({ type }: { type: string }) => (
     <span data-testid={`location-icon-${type}`} />
   ),
 }));
 
-jest.mock("/src/components/utils/formatters", () => ({
+jest.mock("/src/utils/formatters", () => ({
   getTransportTypeLabel: (type: string) => `Label-${type}`,
   formatDuration: (hours: number) => `${hours}h total`,
   formatPrice: (amount: number) => `$${amount}`,

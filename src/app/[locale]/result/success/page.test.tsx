@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import SuccessPage from "@/app/[locale]/result/success/page";
 import { useRoute } from "@/features/routing/context/RouteContext";
-import { Option } from "@/types/route";
+import { Option } from "@/features/routing/types";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { mockReplace } from "@/test/mocks/routing";
+import { mockReplace } from "@/test/setup/routing";
 
 jest.mock("/src/features/routing/context/RouteContext", () => ({
   useRoute: jest.fn(),
@@ -14,7 +14,7 @@ jest.mock("/src/hooks/useIsMounted", () => ({
   useIsMounted: jest.fn(),
 }));
 
-jest.mock("/src/components/layout/OptionCard", () => {
+jest.mock("/src/features/routing/components/OptionCard", () => {
   return {
     OptionCard: function MockOptionCard({
       option,

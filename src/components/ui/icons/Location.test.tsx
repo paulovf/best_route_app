@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
-import { getLocationIcon } from "@/components/utils/LocationIcon";
-import { LocationType } from "@/types/route";
+import { getLocationIcon } from "@/components/ui/icons/Location";
+import { LocationType } from "@/types/utils";
 
 describe("getLocationIcon", () => {
   it("should match the corresponding icon based on the specific location node type", () => {

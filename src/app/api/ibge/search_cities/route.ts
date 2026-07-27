@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { IBGECity } from "@/types/ibge";
-import { CityOption } from "@/types/form";
+import { CityOption, IBGECity } from "@/features/city-search/types";
 
 /**
  * Get a brazilian cities list by external IBGE api.

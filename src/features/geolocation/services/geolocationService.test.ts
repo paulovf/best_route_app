@@ -2,7 +2,7 @@ import { getByCoords } from "./geolocationService"; // Ajuste o caminho se neces
 import {
   GeolocationApiRequest,
   GeolocationApiResponse,
-} from "@/types/geolocation";
+} from "@/features/geolocation/types";
 
 describe("geolocationService - getByCoords", () => {
   let fetchMock: jest.SpyInstance;

@@ -5,7 +5,7 @@ import { DayPicker } from "react-day-picker";
 import { Calendar } from "lucide-react";
 import { format, addYears, startOfDay } from "date-fns";
 import { ptBR, enUS, fr, de, es, Locale } from "date-fns/locale";
-import { DatePickerFieldProps } from "@/types/form";
+import { DatePickerFieldProps } from "@/types/components";
 import { useTranslations, useLocale } from "next-intl";
 import "react-day-picker/dist/style.css";
 

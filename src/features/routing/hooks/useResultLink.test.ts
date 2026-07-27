@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { useResultLink } from "@/features/routing/hooks/useResultLink";
 import { useRoute } from "@/features/routing/context/RouteContext";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { RouteContextType } from "@/types/contexts";
+import { RouteContextType } from "@/features/routing/types";
 
 jest.mock("/src/features/routing/context/RouteContext");
 jest.mock("/src/hooks/useIsMounted");

@@ -7,9 +7,11 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { Fail } from "@/types/fail";
-import { RouteApiResponse } from "@/types/route";
-import { RouteContextType } from "@/types/contexts";
+import {
+  RouteApiResponse,
+  RouteContextType,
+  Fail,
+} from "@/features/routing/types";
 
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
 

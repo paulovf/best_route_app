@@ -7,8 +7,10 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { CityOption } from "@/types/form";
-import { CitySearchContextType } from "@/types/contexts";
+import {
+  CitySearchContextType,
+  CityOption,
+} from "@/features/city-search/types";
 import { getCites } from "@/features/city-search/services/citySearchService";
 
 export const CityContext = createContext<CitySearchContextType | undefined>(

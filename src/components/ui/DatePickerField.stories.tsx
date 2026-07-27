@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { DatePickerField } from "./DatePickerField";
-import { DatePickerFieldProps } from "@/types/form";
+import { DatePickerFieldProps } from "@/types/components";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
 

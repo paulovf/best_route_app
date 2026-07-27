@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
-import { CityFormFieldProps, CityOption } from "@/types/form";
+import { CityFormFieldProps, CityOption } from "@/features/city-search/types";
 import { useTranslations } from "next-intl";
 
 /**

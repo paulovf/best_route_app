@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { getByCoords } from "@/features/geolocation/services/geolocationService";
-import { LocationData, NominatimAddress } from "@/types/openStreetMap";
 import {
+  NominatimAddress,
+  LocationData,
   GeolocationApiRequest,
   GeolocationApiResponse,
-} from "@/types/geolocation";
+} from "@/features/geolocation/types";
 
 /**
  * Get current gelolocation user browser.
