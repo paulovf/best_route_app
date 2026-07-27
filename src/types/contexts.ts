@@ -15,9 +15,11 @@ export interface RouteContextType {
   clearStorage: () => void;
 }
 
-export interface CityContextType {
+export interface CitySearchContextType {
   /** Cities list. */
   cities: CityOption[];
   /** Cities list loading status. */
   isLoadingCities: boolean;
+  /** Set cities list function. */
+  setCities: (cities: CityOption[]) => void;
 }

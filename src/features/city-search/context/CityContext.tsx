@@ -7,11 +7,11 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { getCites } from "@/app/api/ibge/search_cities/route";
 import { CityOption } from "@/types/form";
-import { CityContextType } from "@/types/contexts";
+import { CitySearchContextType } from "@/types/contexts";
+import { getCites } from "@/features/city-search/services/citySearchService";
 
-export const CityContext = createContext<CityContextType | undefined>(
+export const CityContext = createContext<CitySearchContextType | undefined>(
   undefined,
 );
 
@@ -43,11 +43,11 @@ export function CityProvider({
       setIsLoadingCities(true);
       try {
         const validCities = await getCites();
-        setCities(validCities);
+        setCities(validCities.list);
 
         sessionStorage.setItem(
           "best_route_cities",
-          JSON.stringify(validCities),
+          JSON.stringify(validCities.list),
         );
       } catch (error) {
         console.error("Failed to fetch cities globally:", error);
@@ -62,8 +62,8 @@ export function CityProvider({
   return (
     <CityContext.Provider
       value={useMemo(
-        () => ({ cities, isLoadingCities }),
-        [cities, isLoadingCities],
+        () => ({ cities, isLoadingCities, setCities }),
+        [cities, isLoadingCities, setCities],
       )}
     >
       {children}

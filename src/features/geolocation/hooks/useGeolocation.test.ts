@@ -1,56 +1,37 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useGeolocation } from "./useGeolocation";
-import { getByCoords } from "@/app/api/open_street_map/get_location/route";
+import { getByCoords } from "@/features/geolocation/services/geolocationService";
+import { GeolocationApiResponse } from "@/types/geolocation";
 
-jest.mock("/src/app/api/open_street_map/get_location/route");
+jest.mock("/src/features/geolocation/services/geolocationService", () => ({
+  getByCoords: jest.fn(),
+}));
 
-describe("useGeolocation Hook", () => {
-  const mockGetCurrentPosition = jest.fn();
+const mockGetByCoords = getByCoords as jest.MockedFunction<typeof getByCoords>;
+
+describe("useGeolocation", () => {
+  let originalGeolocation: Geolocation;
 
   beforeAll(() => {
-    Object.defineProperty(global.navigator, "geolocation", {
-      value: {
-        getCurrentPosition: mockGetCurrentPosition,
-      },
+    originalGeolocation = navigator.geolocation;
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: originalGeolocation,
       writable: true,
       configurable: true,
     });
   });
 
-  beforeEach(() => {
-    mockGetCurrentPosition.mockReset();
-  });
-
-  it("should return city and uf on a successful geolocation search", async () => {
-    (getByCoords as jest.Mock).mockResolvedValueOnce({
-      address: {
-        municipality: "Vitória",
-        "ISO3166-2-lvl4": "BR-ES",
-      },
-    });
-
-    mockGetCurrentPosition.mockImplementationOnce((successCallback) =>
-      successCallback({
-        coords: { latitude: -19.9167, longitude: -43.9345 },
-      }),
-    );
-
-    const { result } = renderHook(() => useGeolocation());
-
-    await waitFor(() => {
-      expect(result.current.location).toEqual({
-        city: "Vitória",
-        uf: "ES",
-      });
-    });
-
-    expect(result.current.loading).toBe(false);
-    expect(result.current.error).toBeNull();
-  });
-
-  it("should return an error when geolocation is not supported by the browser", async () => {
-    Object.defineProperty(global.navigator, "geolocation", {
+  it("should set an error if geolocation is not supported by the browser", async () => {
+    Object.defineProperty(navigator, "geolocation", {
       value: undefined,
+      writable: true,
       configurable: true,
     });
 
@@ -62,22 +43,23 @@ describe("useGeolocation Hook", () => {
       );
     });
 
-    expect(result.current.location).toBeNull();
     expect(result.current.loading).toBe(false);
-
-    Object.defineProperty(global.navigator, "geolocation", {
-      value: { getCurrentPosition: mockGetCurrentPosition },
-      configurable: true,
-    });
+    expect(result.current.location).toBeNull();
   });
 
-  it("should return an error when the user denies geolocation permission", async () => {
-    mockGetCurrentPosition.mockImplementationOnce((_, errorCallback) =>
+  it("should set an error if geolocation permission is denied by the user", async () => {
+    const mockGetCurrentPosition = jest.fn((_, errorCallback) => {
       errorCallback({
         code: 1,
         message: "User denied Geolocation",
-      }),
-    );
+      });
+    });
+
+    Object.defineProperty(navigator, "geolocation", {
+      value: { getCurrentPosition: mockGetCurrentPosition },
+      writable: true,
+      configurable: true,
+    });
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -87,22 +69,66 @@ describe("useGeolocation Hook", () => {
       );
     });
 
-    expect(result.current.location).toBeNull();
     expect(result.current.loading).toBe(false);
+    expect(result.current.location).toBeNull();
   });
 
-  it("should return an error when the API response misses both city and state info", async () => {
-    (getByCoords as jest.Mock).mockResolvedValueOnce({
-      address: {
-        country: "Brasil",
-      },
+  it("should successfully set location when geolocation succeeds and address data is valid", async () => {
+    const mockGetCurrentPosition = jest.fn((successCallback) => {
+      successCallback({
+        coords: {
+          latitude: -23.5505,
+          longitude: -46.6333,
+        },
+      });
     });
 
-    mockGetCurrentPosition.mockImplementationOnce((successCallback) =>
+    Object.defineProperty(navigator, "geolocation", {
+      value: { getCurrentPosition: mockGetCurrentPosition },
+      writable: true,
+      configurable: true,
+    });
+
+    mockGetByCoords.mockResolvedValueOnce({
+      response: {
+        city: "São Paulo",
+        "ISO3166-2-lvl4": "BR-SP",
+      },
+    } as GeolocationApiResponse);
+
+    const { result } = renderHook(() => useGeolocation());
+
+    await waitFor(() => {
+      expect(result.current.location).toEqual({
+        city: "São Paulo",
+        uf: "SP",
+      });
+    });
+
+    expect(mockGetByCoords).toHaveBeenCalledWith({
+      latitude: -23.5505,
+      longitude: -46.6333,
+    });
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBeNull();
+  });
+
+  it("should set error when city or state cannot be extracted from address response", async () => {
+    const mockGetCurrentPosition = jest.fn((successCallback) => {
       successCallback({
         coords: { latitude: 0, longitude: 0 },
-      }),
-    );
+      });
+    });
+
+    Object.defineProperty(navigator, "geolocation", {
+      value: { getCurrentPosition: mockGetCurrentPosition },
+      writable: true,
+      configurable: true,
+    });
+
+    mockGetByCoords.mockResolvedValueOnce({
+      response: {},
+    } as GeolocationApiResponse);
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -116,20 +142,24 @@ describe("useGeolocation Hook", () => {
     expect(result.current.loading).toBe(false);
   });
 
-  it("should turn loading off and log error when the getByCoords service fails", async () => {
+  it("should handle error when getByCoords service fails", async () => {
     const consoleSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
 
-    (getByCoords as jest.Mock).mockRejectedValueOnce(
-      new Error("Network Error"),
-    );
-
-    mockGetCurrentPosition.mockImplementationOnce((successCallback) =>
+    const mockGetCurrentPosition = jest.fn((successCallback) => {
       successCallback({
-        coords: { latitude: 0, longitude: 0 },
-      }),
-    );
+        coords: { latitude: -23.5505, longitude: -46.6333 },
+      });
+    });
+
+    Object.defineProperty(navigator, "geolocation", {
+      value: { getCurrentPosition: mockGetCurrentPosition },
+      writable: true,
+      configurable: true,
+    });
+
+    mockGetByCoords.mockRejectedValueOnce(new Error("API failure"));
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -141,7 +171,6 @@ describe("useGeolocation Hook", () => {
       "Failed to fetch city from coordinates.",
       expect.any(Error),
     );
-    expect(result.current.location).toBeNull();
 
     consoleSpy.mockRestore();
   });

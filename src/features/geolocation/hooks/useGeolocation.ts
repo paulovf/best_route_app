@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
-import { getByCoords } from "@/app/api/open_street_map/get_location/route";
+import { getByCoords } from "@/features/geolocation/services/geolocationService";
 import { LocationData, NominatimAddress } from "@/types/openStreetMap";
+import {
+  GeolocationApiRequest,
+  GeolocationApiResponse,
+} from "@/types/geolocation";
 
 /**
  * Get current gelolocation user browser.
@@ -28,10 +32,11 @@ export function useGeolocation() {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
+          const payload: GeolocationApiRequest = { latitude, longitude };
 
           try {
-            const data = await getByCoords(latitude, longitude);
-            const { address } = data;
+            const data: GeolocationApiResponse = await getByCoords(payload);
+            const address = data.response;
 
             const city = extractCityFromResponse(address);
             const uf = extractuFFromResponse(address);

@@ -1,83 +1,86 @@
-import { getCites } from "../../../api/ibge/search_cities/route";
+import { GET } from "./route";
+import { CityOption } from "@/types/form";
 
-global.fetch = jest.fn();
+jest.mock("next/server", () => ({
+  NextResponse: {
+    json: (body: unknown, init?: ResponseInit) => ({
+      status: init?.status || 200,
+      body,
+    }),
+  },
+}));
 
-describe("getCites Service", () => {
-  const originalEnv = process.env;
+describe("GET /api/ibge/search_cities", () => {
+  let fetchMock: jest.SpyInstance;
 
   beforeEach(() => {
-    process.env = {
-      ...originalEnv,
-      NEXT_PUBLIC_API_IBGE_URL: "https://api.test.com",
-    };
+    jest.clearAllMocks();
+    process.env.NEXT_PUBLIC_API_IBGE_URL = "https://mock-ibge.com";
+    fetchMock = jest.spyOn(global, "fetch");
   });
 
-  afterAll(() => {
-    process.env = originalEnv;
+  afterEach(() => {
+    fetchMock.mockRestore();
   });
 
-  it("should return a formatted list of cities when the API responds successfully", async () => {
-    const mockApiResponse = [
+  it("should successfully fetch, format, and return cities from IBGE", async () => {
+    const mockIbgeResponse = [
       {
-        nome: "Belo Horizonte",
-        microrregiao: { mesorregiao: { UF: { sigla: "MG" } } },
+        nome: "São Paulo",
+        microrregiao: { mesorregiao: { UF: { sigla: "SP" } } },
       },
       {
-        nome: "Vitória",
-        microrregiao: { mesorregiao: { UF: { sigla: "ES" } } },
+        nome: "Rio de Janeiro",
+        microrregiao: { mesorregiao: { UF: { sigla: "RJ" } } },
       },
-    ];
-
-    (fetch as jest.Mock).mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockApiResponse),
-    });
-
-    const result = await getCites();
-
-    expect(result).toHaveLength(2);
-    expect(result[0]).toEqual({
-      name: "Belo Horizonte",
-      uf: "MG",
-      displayName: "Belo Horizonte - MG",
-    });
-    expect(fetch).toHaveBeenCalledWith(
-      "https://api.test.com",
-      expect.any(Object),
-    );
-  });
-
-  it("should handle cities without UF correctly", async () => {
-    const mockApiResponse = [
       {
         nome: "City Without State",
-        microrregiao: null,
       },
     ];
 
-    (fetch as jest.Mock).mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockApiResponse),
+    fetchMock.mockResolvedValueOnce({
+      json: async () => mockIbgeResponse,
     });
 
-    const result = await getCites();
+    const response = (await GET()) as unknown as {
+      status: number;
+      body: CityOption[];
+    };
 
-    expect(result[0]).toEqual({
-      name: "City Without State",
-      uf: "",
-      displayName: "City Without State",
+    expect(fetchMock).toHaveBeenCalledWith("https://mock-ibge.com", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([
+      { name: "São Paulo", uf: "SP", displayName: "São Paulo - SP" },
+      { name: "Rio de Janeiro", uf: "RJ", displayName: "Rio de Janeiro - RJ" },
+      { name: "City Without State", uf: "", displayName: "City Without State" },
+    ]);
   });
 
-  it("should return an empty array and log an error when the API fails", async () => {
-    (fetch as jest.Mock).mockRejectedValue(new Error("API Down"));
-
+  it("should return status 500 and empty array on API error", async () => {
     const consoleSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
 
-    const result = await getCites();
+    fetchMock.mockRejectedValueOnce(new Error("Network Error"));
 
-    expect(result).toEqual([]);
-    expect(consoleSpy).toHaveBeenCalled();
+    const response = (await GET()) as unknown as {
+      status: number;
+      body: CityOption[];
+    };
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual([]);
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Error during search city on IBGE api:",
+      expect.any(Error),
+    );
 
     consoleSpy.mockRestore();
   });

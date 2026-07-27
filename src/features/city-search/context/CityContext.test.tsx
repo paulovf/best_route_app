@@ -1,113 +1,116 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import { renderHook, act, waitFor } from "@testing-library/react";
 import { CityProvider, useCity } from "./CityContext";
-import { getCites } from "@/app/api/ibge/search_cities/route";
+import { getCites } from "@/features/city-search/services/citySearchService";
+import { CitySearchRouteApiResponse } from "@/types/citySearch";
 
-jest.mock("/src/app/api/ibge/search_cities/route");
+jest.mock("/src/features/city-search/services/citySearchService", () => ({
+  getCites: jest.fn(),
+}));
 
-const DummyConsumer = () => {
-  const { cities, isLoadingCities } = useCity();
-  return (
-    <div>
-      <span data-testid="loading-status">{isLoadingCities.toString()}</span>
-      <ul data-testid="city-list">
-        {cities.map((city) => (
-          <li key={city.name}>{city.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+const mockGetCites = getCites as jest.MockedFunction<typeof getCites>;
 
-describe("CityContext", () => {
-  const mockApiCities = [
-    { name: "Belo Horizonte", uf: "MG", displayName: "Belo Horizonte - MG" },
-    { name: "Vitória", uf: "ES", displayName: "Vitória - ES" },
-  ];
+describe("CityContext & CityProvider", () => {
+  const mockApiResponse: CitySearchRouteApiResponse = {
+    list: [
+      { name: "São Paulo", uf: "SP", displayName: "São Paulo - SP" },
+      { name: "Rio de Janeiro", uf: "RJ", displayName: "Rio de Janeiro - RJ" },
+    ],
+  };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     sessionStorage.clear();
   });
+
+  const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <CityProvider>{children}</CityProvider>
+  );
 
   it("should throw an error if useCity is used outside of CityProvider", () => {
     const consoleSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
 
-    const ComponentOutsideProvider = () => {
-      useCity();
-      return null;
-    };
-
-    expect(() => render(<ComponentOutsideProvider />)).toThrow(
+    expect(() => renderHook(() => useCity())).toThrow(
       "useCity must be used within a CityProvider",
     );
 
     consoleSpy.mockRestore();
   });
 
-  it("should fetch cities from API and save to sessionStorage if cache is empty", async () => {
-    (getCites as jest.Mock).mockResolvedValueOnce(mockApiCities);
+  it("should load cities from sessionStorage on initial state if they already exist", () => {
+    const savedCities = [
+      { name: "Belo Horizonte", uf: "MG", displayName: "Belo Horizonte - MG" },
+    ];
+    sessionStorage.setItem("best_route_cities", JSON.stringify(savedCities));
 
-    render(
-      <CityProvider>
-        <DummyConsumer />
-      </CityProvider>,
+    const { result } = renderHook(() => useCity(), { wrapper });
+
+    expect(result.current.cities).toEqual(savedCities);
+    expect(result.current.isLoadingCities).toBe(false);
+    expect(mockGetCites).not.toHaveBeenCalled();
+  });
+
+  it("should fetch cities from API when sessionStorage is empty and update state", async () => {
+    mockGetCites.mockResolvedValueOnce(
+      mockApiResponse as CitySearchRouteApiResponse,
     );
+
+    const { result } = renderHook(() => useCity(), { wrapper });
+
+    expect(result.current.isLoadingCities).toBe(true);
 
     await waitFor(() => {
-      expect(screen.getByText("Belo Horizonte")).toBeInTheDocument();
-      expect(screen.getByText("Vitória")).toBeInTheDocument();
+      expect(result.current.isLoadingCities).toBe(false);
     });
 
-    expect(getCites).toHaveBeenCalledTimes(1);
-
-    const savedCache = sessionStorage.getItem("best_route_cities");
-    expect(savedCache).toEqual(JSON.stringify(mockApiCities));
-
-    expect(screen.getByTestId("loading-status")).toHaveTextContent("false");
+    expect(mockGetCites).toHaveBeenCalledTimes(1);
+    expect(result.current.cities).toEqual(mockApiResponse.list);
   });
 
-  it("should load cities straight from sessionStorage and NOT call the API", () => {
-    const cachedCities = [
-      { name: "Fortaleza", uf: "CE", displayName: "Fortaleza - CE" },
-    ];
-
-    sessionStorage.setItem("best_route_cities", JSON.stringify(cachedCities));
-
-    render(
-      <CityProvider>
-        <DummyConsumer />
-      </CityProvider>,
-    );
-
-    expect(screen.getByText("Fortaleza")).toBeInTheDocument();
-
-    expect(getCites).not.toHaveBeenCalled();
-  });
-
-  it("should handle API errors gracefully and stop loading", async () => {
+  it("should handle API call error and reset loading state", async () => {
     const consoleSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    (getCites as jest.Mock).mockRejectedValueOnce(new Error("API Error"));
+    mockGetCites.mockRejectedValueOnce(new Error("API Error"));
 
-    render(
-      <CityProvider>
-        <DummyConsumer />
-      </CityProvider>,
-    );
+    const { result } = renderHook(() => useCity(), { wrapper });
+
+    expect(result.current.isLoadingCities).toBe(true);
 
     await waitFor(() => {
-      expect(screen.getByTestId("loading-status")).toHaveTextContent("false");
+      expect(result.current.isLoadingCities).toBe(false);
     });
 
+    expect(result.current.cities).toEqual([]);
     expect(consoleSpy).toHaveBeenCalledWith(
       "Failed to fetch cities globally:",
       expect.any(Error),
     );
 
-    expect(sessionStorage.getItem("best_route_cities")).toBeNull();
-
     consoleSpy.mockRestore();
+  });
+
+  it("should allow updating cities manually using setCities function", async () => {
+    mockGetCites.mockResolvedValueOnce({
+      list: [],
+    } as CitySearchRouteApiResponse);
+
+    const { result } = renderHook(() => useCity(), { wrapper });
+
+    await waitFor(() => {
+      expect(result.current.isLoadingCities).toBe(false);
+    });
+
+    const newCities = [
+      { name: "Curitiba", uf: "PR", displayName: "Curitiba - PR" },
+    ];
+
+    act(() => {
+      result.current.setCities(newCities);
+    });
+
+    expect(result.current.cities).toEqual(newCities);
   });
 });

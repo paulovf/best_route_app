@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { IBGECity } from "@/types/ibge";
 import { CityOption } from "@/types/form";
 
@@ -6,7 +7,7 @@ import { CityOption } from "@/types/form";
  *
  * @returns a brazilian cities list.
  */
-export async function getCites() {
+export async function GET() {
   try {
     const apiIbgeUrl = `${process.env.NEXT_PUBLIC_API_IBGE_URL}`;
 
@@ -20,10 +21,10 @@ export async function getCites() {
     const data: IBGECity[] = await response.json();
     const formattedCities = formatCities(data);
 
-    return formattedCities;
+    return NextResponse.json(formattedCities);
   } catch (error) {
     console.error("Error during search city on IBGE api:", error);
-    return [];
+    return NextResponse.json([], { status: 500 });
   }
 }
 
