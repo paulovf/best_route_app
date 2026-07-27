@@ -1,4 +1,4 @@
-import { TransportType } from "@/types/route";
+import { TransportType } from "@/types/utils";
 
 /**
  * Get transport label for display in Step component.

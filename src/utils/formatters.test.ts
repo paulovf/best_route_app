@@ -25,6 +25,7 @@ describe("getTransportTypeLabel", () => {
   });
 
   it('should return the fallback label "Carro" when given an unmapped type string', () => {
+    // @ts-expect-error: Allow for test use case
     expect(getTransportTypeLabel("teleport", tTransport)).toBe("Carro");
   });
 });
