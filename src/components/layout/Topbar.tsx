@@ -41,7 +41,7 @@ export default function Topbar({ show, resultHref }: Readonly<TopbarProps>) {
     },
     {
       label: t("links.privacy"),
-      href: "/privacy_policy",
+      href: "/privacy-policy",
       id: "privacy-policy-screen",
       target: "_self",
     },

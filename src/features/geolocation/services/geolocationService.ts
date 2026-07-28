@@ -14,13 +14,13 @@ export async function getByCoords(
   payload: GeolocationApiRequest,
 ): Promise<GeolocationApiResponse> {
   const url = "/api/geolocation/get_by_coords";
+  const queryParams = new URLSearchParams(formatPayload(payload)).toString();
 
-  const response = await fetch(url, {
-    method: "POST",
+  const response = await fetch(`${url}?${queryParams}`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
@@ -39,4 +39,10 @@ export async function getByCoords(
   }
 
   return response.json();
+}
+
+function formatPayload(
+  payload: GeolocationApiRequest,
+): Array<[string, string]> {
+  return Object.entries(payload).map(([key, value]) => [key, String(value)]);
 }

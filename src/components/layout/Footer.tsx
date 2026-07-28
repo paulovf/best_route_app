@@ -97,7 +97,7 @@ export function Footer({ resultHref }: Readonly<FooterProps>) {
               </li>
               <li>
                 <Link
-                  href="/privacy_policy"
+                  href="/privacy-policy"
                   className="hover:text-white transition-colors"
                 >
                   {t("links.privacy")}

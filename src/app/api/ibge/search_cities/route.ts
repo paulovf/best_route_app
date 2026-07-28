@@ -2,9 +2,41 @@ import { NextResponse } from "next/server";
 import { CityOption, IBGECity } from "@/features/city-search/types";
 
 /**
- * Get a brazilian cities list by external IBGE api.
- *
- * @returns a brazilian cities list.
+ * @swagger
+ * /api/ibge/search_cities:
+ *   get:
+ *     summary: Get Brazilian cities list
+ *     description: Fetches the list of municipalities from the external IBGE API and returns formatted data (name, UF, and display name).
+ *     tags:
+ *       - Cities
+ *     responses:
+ *       200:
+ *         description: Formatted list of cities successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     example: "São Paulo"
+ *                   uf:
+ *                     type: string
+ *                     example: "SP"
+ *                   displayName:
+ *                     type: string
+ *                     example: "São Paulo - SP"
+ *       500:
+ *         description: Internal error while fetching cities from the IBGE API.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *               example: []
  */
 export async function GET() {
   try {

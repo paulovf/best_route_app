@@ -31,7 +31,15 @@ export function CityProvider({
   const [cities, setCities] = useState<CityOption[]>(() => {
     if (typeof window !== "undefined") {
       const savedCities = sessionStorage.getItem("best_route_cities");
-      return savedCities ? JSON.parse(savedCities) : [];
+      if (
+        savedCities !== undefined &&
+        savedCities !== null &&
+        savedCities !== "undefined"
+      ) {
+        return savedCities ? JSON.parse(savedCities) : [];
+      } else {
+        return [];
+      }
     }
     return [];
   });
