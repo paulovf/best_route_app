@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { OptionCard } from "@/features/routing/components/OptionCard";
 import { Option } from "@/features/routing/types";
 

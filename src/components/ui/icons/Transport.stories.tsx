@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { TransportIcon } from "@/components/ui/icons/Transport";
 
 const meta = {
