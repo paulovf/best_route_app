@@ -38,14 +38,14 @@ describe("geolocationService - getByCoords", () => {
     });
 
     const result = await getByCoords(payload);
+    const url = `/api/geolocation/get_by_coords?latitude=${payload.latitude}&longitude=${payload.longitude}`;
 
     expect(result).toEqual(mockApiResponse);
-    expect(fetchMock).toHaveBeenCalledWith("/api/geolocation/get_by_coords", {
-      method: "POST",
+    expect(fetchMock).toHaveBeenCalledWith(url, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
     });
   });
 

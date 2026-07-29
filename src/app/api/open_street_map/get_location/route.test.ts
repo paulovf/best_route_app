@@ -34,7 +34,7 @@ describe("GET /api/open_street_map/get_location", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      error: "Os parâmetros 'lat' e 'lon' são obrigatórios.",
+      error: "The 'lat' and 'lon' parameters are required.",
     });
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -59,7 +59,10 @@ describe("GET /api/open_street_map/get_location", () => {
       "https://mock-osm.com?format=json&lat=-23.55&lon=-46.63&zoom=10&addressdetails=1",
       {
         method: "GET",
-        headers: { "Accept-Language": "pt-BR" },
+        headers: {
+          "Accept-Language": "pt-BR",
+          "User-Agent": "BestRouteApplication/0.1.0 (contact@bestroute.com)",
+        },
       },
     );
 
@@ -84,7 +87,7 @@ describe("GET /api/open_street_map/get_location", () => {
 
     expect(response.status).toBe(500);
     expect(response.body).toEqual({
-      error: "Erro interno ao buscar geolocalização.",
+      error: "Internal error while fetching geolocation.",
     });
 
     expect(consoleSpy).toHaveBeenCalledWith(
@@ -110,7 +113,7 @@ describe("GET /api/open_street_map/get_location", () => {
 
     expect(response.status).toBe(500);
     expect(response.body).toEqual({
-      error: "Erro interno ao buscar geolocalização.",
+      error: "Internal error while fetching geolocation.",
     });
 
     consoleSpy.mockRestore();

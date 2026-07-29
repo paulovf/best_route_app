@@ -12,14 +12,14 @@ describe("routeService - getCites", () => {
   it("should return route data successfully on 200 OK", async () => {
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: jest.fn().mockResolvedValue(mockApiResponse),
+      json: jest.fn().mockResolvedValue(mockApiResponse.list),
     });
 
     const result = await getCites();
 
     expect(result).toEqual(mockApiResponse);
     expect(global.fetch).toHaveBeenCalledWith("/api/ibge/search_cities", {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
     });
   });

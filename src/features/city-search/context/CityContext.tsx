@@ -8,8 +8,9 @@ import React, {
   useState,
 } from "react";
 import {
-  CitySearchContextType,
   CityOption,
+  CitySearchContextType,
+  CitySearchRouteApiResponse,
 } from "@/features/city-search/types";
 import { getCites } from "@/features/city-search/services/citySearchService";
 
@@ -52,12 +53,12 @@ export function CityProvider({
     const fetchCities = async () => {
       setIsLoadingCities(true);
       try {
-        const validCities = await getCites();
+        const validCities: CitySearchRouteApiResponse = await getCites();
         setCities(validCities.list);
 
         sessionStorage.setItem(
           "best_route_cities",
-          JSON.stringify(validCities.list),
+          JSON.stringify(validCities),
         );
       } catch (error) {
         console.error("Failed to fetch cities globally:", error);
