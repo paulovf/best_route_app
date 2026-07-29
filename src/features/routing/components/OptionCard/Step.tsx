@@ -1,5 +1,5 @@
 import React from "react";
-import { MoveRight, Dot } from "lucide-react";
+import { MoveRight, Dot, MoveDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { OptionStepsTimelineProps } from "@/features/routing/types";
 import {
@@ -49,28 +49,42 @@ export const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
               {step.destination_arrival}
             </div>
 
-            <p className="text-xs text-neutral-800/50 mt-0.5">
-              {step.origin_city} ({step.origin_state}) {t("to")}{" "}
-              {step.destination_city} ({step.destination_state})
-            </p>
+            <div className="flex flex-col gap-1 md:flex-row items-start">
+              <p className="text-xs text-neutral-800/50 mt-0.5">
+                {step.origin_city} ({step.origin_state})
+              </p>
+              <div className="md:hidden flex">
+                <MoveDown size={10} className="text-neutral-800/50" />
+              </div>
+              <div className="hidden md:flex">
+                <p className="text-xs text-neutral-800/50 mt-0.5">{t("to")}</p>
+              </div>
+              <p className="text-xs text-neutral-800/50 mt-0.5">
+                {step.destination_city} ({step.destination_state})
+              </p>
+            </div>
 
-            <div className="mt-2 flex flex-wrap items-center gap-1 text-xs text-neutral-800/60">
+            <div className="mt-2 flex flex-col md:flex-row items-start md:items-center justify-start gap-1 text-xs text-neutral-800/60">
               <span className="flex items-center gap-1 bg-primary-50 text-primary-700 px-1.5 py-0.5 rounded font-medium">
                 <TransportIcon type={step.transport_type} className="w-3 h-3" />
                 <span>
                   {getTransportTypeLabel(step.transport_type, tTransport)}
                 </span>
               </span>
-              <Dot size={20} className="text-neutral-800/60" />
-              <span>{formatDuration(step.duration_hours)}</span>
-              <Dot size={20} className="text-neutral-800/60" />
-              <span>
-                {step.kilometers} {t("km")}
-              </span>
-              <Dot size={20} className="text-neutral-800/60" />
-              <span className="font-semibold text-primary-700">
-                {formatPrice(step.average_amount)}
-              </span>
+              <div className="hidden md:flex">
+                <Dot size={20} className="text-neutral-800/60" />
+              </div>
+              <div className="flex flex-row gap-1 items-center">
+                <span>{formatDuration(step.duration_hours)}</span>
+                <Dot size={20} className="text-neutral-800/60" />
+                <span>
+                  {step.kilometers} {t("km")}
+                </span>
+                <Dot size={20} className="text-neutral-800/60" />
+                <span className="font-semibold text-primary-700">
+                  {formatPrice(step.average_amount)}
+                </span>
+              </div>
             </div>
           </div>
         </div>

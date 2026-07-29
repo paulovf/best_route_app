@@ -74,6 +74,10 @@ export default function Topbar({ show, resultHref }: Readonly<TopbarProps>) {
     });
   };
 
+  const goToHomePage = () => {
+    window.location.href = "/";
+  };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-600/10 ${
@@ -83,7 +87,11 @@ export default function Topbar({ show, resultHref }: Readonly<TopbarProps>) {
       }`}
     >
       <div className="w-full mx-auto px-10 h-14 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => goToHomePage()}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <Image
             src="/images/logo_v2_dark.png"
             alt={t("logoAlt")}
@@ -95,7 +103,7 @@ export default function Topbar({ show, resultHref }: Readonly<TopbarProps>) {
           <span className="font-semibold tracking-tight text-neutral-600">
             Best Route
           </span>
-        </div>
+        </button>
         <nav className="hidden md:flex gap-1">{renderLinks(false)}</nav>
 
         <button

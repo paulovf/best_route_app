@@ -49,7 +49,7 @@ export default function ErrorPage() {
           <Topbar show={true} resultHref={resultHref} />
           <section
             id="result-screen"
-            className="relative min-h-screen screen flex flex-col bg-neutral-50 gap-y-8 overflow-hidden pt-8"
+            className="relative min-h-[500px] h-screen screen flex flex-col justify-center bg-neutral-50 gap-y-8 overflow-hidden"
           >
             <div className="w-full flex flex-col gap-y-6 items-center">
               <div className="max-w-2xl mx-auto px-6 py-12 rounded-xl border border-neutral-200 bg-white shadow-sm">
@@ -57,7 +57,7 @@ export default function ErrorPage() {
                   <CircleAlert size={64} className="text-red-600" />
                 </div>
 
-                <h1 className="text-xl font-semibold text-neutral-700">
+                <h1 className="text-xl font-semibold text-center text-neutral-700">
                   {t("title")}
                 </h1>
 
