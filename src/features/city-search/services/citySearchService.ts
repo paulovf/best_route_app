@@ -11,7 +11,7 @@ export async function getCites(): Promise<CitySearchRouteApiResponse> {
   const url = "/api/ibge/search_cities";
 
   const response = await fetch(url, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
@@ -23,5 +23,9 @@ export async function getCites(): Promise<CitySearchRouteApiResponse> {
     throw errorData;
   }
 
-  return response.json();
+  const listRespose: CitySearchRouteApiResponse = {
+    list: await response.json(),
+  };
+
+  return listRespose;
 }

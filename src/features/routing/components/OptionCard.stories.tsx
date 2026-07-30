@@ -97,3 +97,21 @@ export const Fastest: Story = {
     },
   },
 };
+
+export const Cheapest: Story = {
+  args: {
+    option: {
+      ...mockOption,
+      highlight: "cheapest",
+    },
+  },
+};
+
+export const MostConvenient: Story = {
+  args: {
+    option: {
+      ...mockOption,
+      highlight: "most_convenient",
+    },
+  },
+};

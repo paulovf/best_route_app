@@ -9,6 +9,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 import { useResultLink } from "@/features/routing/hooks/useResultLink";
 import { Footer } from "@/components/layout/Footer";
+import { CityProvider } from "@/features/city-search/context/CityContext";
 
 /**
  * The main entry page for the application.
@@ -61,7 +62,7 @@ export default function Page() {
 
           <section
             id="home-screen"
-            className="relative flex h-screen flex-col bg-neutral-900 overflow-hidden"
+            className="relative min-h-screen screen flex flex-col bg-neutral-900 gap-y-8 overflow-hidden"
           >
             <div className="absolute inset-0 z-0">
               <Image
@@ -159,8 +160,9 @@ export default function Page() {
               </a>
             </div>
           </section>
-
-          <FormScreen ref={formSectionRef} />
+          <CityProvider>
+            <FormScreen ref={formSectionRef} />
+          </CityProvider>
         </div>
       </main>
       <Footer resultHref={resultHref} />

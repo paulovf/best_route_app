@@ -43,34 +43,38 @@ export default function ErrorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 animate-fadeIn">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900">
       <main className="pt-0">
-        <Topbar show={true} resultHref={resultHref} />
-        <div
-          id="result-screen"
-          className="h-screen flex flex-row items-center justify-center"
-        >
-          <div className="flex flex-col items-center justify-center max-w-md rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
-            <div className="mx-auto mb-4 flex h-[80px] w-[80px] items-center justify-center rounded-full bg-red-50">
-              <CircleAlert size={64} className="text-red-600" />
+        <div className="relative min-h-screen text-white selection:bg-emerald-500">
+          <Topbar show={true} resultHref={resultHref} />
+          <section
+            id="result-screen"
+            className="relative min-h-[500px] h-screen screen flex flex-col justify-center bg-neutral-50 gap-y-8 overflow-hidden"
+          >
+            <div className="w-full flex flex-col gap-y-6 items-center">
+              <div className="max-w-2xl mx-auto px-6 py-12 rounded-xl border border-neutral-200 bg-white shadow-sm">
+                <div className="mx-auto mb-4 flex h-[80px] w-[80px] items-center justify-center rounded-full bg-red-50">
+                  <CircleAlert size={64} className="text-red-600" />
+                </div>
+
+                <h1 className="text-xl font-semibold text-center text-neutral-700">
+                  {t("title")}
+                </h1>
+
+                <p className="mt-3 text-sm text-neutral-600 text-center">
+                  {getFriendlyMessage(errorData.status || 500)}
+                </p>
+
+                <Link
+                  href="/#form-screen"
+                  id="btn-new-route"
+                  className="flex flex-row items-center justify-center w-full mt-6 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
+                >
+                  {t("button")}
+                </Link>
+              </div>
             </div>
-
-            <h1 className="text-xl font-semibold text-neutral-700">
-              {t("title")}
-            </h1>
-
-            <p className="mt-3 text-sm text-neutral-600 text-center">
-              {getFriendlyMessage(errorData.status || 500)}
-            </p>
-
-            <Link
-              href="/#form-screen"
-              id="btn-new-route"
-              className="flex flex-row items-center justify-center w-full mt-6 bg-neutral-700 text-neutral-50 rounded-full font-semibold h-12 text-base shadow-sm hover:opacity-50 active:scale-95 transition-all cursor-pointer"
-            >
-              {t("button")}
-            </Link>
-          </div>
+          </section>
         </div>
       </main>
       <Footer resultHref={resultHref} />

@@ -2,10 +2,72 @@ import { NextResponse } from "next/server";
 import { NominatimReverseResponse } from "@/features/geolocation/types";
 
 /**
- * Get a city location by coords in Open Street map external api.
- *
- * @param request - The incoming HTTP request containing lat and lon search params.
- * @returns a city location by cords.
+ * @swagger
+ * /api/open_street_map/get_location:
+ *   get:
+ *     summary: Get location by coordinates (Reverse Geocoding)
+ *     description: Queries the OpenStreetMap (Nominatim) API to obtain address details based on latitude and longitude.
+ *     tags:
+ *       - Geolocation
+ *     parameters:
+ *       - in: query
+ *         name: lat
+ *         required: true
+ *         description: Location latitude
+ *         schema:
+ *           type: string
+ *           example: "-23.5505"
+ *       - in: query
+ *         name: lon
+ *         required: true
+ *         description: Location longitude
+ *         schema:
+ *           type: string
+ *           example: "-46.6333"
+ *     responses:
+ *       200:
+ *         description: Geolocation data successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 place_id:
+ *                   type: number
+ *                 licence:
+ *                   type: string
+ *                 osm_type:
+ *                   type: string
+ *                 osm_id:
+ *                   type: number
+ *                 lat:
+ *                   type: string
+ *                 lon:
+ *                   type: string
+ *                 display_name:
+ *                   type: string
+ *                 address:
+ *                   type: object
+ *       400:
+ *         description: Missing required parameters (lat or lon).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "The 'lat' and 'lon' parameters are required."
+ *       500:
+ *         description: Internal error while fetching geolocation.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal error while fetching geolocation."
  */
 export async function GET(request: Request) {
   try {
@@ -15,7 +77,7 @@ export async function GET(request: Request) {
 
     if (!lat || !lon) {
       return NextResponse.json(
-        { error: "Os parâmetros 'lat' e 'lon' são obrigatórios." },
+        { error: "The 'lat' and 'lon' parameters are required." },
         { status: 400 },
       );
     }
@@ -25,7 +87,10 @@ export async function GET(request: Request) {
 
     const response = await fetch(`${apiUrl}${path}`, {
       method: "GET",
-      headers: { "Accept-Language": "pt-BR" },
+      headers: {
+        "Accept-Language": "pt-BR",
+        "User-Agent": "BestRouteApplication/0.1.0 (contact@bestroute.com)",
+      },
     });
 
     if (!response.ok) {
@@ -38,7 +103,7 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Error in get city location by coords:", error);
     return NextResponse.json(
-      { error: "Erro interno ao buscar geolocalização." },
+      { error: "Internal error while fetching geolocation." },
       { status: 500 },
     );
   }

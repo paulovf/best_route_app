@@ -8,6 +8,20 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          position: "relative",
+          height: "80px",
+          overflow: "hidden",
+          transform: "translateZ(0)",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     isOpen: {
       control: "boolean",

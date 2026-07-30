@@ -58,6 +58,12 @@ jest.mock("/src/features/routing/context/RouteContext", () => ({
   }),
 }));
 
+jest.mock("/src/features/city-search/context/CityContext", () => ({
+  CityProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+}));
+
 describe("Home page", () => {
   beforeEach(() => {
     global.IntersectionObserver = jest.fn().mockImplementation(() => ({
