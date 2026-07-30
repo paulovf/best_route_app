@@ -1,4 +1,7 @@
 import type { Preview } from "@storybook/nextjs-vite";
+import { NextIntlClientProvider } from "next-intl";
+import messages from "../messages/pt.json";
+// @ts-ignore
 import "../src/app/globals.css";
 
 const preview: Preview = {
@@ -11,12 +14,16 @@ const preview: Preview = {
     },
 
     a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: "todo",
+      test: "error",
     },
   },
+  decorators: [
+    (Story) => (
+      <NextIntlClientProvider locale="pt-BR" messages={messages}>
+        <Story />
+      </NextIntlClientProvider>
+    ),
+  ],
 };
 
 export default preview;

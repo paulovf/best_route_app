@@ -12,7 +12,7 @@ The project leverages modern, production-grade tools from the JavaScript/TypeScr
 - **Styling:** Tailwind CSS 4, `clsx`, `tailwind-merge`
 - **Icons & UI:** Lucide React, React Day Picker
 - **Documentation:** Swagger UI (`next-swagger-doc`), Storybook 10, TSDoc
-- **Testing:** Jest, React Testing Library
+- **Testing:** Jest (for unity tests), Vitest (for Storybook tests), React Testing Library
 
 ---
 

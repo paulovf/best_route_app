@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { setTestLocale } from "@/test/i18n";
-import "@/test/mocks/next-intl";
-import "@/test/mocks/routing";
+import "@/test/setup/next-intl";
+import "@/test/setup/routing";
 
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),

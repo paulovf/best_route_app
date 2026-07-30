@@ -1,22 +1,19 @@
-import { Option } from "./route";
-import { Step } from "./route";
-
 export interface LoadingModalProps {
   /** Modal open status. */
   isOpen: boolean;
 }
-
-export interface OptionCardProps {
-  /** Option component props. */
-  option: Option;
-}
-
 export interface TopbarProps {
   /** Topbar display status. */
   show: boolean;
+  /** Topbar result link. */
+  resultHref: string;
 }
 
-export interface OptionStepsTimelineProps {
-  /** Routes list. */
-  steps: Step[];
+export interface DatePickerFieldProps {
+  /** Input value. */
+  value: Date | undefined;
+  /** Input onchange event. */
+  onChange: (date: Date | undefined) => void;
+  /** Input error message. */
+  error?: string;
 }

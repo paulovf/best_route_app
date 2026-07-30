@@ -1,0 +1,94 @@
+import React from "react";
+import { MoveRight, Dot, MoveDown } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { OptionStepsTimelineProps } from "@/features/routing/types";
+import {
+  formatDuration,
+  getTransportTypeLabel,
+  formatPrice,
+} from "@/utils/formatters";
+import { TransportIcon } from "../../../../components/ui/icons/Transport";
+import { getLocationIcon } from "../../../../components/ui/icons/Location";
+
+/**
+ * Renders a timeline of steps for a travel route option.
+ *
+ * @param steps - The properties for the component.
+ * @returns The rendered steps timeline.
+ */
+export const OptionCardStep = ({ steps }: OptionStepsTimelineProps) => {
+  const t = useTranslations("OptionCardStep");
+  const tTransport = useTranslations("Transport");
+  const sortedSteps = [...steps].sort((a, b) => a.order - b.order);
+
+  return (
+    <div className="relative mt-6 pl-8 space-y-6 animate-fadeIn">
+      {sortedSteps.map((step, index) => (
+        <div key={`${step.order}-${index}`} className="relative">
+          {index < sortedSteps.length - 1 && (
+            <div className="absolute left-[-20px] top-6 bottom-[-26px] w-[2px] bg-neutral-200" />
+          )}
+
+          <div className="absolute -left-[31px] top-0.5 w-6 h-6 rounded-full border-2 flex items-center justify-center bg-white border-neutral-400 text-neutral-800 z-10">
+            {getLocationIcon({
+              type:
+                index === 0
+                  ? step.origin_departure_type
+                  : step.destination_arrival_type,
+              className: "w-3 h-3",
+            })}
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-primary-900 balance flex flex-row items-center justify-start gap-x-2">
+              {step.origin_departure}
+              <MoveRight
+                size={18}
+                className="text-neutral-800/40 font-normal"
+              />
+              {step.destination_arrival}
+            </div>
+
+            <div className="flex flex-col gap-1 md:flex-row items-start">
+              <p className="text-xs text-neutral-800/50 mt-0.5">
+                {step.origin_city} ({step.origin_state})
+              </p>
+              <div className="md:hidden flex">
+                <MoveDown size={10} className="text-neutral-800/50" />
+              </div>
+              <div className="hidden md:flex">
+                <p className="text-xs text-neutral-800/50 mt-0.5">{t("to")}</p>
+              </div>
+              <p className="text-xs text-neutral-800/50 mt-0.5">
+                {step.destination_city} ({step.destination_state})
+              </p>
+            </div>
+
+            <div className="mt-2 flex flex-col md:flex-row items-start md:items-center justify-start gap-1 text-xs text-neutral-800/60">
+              <span className="flex items-center gap-1 bg-primary-50 text-primary-700 px-1.5 py-0.5 rounded font-medium">
+                <TransportIcon type={step.transport_type} className="w-3 h-3" />
+                <span>
+                  {getTransportTypeLabel(step.transport_type, tTransport)}
+                </span>
+              </span>
+              <div className="hidden md:flex">
+                <Dot size={20} className="text-neutral-800/60" />
+              </div>
+              <div className="flex flex-row gap-1 items-center">
+                <span>{formatDuration(step.duration_hours)}</span>
+                <Dot size={20} className="text-neutral-800/60" />
+                <span>
+                  {step.kilometers} {t("km")}
+                </span>
+                <Dot size={20} className="text-neutral-800/60" />
+                <span className="font-semibold text-primary-700">
+                  {formatPrice(step.average_amount)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};

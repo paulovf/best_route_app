@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const path = "/api/v1/routes/search";
-const TIMEOUT_MS = 50000;
+const TIMEOUT_MS = 60000;
 
 /**
  * @swagger
