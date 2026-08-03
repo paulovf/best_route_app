@@ -111,8 +111,16 @@ export default function Page() {
 
             <div
               id="home-group-buttons"
-              className="relative z-10 pb-10 flex justify-center gap-5"
+              className="relative z-10 pb-[70px] flex justify-center gap-5"
             >
+              <button
+                onClick={() => {
+                  throw new Error("Teste de erro no Grafana Faro");
+                }}
+                type="button"
+              >
+                Teste
+              </button>
               <a
                 href="https://github.com/paulovf/best_route_api"
                 target="_blank"

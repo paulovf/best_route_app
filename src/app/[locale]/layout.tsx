@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { RouteProvider } from "@/features/routing/context/RouteContext";
 import { Geist, Geist_Mono } from "next/font/google";
-// import { Footer } from "../../components/layout/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import FaroProvider from "@/features/observability/components/FaroProvider";
+import CookieBanner from "@/components/layout/CookieBanner";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -37,8 +38,10 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased font-sans bg-neutral-50 text-neutral-800`}
     >
       <body className="min-h-full flex flex-col">
+        <FaroProvider />
         <NextIntlClientProvider messages={messages}>
           <RouteProvider>{children}</RouteProvider>
+          <CookieBanner />
         </NextIntlClientProvider>
       </body>
     </html>

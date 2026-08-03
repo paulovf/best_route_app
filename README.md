@@ -64,6 +64,7 @@ cd best_route_app
    ```env
    NEXT_PUBLIC_API_IBGE_URL=https://servicodados.ibge.gov.br/api/v1/localidades/municipios
    NEXT_PUBLIC_OPEN_STREET_MAP_URL=https://nominatim.openstreetmap.org/reverse
+   NEXT_PUBLIC_FARO_URL=https://faro-collector-prod-sa-east-1.grafana.net/collect/<your-collection>
    API_URL=http://localhost:8080
    X_API_KEY=your_local_secret_key
    ```

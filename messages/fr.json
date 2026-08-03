@@ -57,13 +57,22 @@
       },
       "cookies": {
         "title": "3. Cookies et suivi tiers",
-        "content": "Cet environnement numérique est exempt d'outils de suivi tiers, de cookies marketing ou de pixels de réseaux sociaux. Nous utilisons uniquement le stockage local strictement nécessaire au fonctionnement technique de l'application."
+        "content": "Nous utilisons des outils de suivi et d'observabilité tiers (tels que Grafana Faro et Microsoft Clarity) pour analyser les performances de l'application et l'expérience de navigation, mais uniquement après votre consentement explicite. Nous n'utilisons pas de cookies marketing, de traqueurs publicitaires ni de pixels de réseaux sociaux."
       },
       "security": {
         "title": "4. Sécurité",
         "content": "Tout le trafic de données entre votre navigateur et nos services est chiffré via le protocole HTTPS, garantissant que vos requêtes voyagent en toute sécurité."
+      },
+      "monitoring": {
+        "title": "5. Suivi et Analytique",
+        "content": "Pour améliorer continuellement votre expérience et identifier les goulets d'étranglement en matière d'ergonomie, nous utilisons des outils de suivi tels que Grafana Faro et Microsoft Clarity. La collecte de données par ces outils n'intervient qu'après votre consentement explicite dans le bandeau de cookies. Vous pouvez révoquer cette autorisation à tout moment en effaçant les données de navigation de votre appareil."
       }
     }
+  },
+  "CookieBanner": {
+    "message": "Nous utilisons des cookies et des outils de suivi (tels que Grafana Faro et Clarity) pour analyser le trafic et améliorer votre expérience. Les données ne seront collectées qu'avec votre accord.",
+    "accept": "Accepter et continuer",
+    "decline": "Refuser"
   },
   "ErrorPage": {
     "title": "Oups ! Quelque chose a mal tourné",
