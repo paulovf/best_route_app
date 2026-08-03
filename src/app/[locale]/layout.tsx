@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import FaroProvider from "@/features/observability/components/FaroProvider";
-import CookieBanner from "@/components/layout/CookieBanner";
+import CookieBannerWrapper from "@/components/layout/CookieBannerWrapper";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -41,7 +41,7 @@ export default async function RootLayout({
         <FaroProvider />
         <NextIntlClientProvider messages={messages}>
           <RouteProvider>{children}</RouteProvider>
-          <CookieBanner />
+          <CookieBannerWrapper />
         </NextIntlClientProvider>
       </body>
     </html>
