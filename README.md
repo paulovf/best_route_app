@@ -1,6 +1,8 @@
 # Best Route App 🗺️
 
-Best Route App is a modern web application built with Next.js to calculate the best travel routes between cities. The application features a robust frontend architecture with internationalization, interactive API documentation, UI component sandboxing, and seamless integration with external APIs.
+Best Route App is a modern web application built with Next.js to calculate the best travel routes between cities. The application features a robust frontend architecture with internationalization, interactive API documentation, UI component sandboxing, real-time observability, and seamless integration with external APIs.
+
+---
 
 ## 🛠️ Tech Stack & Tools
 
@@ -11,8 +13,10 @@ The project leverages modern, production-grade tools from the JavaScript/TypeScr
 - **Language:** TypeScript 5
 - **Styling:** Tailwind CSS 4, `clsx`, `tailwind-merge`
 - **Icons & UI:** Lucide React, React Day Picker
+- **Observability:** Grafana Faro Web SDK, Grafana Cloud Dashboards, Microsoft Clarity
 - **Documentation:** Swagger UI (`next-swagger-doc`), Storybook 10, TSDoc
-- **Testing:** Jest (for unity tests), Vitest (for Storybook tests), React Testing Library
+- **Testing:** Jest (for unit tests), Vitest (for Storybook tests), React Testing Library
+- **Design & Planning:** Figma (User Flows/Mind Maps), Notion (Agile Task Board)
 
 ---
 
@@ -22,7 +26,32 @@ The project leverages modern, production-grade tools from the JavaScript/TypeScr
 2. **City Autocomplete:** Integrates with the external IBGE API to fetch and display Brazilian cities dynamically.
 3. **Reverse Geocoding:** Uses the OpenStreetMap external API to fetch city locations based on geographical coordinates.
 4. **Internationalization (i18n):** Multi-language support implemented seamlessly using `next-intl`.
-5. **Standardized Code & UI:** UI components are documented and tested in isolation using Storybook, and code is heavily documented using TSDoc standards.
+5. **Real-time Frontend Observability:** Tracks web vitals, errors, user sessions, and performance metrics via Grafana Faro & Microsoft Clarity.
+6. **Standardized Code & UI:** UI components are documented and tested in isolation using Storybook, and code is heavily documented using TSDoc standards.
+
+---
+
+## 📐 UX/UI Design & User Flows
+
+System architecture, screen navigation flows, and interactive mind maps for the frontend application are maintained on Figma:
+
+- 🎨 **Figma Diagrams & Mind Maps:** [Best Route - Screen Flows & Diagrams](https://www.figma.com/board/rlConotRDMKydwTAJ5OMHX/Fluxo-telas?node-id=0-1&p=f)
+
+---
+
+## 📋 Task Management & Planning
+
+Project management, sprint planning, epics, and task cards are organized and tracked via Notion following agile methodologies:
+
+- 📌 **Notion Task Board:** [Best Route - Frontend Kanban & Tasks](https://silk-stay-df9.notion.site/23b28b90a2db48e5a51203e717d325c5?v=1f3d96807cb949a6b18edc6a0445e628)
+
+---
+
+## 📊 Observability & Performance Monitoring
+
+Real-time telemetry, Web Vitals (LCP, FID, CLS), error tracking, and device/browser usage analytics are captured using **Grafana Faro** and visualized in a public Grafana dashboard:
+
+- 📈 **Grafana Public Dashboard:** [Best Route Observability & Telemetry Panel](https://bestroute.grafana.net/public-dashboards/1ae81052288d42aeb3485850b6f1aa9b)
 
 ---
 
@@ -34,6 +63,7 @@ To run the project locally or in production, ensure the following environment va
 | :-------------------------------- | :------------------------------------------------ | :--------------------------------------------------------------- |
 | `NEXT_PUBLIC_API_IBGE_URL`        | External API for fetching Brazilian cities        | `https://servicodados.ibge.gov.br/api/v1/localidades/municipios` |
 | `NEXT_PUBLIC_OPEN_STREET_MAP_URL` | External API for reverse geocoding                | `https://nominatim.openstreetmap.org/reverse`                    |
+| `NEXT_PUBLIC_FARO_URL`            | Grafana Faro Collector URL for observability      | `https://faro-collector-prod-sa-east-1.grafana.net/collect/...`  |
 | `API_URL`                         | Internal proxy routing to the Spring Boot backend | `http://localhost:8080`                                          |
 | `X_API_KEY`                       | Secret master key token matching the backend      | `master-key-token-xyz`                                           |
 
