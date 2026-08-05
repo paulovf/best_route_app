@@ -72,8 +72,8 @@ import { NominatimReverseResponse } from "@/features/geolocation/types";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const lat = searchParams.get("lat");
-    const lon = searchParams.get("lon");
+    const lat = searchParams.get("latitude");
+    const lon = searchParams.get("longitude");
 
     if (!lat || !lon) {
       return NextResponse.json(

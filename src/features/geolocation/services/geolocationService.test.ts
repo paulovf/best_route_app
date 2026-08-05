@@ -1,7 +1,7 @@
 import { getByCoords } from "./geolocationService"; // Ajuste o caminho se necessário
 import {
   GeolocationApiRequest,
-  GeolocationApiResponse,
+  NominatimReverseResponse,
 } from "@/features/geolocation/types";
 
 describe("geolocationService - getByCoords", () => {
@@ -15,8 +15,8 @@ describe("geolocationService - getByCoords", () => {
     fetchMock.mockRestore();
   });
 
-  const mockApiResponse: GeolocationApiResponse = {
-    response: {
+  const mockApiResponse: NominatimReverseResponse = {
+    address: {
       municipality: "Belo Horizonte",
       state: "MG",
       region: "Southeast",
@@ -24,6 +24,20 @@ describe("geolocationService - getByCoords", () => {
       country: "Brazil",
       country_code: "br",
     },
+    place_id: 0,
+    licence: "",
+    osm_type: "",
+    osm_id: 0,
+    lat: "",
+    lon: "",
+    class: "",
+    type: "",
+    place_rank: 0,
+    importance: 0,
+    addresstype: "",
+    name: "",
+    display_name: "",
+    boundingbox: [],
   };
 
   const payload: GeolocationApiRequest = {
@@ -38,7 +52,7 @@ describe("geolocationService - getByCoords", () => {
     });
 
     const result = await getByCoords(payload);
-    const url = `/api/geolocation/get_by_coords?latitude=${payload.latitude}&longitude=${payload.longitude}`;
+    const url = `/api/open_street_map/get_location?latitude=${payload.latitude}&longitude=${payload.longitude}`;
 
     expect(result).toEqual(mockApiResponse);
     expect(fetchMock).toHaveBeenCalledWith(url, {

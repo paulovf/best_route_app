@@ -4,7 +4,7 @@ import {
   NominatimAddress,
   LocationData,
   GeolocationApiRequest,
-  GeolocationApiResponse,
+  NominatimReverseResponse,
 } from "@/features/geolocation/types";
 
 /**
@@ -36,9 +36,8 @@ export function useGeolocation() {
           const payload: GeolocationApiRequest = { latitude, longitude };
 
           try {
-            const data: GeolocationApiResponse = await getByCoords(payload);
-            const address = data.response;
-
+            const data: NominatimReverseResponse = await getByCoords(payload);
+            const address = data.address;
             const city = extractCityFromResponse(address);
             const uf = extractuFFromResponse(address);
 
