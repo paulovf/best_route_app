@@ -111,7 +111,7 @@ export default function Page() {
 
             <div
               id="home-group-buttons"
-              className="relative z-10 pb-10 flex justify-center gap-5"
+              className="relative z-10 pb-[70px] flex justify-center gap-5"
             >
               <a
                 href="https://github.com/paulovf/best_route_api"

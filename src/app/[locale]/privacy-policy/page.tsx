@@ -98,6 +98,15 @@ export default function PrivacyPolicyPage() {
                       {t("sections.security.content")}
                     </p>
                   </section>
+
+                  <section className="space-y-2">
+                    <h2 className="text-lg font-semibold text-neutral-900">
+                      {t("sections.monitoring.title")}
+                    </h2>
+                    <p className="leading-relaxed text-slate-600 text-sm md:text-base">
+                      {t("sections.monitoring.content")}
+                    </p>
+                  </section>
                 </article>
               </div>
             </div>

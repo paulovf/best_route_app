@@ -57,13 +57,22 @@
       },
       "cookies": {
         "title": "3. Cookies and Third-Party Tracking",
-        "content": "This digital environment is free from third-party tracking tools, marketing cookies, or social media pixels. We only use local storage strictly necessary for the technical functioning of the application."
+        "content": "We use third-party monitoring and observability tools (such as Grafana Faro and Microsoft Clarity) to analyze application performance and browsing experience, but only after your explicit consent. We do not use marketing cookies, advertising trackers, or social media pixels."
       },
       "security": {
         "title": "4. Security",
         "content": "All data traffic between your browser and our services is encrypted using the HTTPS protocol, ensuring your queries travel securely."
+      },
+      "monitoring": {
+        "title": "5. Monitoring and Analytics",
+        "content": "To continually improve your experience and identify usability bottlenecks, we use monitoring tools such as Grafana Faro and Microsoft Clarity. Data collection by these tools only occurs after your explicit consent in the cookie banner. You may revoke this permission at any time by clearing your device's browsing data."
       }
     }
+  },
+  "CookieBanner": {
+    "message": "We use cookies and monitoring tools (such as Grafana Faro and Clarity) to analyze traffic and improve your experience. Data will only be collected with your consent.",
+    "accept": "Accept and continue",
+    "decline": "Decline"
   },
   "ErrorPage": {
     "title": "Oops! Something went wrong",
