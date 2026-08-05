@@ -65,7 +65,7 @@ export function CityFormField({
 
     setQuery(newValue);
 
-    if (!isDeleting.current && cities?.length > 0) {
+    if (!isDeleting.current && Array.isArray(cities) && cities.length > 0) {
       const normalizedQuery = normalize(newValue);
 
       const exactDisplayMatch = cities.find(
@@ -192,7 +192,8 @@ export function CityFormField({
 }
 
 function filterCities(query: string, cities: CityOption[]) {
-  if (query === "") return [];
+  if (query === "" || !Array.isArray(cities)) return [];
+
   return cities
     .filter((city) => {
       const normalize = (str: string) =>
