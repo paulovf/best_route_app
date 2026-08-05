@@ -1,5 +1,5 @@
 import { GET } from "./route";
-import { GeolocationApiResponse } from "@/features/geolocation/types";
+import { NominatimReverseResponse } from "@/features/geolocation/types";
 
 jest.mock("next/server", () => ({
   NextResponse: {
@@ -26,10 +26,10 @@ describe("GET /api/open_street_map/get_location", () => {
   const mockRequest = (url: string) => ({ url }) as Request;
 
   it("should return 400 error if 'lat' or 'lon' params are missing", async () => {
-    const req = mockRequest("http://localhost/api/osm?lat=-23.55");
+    const req = mockRequest("http://localhost/api/osm?latitude=-23.55");
     const response = (await GET(req)) as unknown as {
       status: number;
-      body: GeolocationApiResponse;
+      body: NominatimReverseResponse;
     };
 
     expect(response.status).toBe(400);
@@ -49,10 +49,12 @@ describe("GET /api/open_street_map/get_location", () => {
       json: async () => mockOsmResponse,
     });
 
-    const req = mockRequest("http://localhost/api/osm?lat=-23.55&lon=-46.63");
+    const req = mockRequest(
+      "http://localhost/api/osm?latitude=-23.55&longitude=-46.63",
+    );
     const response = (await GET(req)) as unknown as {
       status: number;
-      body: GeolocationApiResponse;
+      body: NominatimReverseResponse;
     };
 
     expect(fetchMock).toHaveBeenCalledWith(
@@ -79,10 +81,12 @@ describe("GET /api/open_street_map/get_location", () => {
       ok: false,
     });
 
-    const req = mockRequest("http://localhost/api/osm?lat=-23.55&lon=-46.63");
+    const req = mockRequest(
+      "http://localhost/api/osm?latitude=-23.55&longitude=-46.63",
+    );
     const response = (await GET(req)) as unknown as {
       status: number;
-      body: GeolocationApiResponse;
+      body: NominatimReverseResponse;
     };
 
     expect(response.status).toBe(500);
@@ -105,10 +109,12 @@ describe("GET /api/open_street_map/get_location", () => {
 
     fetchMock.mockRejectedValueOnce(new Error("Network Error"));
 
-    const req = mockRequest("http://localhost/api/osm?lat=-23.55&lon=-46.63");
+    const req = mockRequest(
+      "http://localhost/api/osm?latitude=-23.55&longitude=-46.63",
+    );
     const response = (await GET(req)) as unknown as {
       status: number;
-      body: GeolocationApiResponse;
+      body: NominatimReverseResponse;
     };
 
     expect(response.status).toBe(500);

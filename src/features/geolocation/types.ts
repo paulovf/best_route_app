@@ -1,19 +1,19 @@
 export interface NominatimAddress {
-  municipality: string;
+  municipality?: string;
   /** Location state. */
-  state: string;
+  state?: string;
   /** Location city with lvl4 display format, if exists. */
   "ISO3166-2-lvl4"?: string;
   /** Location city with defalut format, if exists. */
   "ISO3166-2"?: string;
   /** Location city region. */
-  region: string;
+  region?: string;
   /** Location city postcode (CEP). */
-  postcode: string;
+  postcode?: string;
   /** Location city country. */
-  country: string;
+  country?: string;
   /** Location city country code. */
-  country_code: string;
+  country_code?: string;
   /** Location city name. */
   city?: string;
   /** Location city town, if exists. */

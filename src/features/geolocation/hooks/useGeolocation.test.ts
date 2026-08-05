@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useGeolocation } from "./useGeolocation";
 import { getByCoords } from "@/features/geolocation/services/geolocationService";
-import { GeolocationApiResponse } from "@/features/geolocation/types";
+import { NominatimReverseResponse } from "@/features/geolocation/types";
 
 jest.mock("/src/features/geolocation/services/geolocationService", () => ({
   getByCoords: jest.fn(),
@@ -90,11 +90,11 @@ describe("useGeolocation", () => {
     });
 
     mockGetByCoords.mockResolvedValueOnce({
-      response: {
+      address: {
         city: "São Paulo",
         "ISO3166-2-lvl4": "BR-SP",
       },
-    } as GeolocationApiResponse);
+    } as NominatimReverseResponse);
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -127,8 +127,8 @@ describe("useGeolocation", () => {
     });
 
     mockGetByCoords.mockResolvedValueOnce({
-      response: {},
-    } as GeolocationApiResponse);
+      address: {},
+    } as NominatimReverseResponse);
 
     const { result } = renderHook(() => useGeolocation());
 
