@@ -39,14 +39,14 @@ export default function CookieBanner() {
           <button
             type="button"
             onClick={handleDecline}
-            className="flex-1 md:flex-none px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+            className="flex-1 md:flex-none px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition cursor-pointer"
           >
             {t("decline")}
           </button>
           <button
             type="button"
             onClick={handleAccept}
-            className="flex-1 md:flex-none px-4 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 rounded-lg transition"
+            className="flex-1 md:flex-none px-4 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 rounded-lg transition cursor-pointer"
           >
             {t("accept")}
           </button>

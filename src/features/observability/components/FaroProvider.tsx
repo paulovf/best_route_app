@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { initializeFaro, getWebInstrumentations } from "@grafana/faro-web-sdk";
 import { ReactIntegration } from "@grafana/faro-react";
 
+let isFaroInitialized = false;
+
 export default function FaroProvider() {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -12,7 +14,8 @@ export default function FaroProvider() {
 
     const hasConsented = localStorage.getItem("cookie-consent") === "granted";
 
-    if (hasConsented) {
+    if (hasConsented && !isFaroInitialized) {
+      isFaroInitialized = true;
       try {
         initializeFaro({
           url: process.env.NEXT_PUBLIC_FARO_URL,
@@ -26,7 +29,9 @@ export default function FaroProvider() {
             new ReactIntegration(),
           ],
         });
-      } catch {}
+      } catch (error) {
+        console.error("Failed to initialize Grafana Faro:", error);
+      }
     }
   }, []);
 
