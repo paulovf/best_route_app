@@ -21,7 +21,7 @@ export default function FaroProvider() {
           url: process.env.NEXT_PUBLIC_FARO_URL,
           app: {
             name: "best-route-frontend",
-            version: "1.0.0",
+            version: process.env.NEXT_PUBLIC_APP_VERSION || "0.1.0",
             environment: "production",
           },
           instrumentations: [
