@@ -10,7 +10,7 @@ export default function FaroProvider() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (process.env.NEXT_PUBLIC_ENVIRONMENT !== "production") return;
+    if (process.env.NODE_ENV !== "production") return;
 
     const hasConsented = localStorage.getItem("cookie-consent") === "granted";
 
