@@ -26,7 +26,7 @@ describe("FaroProvider Component", () => {
   });
 
   it("should not initialize Faro if not in production environment", () => {
-    process.env.NEXT_PUBLIC_ENVIRONMENT = "development";
+    process.env = { ...process.env, NODE_ENV: "development" };
     localStorage.setItem("cookie-consent", "granted");
 
     render(<FaroProvider />);
@@ -34,7 +34,7 @@ describe("FaroProvider Component", () => {
   });
 
   it("should not initialize Faro if the user has not given consent", () => {
-    process.env.NEXT_PUBLIC_ENVIRONMENT = "production";
+    process.env = { ...process.env, NODE_ENV: "production" };
     localStorage.setItem("cookie-consent", "denied");
 
     render(<FaroProvider />);
@@ -42,8 +42,11 @@ describe("FaroProvider Component", () => {
   });
 
   it("should initialize Faro only once in production and with consent", () => {
-    process.env.NEXT_PUBLIC_ENVIRONMENT = "production";
-    process.env.NEXT_PUBLIC_FARO_URL = "https://faro.example.com";
+    process.env = {
+      ...process.env,
+      NODE_ENV: "production",
+      NEXT_PUBLIC_FARO_URL: "https://faro.example.com",
+    };
     localStorage.setItem("cookie-consent", "granted");
 
     const { rerender } = render(<FaroProvider />);
