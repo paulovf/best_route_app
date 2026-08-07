@@ -43,7 +43,7 @@ The project leverages modern, production-grade tools from the JavaScript/TypeScr
 System architecture, screen navigation flows, and interactive mind maps for the frontend application are maintained on Figma:
 
 - 🎨 **Figma Diagrams & Mind Maps:** [Best Route - Screen Flows & Diagrams](https://www.figma.com/board/rlConotRDMKydwTAJ5OMHX/Fluxo-telas?node-id=0-1&p=f)
-- ⚙️ **Frontend test script:** [Best Route - Test script](<[https://www.figma.com/board/HTYkRQgw1OmiNNAozzQWt0/Mapa-mental-API?t=DUpCdS8f1zaZyiUs-1](https://www.figma.com/board/PRJFYCs3ryfSjZ2NBFJHUD/Roterio-de-testes?node-id=0-1&t=m8cZIFJDjEwjzlBJ-1)>)
+- ⚙️ **Frontend test script:** [Best Route - Test script](https://www.figma.com/board/PRJFYCs3ryfSjZ2NBFJHUD/Roterio-de-testes?node-id=0-1&t=m8cZIFJDjEwjzlBJ-1)
 
 ---
 
