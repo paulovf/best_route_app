@@ -80,23 +80,7 @@ export function CityFormField({
         }
         return;
       }
-
-      const nameMatches = cities.filter(
-        (city) => normalize(city.name) === normalizedQuery,
-      );
-
-      if (nameMatches.length === 1) {
-        const uniqueMatch = nameMatches[0];
-        if (value?.displayName !== uniqueMatch.displayName) {
-          isInternalChange.current = true;
-          setQuery(uniqueMatch.displayName);
-          onChange(uniqueMatch);
-          setIsOpen(false);
-        }
-        return;
-      }
     }
-
     isInternalChange.current = true;
     onChange(null);
     setIsOpen(true);
