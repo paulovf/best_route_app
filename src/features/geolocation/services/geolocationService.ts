@@ -1,6 +1,6 @@
 import {
   GeolocationApiRequest,
-  GeolocationApiResponse,
+  NominatimReverseResponse,
   GeolocationApiFail,
 } from "@/features/geolocation/types";
 
@@ -12,8 +12,8 @@ import {
  */
 export async function getByCoords(
   payload: GeolocationApiRequest,
-): Promise<GeolocationApiResponse> {
-  const url = "/api/geolocation/get_by_coords";
+): Promise<NominatimReverseResponse> {
+  const url = "/api/open_street_map/get_location";
   const queryParams = new URLSearchParams(formatPayload(payload)).toString();
 
   const response = await fetch(`${url}?${queryParams}`, {

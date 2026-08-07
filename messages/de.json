@@ -57,13 +57,22 @@
       },
       "cookies": {
         "title": "3. Cookies und Tracking durch Dritte",
-        "content": "Diese digitale Umgebung ist frei von Tracking-Tools Dritter, Marketing-Cookies oder Social-Media-Pixeln. Wir verwenden nur den lokal gespeicherten Speicher, der für den technischen Betrieb der Anwendung unbedingt erforderlich ist."
+        "content": "Wir verwenden Überwachungs- und Beobachtungstools von Drittanbietern (wie Grafana Faro und Microsoft Clarity), um die Anwendungsleistung und das Surferlebnis zu analysieren, jedoch nur nach Ihrer ausdrücklichen Einwilligung. Wir verwenden keine Marketing-Cookies, Werbe-Tracker oder Social-Media-Pixel."
       },
       "security": {
         "title": "4. Sicherheit",
         "content": "Der gesamte Datenverkehr zwischen Ihrem Browser und unseren Diensten wird über das HTTPS-Protokoll verschlüsselt, um sicherzustellen, dass Ihre Anfragen sicher übertragen werden."
+      },
+      "monitoring": {
+        "title": "5. Überwachung und Analytics",
+        "content": "Um Ihre Erfahrung kontinuierlich zu verbessern und Usability-Engpässe zu identifizieren, verwenden wir Überwachungstools wie Grafana Faro und Microsoft Clarity. Die Datenerhebung durch diese Tools erfolgt erst nach Ihrer ausdrücklichen Einwilligung im Cookie-Banner. Sie können diese Berechtigung jederzeit widerrufen, indem Sie die Browserdaten Ihres Geräts löschen."
       }
     }
+  },
+  "CookieBanner": {
+    "message": "Wir verwenden Cookies und Überwachungstools (wie Grafana Faro und Clarity), um den Traffic zu analysieren und Ihre Erfahrung zu verbessern. Daten werden nur mit Ihrer Einwilligung erhoben.",
+    "accept": "Akzeptieren und fortfahren",
+    "decline": "Ablehnen"
   },
   "ErrorPage": {
     "title": "Hoppla! Etwas ist schiefgelaufen",

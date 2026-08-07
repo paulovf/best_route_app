@@ -57,13 +57,22 @@
       },
       "cookies": {
         "title": "3. Cookies y Seguimiento de Terceros",
-        "content": "Este entorno digital está libre de herramientas de seguimiento de terceros, cookies de marketing o píxeles de redes sociales. Solo utilizamos el almacenamiento local estrictamente necesario para el funcionamiento técnico de la aplicación."
+        "content": "Utilizamos herramientas de monitoreo y observabilidad de terceros (como Grafana Faro y Microsoft Clarity) para analizar el rendimiento de la aplicación y la experiencia de navegación, pero solo tras su consentimiento explícito. No utilizamos cookies de marketing, rastreadores publicitarios ni píxeles de redes sociales."
       },
       "security": {
         "title": "4. Seguridad",
         "content": "Todo el tráfico de datos entre tu navegador y nuestros servicios está cifrado utilizando el protocolo HTTPS, garantizando que tus consultas viajen de forma segura."
+      },
+      "monitoring": {
+        "title": "5. Monitoreo y Analítica",
+        "content": "Para mejorar continuamente su experiencia e identificar cuellos de botella en la usabilidad, utilizamos herramientas de monitoreo como Grafana Faro y Microsoft Clarity. La recopilación de datos por parte de estas herramientas solo ocurre tras su consentimiento explícito en el banner de cookies. Puede revocar este permiso en cualquier momento borrando los datos de navegación de su dispositivo."
       }
     }
+  },
+  "CookieBanner": {
+    "message": "Utilizamos cookies y herramientas de monitoreo (como Grafana Faro y Clarity) para analizar el tráfico y mejorar su experiencia. Los datos solo se recopilarán con su aceptación.",
+    "accept": "Aceptar y continuar",
+    "decline": "Rechazar"
   },
   "ErrorPage": {
     "title": "¡Ups! Algo salió mal",
